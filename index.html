@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jesus Hernandez | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Simple, clean styling */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      padding: 1.5rem 10vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    main {
+      padding: 3rem 10vw 4rem 10vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 3vw + 1rem, 3.2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.7rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      background: #111827;
+      border: 1px solid #1f2937;
+      color: #e5e7eb;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: #38bdf8;
+      color: #020617;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: #0ea5e9;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: #374151;
+      color: #e5e7eb;
+    }
+
+    .btn-ghost:hover {
+      background: #111827;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #22c55e33, #020617);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid #1f2937;
+    }
+
+    .hero-card h3 {
+      margin-top: 0;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      margin-bottom: 1rem;
+    }
+
+    .hero-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .hero-list li {
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-top: -0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: #020617;
+      border-radius: 1rem;
+      padding: 1rem;
+      border: 1px solid #1f2937;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .project-meta {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-description {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: #9ca3af;
+    }
+
+    .project-links a {
+      font-size: 0.8rem;
+      margin-right: 0.75rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skills-card {
+      background: #020617;
+      border-radius: 1rem;
+      padding: 1rem;
+      border: 1px solid #1f2937;
+      font-size: 0.9rem;
+    }
+
+    .skills-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .skills-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-card li {
+      margin-bottom: 0.3rem;
+      color: #d1d5db;
+    }
+
+    .contact {
+      font-size: 0.9rem;
+    }
+
+    footer {
+      padding: 1.5rem 10vw 2rem 10vw;
+      border-top: 1px solid #1f2937;
+      font-size: 0.8rem;
+      color: #6b7280;
+      background: #020617;
+      text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      nav {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 1rem;
+        margin-bottom: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Jesus Hernandez</div>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <h1 class="hero-title">Robotics and AI focused engineering student</h1>
+        <p class="hero-subtitle">
+          I am an engineering student interested in robotics, embedded systems, and AI.
+          I work on projects that combine hardware, software, and careful engineering design.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag">Robotics</span>
+          <span class="tag">Embedded C / C++</span>
+          <span class="tag">Verilog / Digital Design</span>
+          <span class="tag">PCB Design</span>
+        </div>
+
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-ghost" href="YOUR_RESUME_LINK_HERE" target="_blank" rel="noopener">Download resume</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>Quick snapshot</h3>
+        <ul class="hero-list">
+          <li>🎓 Engineering student at San Jose State University</li>
+          <li>🤖 Interested in robotics, AI, and assistive technology</li>
+          <li>🛠 Experience with C, C++, Python, Verilog, and KiCad</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Selected projects</h2>
+      <p class="section-subtitle">Hands-on work in robotics, embedded systems, and digital design.</p>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <div>
+            <div class="project-title">Custom Instruction Set Computer Simulator</div>
+            <div class="project-meta">C, x86 Assembly</div>
+            <p class="project-description">
+              Implemented an assembly-level computer simulator that executes a custom instruction set,
+              including ALU operations, instruction parsing, and binary input handling.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Computer Architecture</span>
+              <span class="project-tag">C</span>
+              <span class="project-tag">Assembly</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <!-- Replace with real URLs -->
+            <a href="YOUR_REPO_LINK_1" target="_blank" rel="noopener">Source code</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div>
+            <div class="project-title">LM386 Audio Amplifier PCB</div>
+            <div class="project-meta">KiCad, Soldering, Testing</div>
+            <p class="project-description">
+              Designed and built a PCB-based audio amplifier, including schematic capture, footprint
+              assignment, routing, ground planes, and hardware debugging with real components.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">PCB Design</span>
+              <span class="project-tag">Analog Electronics</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="YOUR_REPO_LINK_2" target="_blank" rel="noopener">Source files</a>
+            <a href="YOUR_PROJECT_IMAGES_LINK_2" target="_blank" rel="noopener">Photos</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div>
+            <div class="project-title">Polynomial Library</div>
+            <div class="project-meta">C++</div>
+            <p class="project-description">
+              Implemented a C++ polynomial class using dynamic memory management, operator overloading,
+              and clean object lifecycle handling for evaluation and algebraic operations.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">C++</span>
+              <span class="project-tag">Data Structures</span>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="YOUR_REPO_LINK_3" target="_blank" rel="noopener">Source code</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research">
+      <h2>Research and writing</h2>
+      <p class="section-subtitle">
+        Technical writing and research experience in space systems, sustainability, and engineering design.
+      </p>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <div>
+            <div class="project-title">Space Debris Detection and Mitigation</div>
+            <div class="project-meta">Research paper</div>
+            <p class="project-description">
+              Investigated methods to detect and identify end-of-life satellites and orbital debris,
+              including ground-based radar, optical tracking, and in situ sensing approaches.
+            </p>
+          </div>
+          <div class="project-links">
+            <a href="YOUR_PAPER_LINK_1" target="_blank" rel="noopener">Read paper</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div>
+            <div class="project-title">Sustainable Engineering and Water Management</div>
+            <div class="project-meta">Technical memo</div>
+            <p class="project-description">
+              Wrote engineering memos on organic waste diversion, recycled water usage, and sustainable
+              campus planning, focusing on practical design recommendations.
+            </p>
+          </div>
+          <div class="project-links">
+            <a href="YOUR_MEMO_LINK_1" target="_blank" rel="noopener">Read memo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skills-card">
+          <h3>Programming</h3>
+          <ul>
+            <li>C, C++</li>
+            <li>Python</li>
+            <li>Verilog (RTL design, testbenches)</li>
+            <li>x86 Assembly (Linux)</li>
+          </ul>
+        </div>
+
+        <div class="skills-card">
+          <h3>Hardware and tools</h3>
+          <ul>
+            <li>KiCad PCB design</li>
+            <li>Oscilloscope and multimeter usage</li>
+            <li>Digital logic design and simulation</li>
+            <li>ESP32 and microcontroller basics</li>
+          </ul>
+        </div>
+
+        <div class="skills-card">
+          <h3>Other</h3>
+          <ul>
+            <li>Technical writing and memos</li>
+            <li>Team collaboration on engineering projects</li>
+            <li>Literature review and research synthesis</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="contact">
+        The best way to reach me is by email: <a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a><br />
+        You can also find my work on GitHub:
+        <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener">github.com/YOUR_GITHUB_USERNAME</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Jesus Hernandez. Built with GitHub Pages.
+  </footer>
+
+  <script>
+    // Set current year automatically
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
