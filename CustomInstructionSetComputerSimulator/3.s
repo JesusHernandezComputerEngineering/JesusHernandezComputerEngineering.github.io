@@ -77,22 +77,22 @@ do_mov:
 
 do_rol:
 	call check
-        mov alu, %eax
+    mov alu, %eax
 	mov counter, %ecx
-        andl $31, %ecx
+    andl $31, %ecx
 	roll %cl, %eax
 	mov %eax, alu
 	mov %eax, counter
-        call itoa
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
-        int $0x80
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
+    int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_ror:
 	call check
@@ -116,107 +116,107 @@ do_ror:
 do_sal:
 	call check
 	mov alu, %eax
-        mov counter, %ecx
-        andl $31, %ecx
-        sall %cl, %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    mov counter, %ecx
+    andl $31, %ecx
+    sall %cl, %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_sar:
 	call check
 	mov alu, %eax
-        mov counter, %ecx
-        andl $31, %ecx
-        sarl %cl, %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    mov counter, %ecx
+    andl $31, %ecx
+    sarl %cl, %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_and:
 	call check
 	mov alu, %eax
-        andl counter, %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    andl counter, %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_or:
 	call check
 	mov alu, %eax
-        orl counter, %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    orl counter, %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_xor:
 	call check
-        mov alu, %eax
-        xorl counter, %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    mov alu, %eax
+    xorl counter, %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 do_not:
-        mov alu, %eax
-        notl %eax
-        mov %eax, alu
-        mov %eax, counter
-        call itoa
+    mov alu, %eax
+    notl %eax
+    mov %eax, alu
+    mov %eax, counter
+    call itoa
 
-        mov $4, %eax
-        mov $1, %ebx
-        mov $itoa_string, %ecx
-        mov $11, %edx
+    mov $4, %eax
+    mov $1, %ebx
+    mov $itoa_string, %ecx
+    mov $11, %edx
 	int $0x80
 
-        call print_b
-        jmp main
+    call print_b
+    jmp main
 
 	mov $1, %eax
 	mov $0, %ebx
