@@ -5,13 +5,15 @@
   <title>Jesus Hernandez | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fancy font -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
-    /* Simple, clean styling */
     body {
       margin: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -20,7 +22,7 @@
     }
 
     a {
-      color: #38bdf8;
+      color: #f97316;
       text-decoration: none;
     }
 
@@ -51,6 +53,13 @@
     nav a {
       margin-left: 1.5rem;
       font-size: 0.9rem;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    nav a.active {
+      color: #f97316;
+      border-bottom: 2px solid #f97316;
+      padding-bottom: 0.25rem;
     }
 
     main {
@@ -59,14 +68,15 @@
       margin: 0 auto;
     }
 
-    /* Hero section with gradient card feel */
+    /* Hero */
+
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
       gap: 2.5rem;
       align-items: center;
       margin-bottom: 4rem;
-      background: radial-gradient(circle at top left, #0ea5e933, #0f172a 55%, #020617 100%);
+      background: radial-gradient(circle at top left, #f9731633, #0f172a 55%, #020617 100%);
       border-radius: 1.6rem;
       padding: 2.5rem 2.4rem;
       border: 1px solid #1f2937;
@@ -83,7 +93,7 @@
       font-size: 1rem;
       color: #9ca3af;
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .hero-tags {
@@ -118,20 +128,24 @@
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
     }
 
     .btn-primary {
-      background: #38bdf8;
+      background: #f97316;
       color: #020617;
       font-weight: 600;
-      box-shadow: 0 12px 24px rgba(56, 189, 248, 0.35);
+      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.35);
     }
 
     .btn-primary:hover {
-      background: #0ea5e9;
+      background: #ea580c;
       transform: translateY(-2px);
-      box-shadow: 0 18px 35px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 18px 35px rgba(249, 115, 22, 0.45);
     }
 
     .btn-ghost {
@@ -152,6 +166,25 @@
       padding: 1.5rem;
       border: 1px solid #1f2937;
       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 999px;
+      display: block;
+      margin: 0 auto 1.2rem auto;
+      object-fit: cover;
+      padding: 4px;
+      background: conic-gradient(
+        from 180deg,
+        #f97316,
+        #22c55e,
+        #0ea5e9,
+        #f97316
+      );
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.6);
     }
 
     .hero-card h3 {
@@ -161,17 +194,27 @@
       letter-spacing: 0.1em;
       color: #9ca3af;
       margin-bottom: 1rem;
+      text-align: left;
     }
 
     .hero-list {
       list-style: none;
       padding: 0;
       margin: 0;
+      text-align: left;
     }
 
     .hero-list li {
       margin-bottom: 0.75rem;
       font-size: 0.9rem;
+    }
+
+    .dynamic-text {
+      font-weight: 600;
+      color: #f97316;
+      border-right: 2px solid #f97316;
+      padding-right: 4px;
+      white-space: nowrap;
     }
 
     section {
@@ -213,12 +256,17 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.2s ease;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: #38bdf8;
+      border-color: #f97316;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.55);
     }
 
@@ -273,12 +321,17 @@
       border: 1px solid #1f2937;
       font-size: 0.9rem;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.2s ease;
+      opacity: 0;
+      transform: translateY(10px);
     }
 
     .skills-card:hover {
       transform: translateY(-3px);
-      border-color: #38bdf8;
+      border-color: #f97316;
       box-shadow: 0 16px 30px rgba(0, 0, 0, 0.55);
     }
 
@@ -345,6 +398,7 @@
     <div class="logo">Jesus Hernandez</div>
     <nav>
       <a href="#projects">Projects</a>
+      <a href="#roots">Roots</a>
       <a href="#skills">Skills</a>
       <a href="#research">Research</a>
       <a href="#contact">Contact</a>
@@ -355,12 +409,17 @@
     <!-- Hero -->
     <section class="hero">
       <div>
-        <h1 class="hero-title">Robotics and AI focused engineering student</h1>
+        <h1 class="hero-title">Mexican computer engineering student building real world systems</h1>
+
         <p class="hero-subtitle">
-          I am Jesus Hernandez, a computer engineering student who loves working on projects  
-          where hardware, software, and real human problems overlap. From space debris
-          detection research to assistive robotics and PCB design, I focus on projects
-          that are hands on, technically deep, and grounded in real impact.
+          I am Jesus Hernandez, a Mexican computer engineering student with Mayan heritage and
+          family roots in Chihuahua. I care about building systems that matter in the real
+          world, whether that is detecting space debris, designing PCBs, or creating tools
+          that make technology more accessible for everyday people.
+        </p>
+
+        <p class="hero-subtitle">
+          I am <span id="dynamic-text" class="dynamic-text"></span>
         </p>
 
         <div class="hero-tags">
@@ -372,16 +431,24 @@
 
         <div class="hero-buttons">
           <a class="btn btn-primary" href="#projects">View projects</a>
-          <a class="btn btn-ghost" href="Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
         </div>
       </div>
 
       <aside class="hero-card">
+        <!-- Make sure this image exists: images/jesus.jpg -->
+        <img
+          src="images/jesus.jpg"
+          alt="Portrait of Jesus Hernandez"
+          class="profile-photo"
+        >
+
         <h3>Quick snapshot</h3>
         <ul class="hero-list">
-          <li> Engineering student at San Jose State University</li>
-          <li> Interested in robotics, AI, and assistive technology</li>
-          <li> Experience with C, C++, Python, Verilog, and KiCad</li>
+          <li>Mexican computer engineering student at San Jose State University</li>
+          <li>Proud of my Mayan heritage and family roots in Chihuahua</li>
+          <li>Focused on robotics, embedded systems, and assistive technology</li>
+          <li>Experience with C, C++, Python, Verilog, and KiCad</li>
         </ul>
       </aside>
     </section>
@@ -412,14 +479,15 @@
       <div class="projects-grid">
         <article class="project-card">
           <div>
+            <!-- Optional GIF screenshot -->
+            <!-- <img src="images/simulator-demo.gif" alt="Simulator demo" style="width:100%; border-radius:12px; margin-bottom:10px;"> -->
             <div class="project-title">Custom Instruction Set Computer Simulator</div>
             <div class="project-meta">C, x86 Assembly</div>
             <p class="project-description">
-              Designed and implemented a custom instruction set simulator in C with x86
-              assembly support. Built an ALU, instruction decoder, and binary input format,
-              then used GDB to debug real programs running on my simulated machine. This
-              project sharpened my understanding of how hardware, compilers, and operating
-              systems fit together.
+              Designed and implemented a custom instruction set simulator in C with x86 assembly
+              support. Built an ALU, instruction decoder, and binary input format, then used GDB
+              to debug real programs running on my simulated machine. This project sharpened my
+              understanding of how hardware, compilers, and operating systems fit together.
             </p>
             <div class="project-tags">
               <span class="project-tag">Computer Architecture</span>
@@ -428,20 +496,23 @@
             </div>
           </div>
           <div class="project-links">
-            <!-- Replace with real URLs -->
-            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/tree/main/CustomInstructionSetComputerSimulator" target="_blank" rel="noopener">Source code</a>
+            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/tree/main/CustomInstructionSetComputerSimulator" target="_blank" rel="noopener">
+              Source code
+            </a>
           </div>
         </article>
 
         <article class="project-card">
           <div>
+            <!-- Optional GIF screenshot -->
+            <!-- <img src="images/pcb-demo.gif" alt="LM386 PCB demo" style="width:100%; border-radius:12px; margin-bottom:10px;"> -->
             <div class="project-title">LM386 Audio Amplifier PCB</div>
             <div class="project-meta">KiCad, Soldering, Testing</div>
             <p class="project-description">
-              Took an audio amplifier from breadboard to manufactured PCB. Captured the
-              schematic in KiCad, selected footprints, routed traces with ground planes,
-              and iterated on track widths for manufacturability. Soldered and tested the
-              board, measuring gain and debugging noise issues with a scope and multimeter.
+              Took an audio amplifier from breadboard to manufactured PCB. Captured the schematic
+              in KiCad, selected footprints, routed traces with ground planes, and iterated on
+              track widths for manufacturability. Soldered and tested the board, measuring gain
+              and debugging noise issues with a scope and multimeter.
             </p>
             <div class="project-tags">
               <span class="project-tag">PCB Design</span>
@@ -449,8 +520,12 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/tree/main/LM386%20Audio%20Amplifier%20PBC" rel="noopener">Source files</a>
-            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/blob/main/LM386%20Audio%20Amplifier%20PBC/PCB_images.pdf" target="_blank" rel="noopener">Photos</a>
+            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/tree/main/LM386%20Audio%20Amplifier%20PBC" target="_blank" rel="noopener">
+              Source files
+            </a>
+            <a href="https://github.com/JesusHernandezComputerEngineering/JesusHernandezComputerEngineering.github.io/blob/main/LM386%20Audio%20Amplifier%20PBC/PCB_images.pdf" target="_blank" rel="noopener">
+              Photos
+            </a>
           </div>
         </article>
 
@@ -459,10 +534,10 @@
             <div class="project-title">Polynomial Library</div>
             <div class="project-meta">C++</div>
             <p class="project-description">
-              Implemented a C++ polynomial library with dynamic memory, operator
-              overloading, and careful object lifecycle management. Focused on writing
-              clean, testable code that supports polynomial evaluation, addition,
-              subtraction, and multiplication while avoiding memory leaks.
+              Implemented a C++ polynomial library with dynamic memory, operator overloading, and
+              careful object lifecycle management. Focused on writing clean, testable code that
+              supports polynomial evaluation, addition, subtraction, and multiplication while
+              avoiding memory leaks.
             </p>
             <div class="project-tags">
               <span class="project-tag">C++</span>
@@ -470,7 +545,33 @@
             </div>
           </div>
           <div class="project-links">
-            <a href="YOUR_REPO_LINK_3" target="_blank" rel="noopener">Source code</a>
+            <a href="YOUR_REPO_LINK_3" target="_blank" rel="noopener">
+              Source code
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Roots / Identity -->
+    <section id="roots">
+      <h2>Roots and identity</h2>
+      <p class="section-subtitle">
+        My background is a big part of why I care about who technology serves.
+      </p>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <div>
+            <div class="project-title">Proudly Mexican with Mayan and Chihuahua roots</div>
+            <div class="project-meta">Personal background</div>
+            <p class="project-description">
+              I come from a Mexican family with Mayan heritage and deep ties to Chihuahua.
+              Growing up around hard working people, and seeing how access to education and
+              technology can be uneven, shaped how I think as an engineer. When I work on
+              robotics, embedded systems, or research projects, I am always thinking about who
+              could benefit from these tools and how to make them more inclusive and practical.
+            </p>
           </div>
         </article>
       </div>
@@ -480,7 +581,7 @@
     <section id="research">
       <h2>Research and writing</h2>
       <p class="section-subtitle">
-        Technical writing and research experience in space systems, sustainability, and engineering design.
+        Technical writing and research experience in space systems and sustainable engineering.
       </p>
 
       <div class="projects-grid">
@@ -489,10 +590,10 @@
             <div class="project-title">Space Debris Detection and Mitigation</div>
             <div class="project-meta">Research paper</div>
             <p class="project-description">
-              Investigated methods to detect and identify end-of-life satellites and orbital debris,
-              including ground-based radar, optical tracking, and in situ sensing approaches.
-              Focused on limitations in current detection pipelines and how improved sensing
-              could support safer active debris removal missions.
+              Investigated methods to detect and identify end-of-life satellites and orbital
+              debris, including ground-based radar, optical tracking, and in situ sensing
+              approaches. Focused on limitations in current detection pipelines and how improved
+              sensing could support safer active debris removal missions.
             </p>
           </div>
           <div class="project-links">
@@ -503,18 +604,18 @@
         <article class="project-card">
           <div>
             <div class="project-title">Sustainable Solutions to Reduce Aviation Pollution</div>
-            <div class="project-meta">Research paper</div>
+            <div class="project-meta">Team research proposal — Engineering 100W</div>
             <p class="project-description">
               Co-authored a comprehensive proposal analyzing how the aviation industry can
               reduce emissions and environmental impact using three major strategies:
               sustainable aviation fuels (SAFs), electric vertical takeoff and landing aircraft
               (eVTOL), and electric propulsion systems. The project evaluates technology,
               cost-benefit tradeoffs, policy frameworks, and realistic timelines for adoption,
-              presenting a multi-stage transition plan for cleaner aviation. 
+              presenting a multi-stage transition plan for cleaner aviation.
             </p>
           </div>
           <div class="project-links">
-            <a href="YOUR_MEMO_LINK_1" target="_blank" rel="noopener">Read paper</a>
+            <a href="YOUR_MEMO_LINK_1" target="_blank" rel="noopener">Read proposal</a>
           </div>
         </article>
       </div>
@@ -562,10 +663,10 @@
       <p class="contact">
         Reach me by email:
         <a href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
-        <br /><br />
+        <br><br>
         I’m always excited to connect about robotics, embedded systems, AI, and
         projects that bridge hardware with real-world impact.
-        <br /><br />
+        <br><br>
         GitHub:
         <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
           github.com/JesusHernandezComputerEngineering
@@ -579,23 +680,86 @@
   </footer>
 
   <script>
-    // On load: set year and fade in cards
     window.addEventListener("DOMContentLoaded", function () {
+      // Set year
       var yearSpan = document.getElementById("year");
       if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
       }
 
+      // Fade-in cards
       var cards = document.querySelectorAll(".project-card, .skills-card");
       cards.forEach(function (el, i) {
-        el.style.opacity = 0;
-        el.style.transform = "translateY(10px)";
         setTimeout(function () {
           el.style.transition = "all .35s ease";
           el.style.opacity = 1;
           el.style.transform = "translateY(0)";
         }, 120 * i);
       });
+
+      // Typing / rotating text in hero
+      var phrases = [
+        "into robotics and embedded systems",
+        "digging into space debris detection research",
+        "from a proud Mexican and Mayan background",
+        "getting ready to graduate and build real-world systems"
+      ];
+
+      var dyn = document.getElementById("dynamic-text");
+      if (dyn) {
+        var phraseIndex = 0;
+        var charIndex = 0;
+        var deleting = false;
+
+        function typeLoop() {
+          var current = phrases[phraseIndex];
+
+          if (!deleting) {
+            dyn.textContent = current.slice(0, ++charIndex);
+            if (charIndex === current.length) {
+              deleting = true;
+              setTimeout(typeLoop, 1400); // pause at full text
+              return;
+            }
+          } else {
+            dyn.textContent = current.slice(0, --charIndex);
+            if (charIndex === 0) {
+              deleting = false;
+              phraseIndex = (phraseIndex + 1) % phrases.length;
+            }
+          }
+          setTimeout(typeLoop, deleting ? 40 : 70);
+        }
+
+        typeLoop();
+      }
+
+      // Scroll spy for sections
+      var sections = document.querySelectorAll("main section[id]");
+      var navLinks = document.querySelectorAll("header nav a");
+
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var id = entry.target.id;
+                navLinks.forEach(function (link) {
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute("href") === "#" + id
+                  );
+                });
+              }
+            });
+          },
+          { threshold: 0.4 }
+        );
+
+        sections.forEach(function (sec) {
+          observer.observe(sec);
+        });
+      }
     });
   </script>
 </body>
