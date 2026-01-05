@@ -21,7 +21,7 @@
       /* Palenque background with dark overlay */
       background:
         linear-gradient(rgba(2, 6, 23, 0.94), rgba(2, 6, 23, 0.94)),
-        url("images/BackgroundWebsite.jpg");
+        url("images/palenque-background.jpg");
 
       background-size: cover;
       background-position: center top;
@@ -48,7 +48,7 @@
       background: rgba(2, 6, 23, 0.9);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       border-bottom: 1px solid rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(10px);
     }
@@ -60,13 +60,13 @@
       font-size: 0.9rem;
     }
 
-    nav a {
+    header nav a {
       margin-left: 1.5rem;
       font-size: 0.9rem;
       transition: color 0.15s ease, border-color 0.15s ease;
     }
 
-    nav a.active {
+    header nav a.active {
       color: #facc15;
       border-bottom: 2px solid #facc15;
       padding-bottom: 0.25rem;
@@ -370,8 +370,7 @@
       margin-right: 0.75rem;
     }
 
-    /* Animated jaguar icon hover effect
-       Apply .jaguar-hover to any link or button */
+    /* Animated jaguar icon hover effect */
     .jaguar-hover::after {
       content: "🐆";
       font-size: 1rem;
@@ -446,6 +445,50 @@
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
     }
 
+    /* Side scroll nav */
+
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      z-index: 30;
+    }
+
+    .side-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-nav li {
+      margin: 8px 0;
+    }
+
+    .side-nav a {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #facc15cc;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(15, 23, 42, 0.85);
+      display: inline-block;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .side-nav a.active {
+      color: #020617;
+      background: #facc15;
+      border-color: #fbbf24;
+      transform: translateX(-2px);
+    }
+
     @media (max-width: 800px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
@@ -458,14 +501,14 @@
         gap: 0.5rem;
       }
 
-      nav {
+      header nav {
         width: 100%;
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
       }
 
-      nav a {
+      header nav a {
         margin-left: 0;
         margin-right: 1rem;
         margin-bottom: 0.3rem;
@@ -476,10 +519,26 @@
       .contact {
         padding-left: 2.5rem;
       }
+
+      .side-nav {
+        display: none; /* hide side nav on small screens */
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Side scroll indicator nav -->
+  <nav class="side-nav">
+    <ul>
+      <li><a href="#projects" class="active">Projects</a></li>
+      <li><a href="#roots">Roots</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <header>
     <div class="logo">Jesus Hernandez</div>
     <nav>
@@ -495,10 +554,10 @@
     <!-- Hero -->
     <section class="hero">
       <div>
-        <h1 class="hero-title">First Generation Computer Engineering student building real world systems</h1>
+        <h1 class="hero-title">Mexican computer engineering student building real world systems</h1>
 
         <p class="hero-subtitle">
-          I am Jesus Hernandez, a First Generation Computer Engineering student with Mayan heritage and
+          I am Jesus Hernandez, a Mexican computer engineering student with Mayan heritage and
           family roots in Chihuahua. I care about building systems that matter in the real
           world, whether that is detecting space debris, designing PCBs, or creating tools
           that make technology more accessible for everyday people.
@@ -517,7 +576,7 @@
 
         <div class="hero-buttons">
           <a class="btn btn-primary jaguar-hover" href="#projects">View projects</a>
-          <a class="btn btn-ghost" href="Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
         </div>
       </div>
 
@@ -531,7 +590,7 @@
 
         <h3>Quick snapshot</h3>
         <ul class="hero-list">
-          <li>First Generation computer engineering student at San Jose State University</li>
+          <li>Mexican computer engineering student at San Jose State University</li>
           <li>Proud of my Mayan heritage and family roots in Chihuahua</li>
           <li>Focused on robotics, embedded systems, and assistive technology</li>
           <li>Experience with C, C++, Python, Verilog, and KiCad</li>
@@ -747,8 +806,8 @@
         Reach me by email:
         <a class="jaguar-hover" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
         <br><br>
-        I’m always excited to connect about robotics, embedded systems, AI, and
-        projects that bridge hardware with real-world impact.
+        I am always excited to connect about robotics, embedded systems, AI, and
+        projects that bridge hardware with real world impact.
         <br><br>
         GitHub:
         <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
@@ -761,7 +820,7 @@
   <footer>
     © <span id="year"></span> Jesus Hernandez. Built with GitHub Pages.
     <br>
-    <span style="opacity:0.75;">Background inspired by public-domain artwork from the Palenque archaeological site (Wikimedia Commons).</span>
+    <span style="opacity:0.75;">Background inspired by public domain artwork from the Palenque archaeological site (Wikimedia Commons).</span>
   </footer>
 
   <script>
@@ -787,8 +846,7 @@
         "into robotics and embedded systems",
         "digging into space debris detection research",
         "from a proud Mexican and Mayan background",
-        "getting ready to graduate and build real-world systems",
-        "finally Platnium in League"
+        "getting ready to graduate and build real world systems"
       ];
 
       var dyn = document.getElementById("dynamic-text");
@@ -820,9 +878,9 @@
         typeLoop();
       }
 
-      // Scroll spy for sections
+      // Scroll spy for both top nav and side nav
       var sections = document.querySelectorAll("main section[id]");
-      var navLinks = document.querySelectorAll("header nav a");
+      var navLinks = document.querySelectorAll("header nav a, .side-nav a");
 
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(
