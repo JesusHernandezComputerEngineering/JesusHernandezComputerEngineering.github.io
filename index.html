@@ -5,34 +5,60 @@
   <title>Jesus Hernandez | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   >
 
   <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-panel: rgba(15, 23, 42, 0.96);
+      --accent-cyan: #22d3ee;
+      --accent-purple: #a855f7;
+      --accent-pink: #fb37ff;
+      --accent-neon: #facc15;
+      --text-main: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
 
-      /* Palenque background with dark overlay */
+      /* Y2K cyber gradient background */
       background:
-        linear-gradient(rgba(2, 6, 23, 0.94), rgba(2, 6, 23, 0.94)),
-        url("images/BackgroundWebsite.jpg");
-
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
+        radial-gradient(circle at 0% 0%, #0ea5e933 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, #fb37ff33 0, transparent 55%),
+        linear-gradient(135deg, #020617 0, #020617 32%, #0f172a 60%, #020617 100%);
       background-attachment: fixed;
+    }
 
-      color: #e5e7eb;
+    body::before {
+      /* subtle scan-line overlay */
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.45) 1px,
+        transparent 1px
+      );
+      background-size: 100% 3px;
+      opacity: 0.25;
+      z-index: -1;
     }
 
     a {
-      color: #f97316;
+      color: var(--accent-cyan);
       text-decoration: none;
     }
 
@@ -40,87 +66,194 @@
       text-decoration: underline;
     }
 
+    /* Top header */
+
     header {
-      padding: 1.1rem 10vw;
+      padding: 0.9rem 8vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(2, 6, 23, 0.9);
+      background: rgba(3, 7, 18, 0.92);
       position: sticky;
       top: 0;
-      z-index: 10;
-      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(10px);
+      z-index: 20;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      backdrop-filter: blur(20px);
     }
 
     .logo {
+      font-family: "Orbitron", system-ui;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      font-size: 0.9rem;
+      font-size: 0.78rem;
+      color: var(--accent-neon);
     }
 
-    nav a {
-      margin-left: 1.5rem;
-      font-size: 0.9rem;
-      transition: color 0.15s ease, border-color 0.15s ease;
-    }
-
-    nav a.active {
-      color: #facc15;
-      border-bottom: 2px solid #facc15;
+    header nav a {
+      margin-left: 1.4rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #cbd5f5;
       padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition:
+        color 0.16s ease,
+        border-color 0.16s ease;
+    }
+
+    header nav a.active {
+      color: var(--accent-neon);
+      border-color: var(--accent-neon);
     }
 
     main {
-      padding: 3rem 10vw 4rem 10vw;
+      padding: 2.8rem 8vw 4rem 8vw;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    /* Side scroll nav */
+
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      z-index: 30;
+      font-family: "Orbitron", system-ui;
+    }
+
+    .side-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-nav li {
+      margin: 6px 0;
+    }
+
+    .side-nav a {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.96));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .side-nav a::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4b5563;
+      box-shadow: 0 0 6px transparent;
+      transition:
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .side-nav a.active {
+      color: #020617;
+      background: linear-gradient(135deg, #22d3ee, #a855f7);
+      border-color: #e5e7eb;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.75);
+      transform: translateX(-2px);
+    }
+
+    .side-nav a.active::before {
+      background: #facc15;
+      box-shadow: 0 0 10px #facc15;
     }
 
     /* Hero */
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-      gap: 2.5rem;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 2.2rem;
       align-items: center;
-      margin-bottom: 4rem;
-      background: radial-gradient(circle at top left, #f9731633, #0f172a 55%, #020617 100%);
-      border-radius: 1.6rem;
-      padding: 2.5rem 2.4rem;
-      border: 1px solid rgba(250, 204, 21, 0.35); /* subtle gold frame */
-      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.55);
+      margin-bottom: 3.3rem;
+      background:
+        radial-gradient(circle at 0% -10%, rgba(56, 189, 248, 0.45), transparent 60%),
+        radial-gradient(circle at 120% 120%, rgba(244, 114, 182, 0.4), transparent 60%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      border-radius: 1.8rem;
+      padding: 2.4rem 2.3rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 1),
+        0 26px 52px rgba(0, 0, 0, 0.75);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      /* Y2K glow ring */
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      top: -60px;
+      right: -80px;
+      box-shadow: 0 0 40px rgba(94, 234, 212, 0.45);
+      opacity: 0.4;
+      pointer-events: none;
     }
 
     .hero-title {
-      font-size: clamp(2.3rem, 3vw + 1rem, 3.2rem);
+      font-family: "Orbitron", system-ui;
+      font-size: clamp(2.1rem, 3vw + 0.8rem, 3.2rem);
       font-weight: 800;
       margin-bottom: 1rem;
-      position: relative;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
     }
 
     .hero-subtitle {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: #d1d5db;
       line-height: 1.6;
       margin-bottom: 1rem;
+    }
+
+    .hero-subtitle strong {
+      color: var(--accent-neon);
     }
 
     .hero-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.6rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
 
     .tag {
       padding: 0.25rem 0.7rem;
       font-size: 0.75rem;
       border-radius: 999px;
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(250, 204, 21, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.9);
       color: #e5e7eb;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .hero-buttons {
@@ -139,47 +272,72 @@
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "Orbitron", system-ui;
       transition:
         transform 0.15s ease,
         box-shadow 0.15s ease,
         background 0.15s ease,
-        border-color 0.15s ease;
+        border-color 0.15s ease,
+        color 0.15s ease;
     }
 
     .btn-primary {
-      background: #f97316;
+      background: linear-gradient(135deg, #22d3ee, #a855f7);
       color: #020617;
       font-weight: 600;
-      box-shadow: 0 12px 24px rgba(249, 115, 22, 0.35);
-      border-color: rgba(250, 204, 21, 0.7);
+      border-color: #e5e7eb;
+      box-shadow:
+        0 0 12px rgba(56, 189, 248, 0.7),
+        0 0 22px rgba(168, 85, 247, 0.7);
     }
 
     .btn-primary:hover {
-      background: #ea580c;
       transform: translateY(-2px);
-      box-shadow: 0 18px 35px rgba(249, 115, 22, 0.55);
+      box-shadow:
+        0 0 15px rgba(56, 189, 248, 0.9),
+        0 0 28px rgba(168, 85, 247, 0.9);
     }
 
     .btn-ghost {
-      background: transparent;
-      border-color: rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.8);
       color: #e5e7eb;
     }
 
     .btn-ghost:hover {
-      background: rgba(15, 23, 42, 0.9);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 1), rgba(30, 64, 175, 1));
       transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7);
-      border-color: rgba(250, 204, 21, 0.5);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8);
+      border-color: var(--accent-cyan);
     }
 
     .hero-card {
-      background: radial-gradient(circle at top left, #22c55e33, #020617);
+      background:
+        linear-gradient(135deg, rgba(30, 64, 175, 0.96), rgba(15, 23, 42, 0.98));
       border-radius: 1.5rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(250, 204, 21, 0.35);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+      padding: 1.6rem 1.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 1),
+        0 18px 34px rgba(0, 0, 0, 0.75);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "ONLINE";
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      font-family: "Orbitron", system-ui;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #bbf7d0;
+      opacity: 0.8;
     }
 
     .profile-photo {
@@ -187,27 +345,30 @@
       max-width: 220px;
       border-radius: 999px;
       display: block;
-      margin: 0 auto 1.2rem auto;
+      margin: 0 auto 1.1rem auto;
       object-fit: cover;
       padding: 4px;
-      background: conic-gradient(
-        from 180deg,
-        #f97316,
-        #22c55e,
-        #0ea5e9,
-        #f97316
-      );
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.8);
+      background:
+        conic-gradient(
+          from 180deg,
+          #22d3ee,
+          #a855f7,
+          #fb37ff,
+          #facc15,
+          #22d3ee
+        );
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
     }
 
     .hero-card h3 {
       margin-top: 0;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #facc15;
+      letter-spacing: 0.14em;
+      color: var(--accent-neon);
       margin-bottom: 1rem;
       text-align: left;
+      font-family: "Orbitron", system-ui;
     }
 
     .hero-list {
@@ -215,46 +376,46 @@
       padding: 0;
       margin: 0;
       text-align: left;
+      font-size: 0.88rem;
     }
 
     .hero-list li {
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.65rem;
     }
 
     .dynamic-text {
       font-weight: 600;
-      color: #facc15;
-      border-right: 2px solid #facc15;
+      color: var(--accent-neon);
+      border-right: 2px solid var(--accent-neon);
       padding-right: 4px;
       white-space: nowrap;
     }
 
-    /* Sections + glyph dividers */
+    /* Sections + dividers */
 
     section {
       margin-bottom: 3rem;
-      padding-bottom: 2.5rem;
+      padding-bottom: 2.4rem;
       position: relative;
     }
 
     section::after {
-      /* glyph-like divider */
+      /* neon divider */
       content: "";
       position: absolute;
       left: 0;
       bottom: 0;
       width: 100%;
-      height: 12px;
-      background-image:
-        repeating-linear-gradient(
-          to right,
-          rgba(250, 204, 21, 0.4) 0,
-          rgba(250, 204, 21, 0.4) 14px,
-          transparent 14px,
-          transparent 20px
-        );
-      opacity: 0.6;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(56, 189, 248, 0.9),
+        rgba(168, 85, 247, 0.9),
+        rgba(244, 114, 182, 0.9),
+        transparent
+      );
+      opacity: 0.7;
       pointer-events: none;
     }
 
@@ -268,37 +429,63 @@
 
     section h2 {
       font-size: 1.3rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.3rem;
       font-weight: 600;
       position: relative;
-      padding-left: 3.2rem;
+      padding-left: 3.1rem;
+      font-family: "Orbitron", system-ui;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
-    /* Watermark glyph behind headers */
     section h2::before {
+      /* Y2K glowing orb watermark */
       content: "";
       position: absolute;
-      left: 0.4rem;
+      left: 0.6rem;
       top: 50%;
       transform: translateY(-50%);
-      width: 34px;
-      height: 34px;
-      opacity: 0.16;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
       background:
-        url("images/glyph-watermark.png") center/contain no-repeat;
-      border-radius: 8px;
-      border: 1px solid rgba(250, 204, 21, 0.4);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7) inset;
-      pointer-events: none;
+        radial-gradient(circle at 30% 20%, #facc15, transparent 60%),
+        radial-gradient(circle at 70% 80%, #22d3ee, transparent 60%),
+        linear-gradient(135deg, #0f172a, #1f2937);
+      box-shadow:
+        0 0 12px rgba(250, 204, 21, 0.9),
+        0 0 18px rgba(56, 189, 248, 0.7);
+      opacity: 0.85;
     }
 
     .section-subtitle {
       font-size: 0.9rem;
-      color: #d1d5db;
-      margin-top: -0.8rem;
+      color: #cbd5f5;
+      margin-top: -0.6rem;
       margin-bottom: 1.5rem;
-      padding-left: 3.2rem;
+      padding-left: 3.1rem;
     }
+
+    /* Stripe card */
+
+    .goals-card {
+      background: var(--bg-panel);
+      border-radius: 1rem;
+      padding: 1rem 1.3rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      font-size: 0.9rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .goals-card strong {
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      font-family: "Orbitron", system-ui;
+    }
+
+    /* Project / skills cards */
 
     .projects-grid {
       display: grid;
@@ -306,41 +493,61 @@
       gap: 1.5rem;
     }
 
-    .project-card {
-      background: rgba(2, 6, 23, 0.96);
+    .project-card,
+    .skills-card {
+      background: var(--bg-panel);
       border-radius: 1rem;
       padding: 1rem;
-      border: 1px solid rgba(15, 23, 42, 0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.85);
       transition:
         transform 0.15s ease,
         box-shadow 0.15s ease,
-        border-color 0.2s ease;
+        border-color 0.18s ease;
       opacity: 0;
       transform: translateY(10px);
       position: relative;
       overflow: hidden;
     }
 
-    .project-card:hover {
+    .project-card::before,
+    .skills-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.15), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      pointer-events: none;
+    }
+
+    .project-card:hover,
+    .skills-card:hover {
       transform: translateY(-4px);
-      border-color: #facc15;
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.85);
+      border-color: var(--accent-cyan);
+      box-shadow:
+        0 0 18px rgba(56, 189, 248, 0.5),
+        0 18px 42px rgba(0, 0, 0, 0.9);
+    }
+
+    .project-card:hover::before,
+    .skills-card:hover::before {
+      opacity: 1;
     }
 
     .project-title {
       font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
     }
 
     .project-meta {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #9ca3af;
       margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: "Orbitron", system-ui;
     }
 
     .project-description {
@@ -360,9 +567,11 @@
       font-size: 0.7rem;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      color: #facc15;
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: var(--accent-neon);
+      background: rgba(15, 23, 42, 0.95);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .project-links a {
@@ -370,8 +579,36 @@
       margin-right: 0.75rem;
     }
 
-    /* Animated jaguar icon hover effect
-       Apply .jaguar-hover to any link or button */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skills-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      font-family: "Orbitron", system-ui;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .skills-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.88rem;
+    }
+
+    .skills-card li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Jaguar hover (kept from previous version, now neon :) */
+
     .jaguar-hover::after {
       content: "🐆";
       font-size: 1rem;
@@ -381,72 +618,28 @@
     }
 
     .jaguar-hover:hover::after {
-      transform: translateX(2px);
+      transform: translateX(3px);
       opacity: 1;
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .skills-card {
-      background: rgba(2, 6, 23, 0.96);
-      border-radius: 1rem;
-      padding: 1rem;
-      border: 1px solid rgba(15, 23, 42, 0.9);
-      font-size: 0.9rem;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
-      transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        border-color 0.2s ease;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .skills-card:hover {
-      transform: translateY(-3px);
-      border-color: #facc15;
-      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.9);
-    }
-
-    .skills-card h3 {
-      margin-top: 0;
-      margin-bottom: 0.6rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #facc15;
-    }
-
-    .skills-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .skills-card li {
-      margin-bottom: 0.3rem;
-      color: #e5e7eb;
-    }
+    /* Contact */
 
     .contact {
       font-size: 0.9rem;
-      padding-left: 3.2rem;
+      padding-left: 3.1rem;
     }
 
     footer {
-      padding: 1.5rem 10vw 2rem 10vw;
-      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      padding: 1.6rem 8vw 2rem 8vw;
+      border-top: 1px solid rgba(148, 163, 184, 0.6);
       font-size: 0.8rem;
-      color: #d1d5db;
-      background: rgba(2, 6, 23, 0.98);
+      color: #cbd5f5;
+      background: rgba(3, 7, 18, 0.98);
       text-align: center;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.9);
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
         padding: 2rem 1.6rem;
@@ -455,33 +648,48 @@
       header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.45rem;
       }
 
-      nav {
+      header nav {
         width: 100%;
         display: flex;
-        justify-content: flex-start;
         flex-wrap: wrap;
       }
 
-      nav a {
+      header nav a {
         margin-left: 0;
         margin-right: 1rem;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.2rem;
       }
 
       section h2,
       .section-subtitle,
       .contact {
-        padding-left: 2.5rem;
+        padding-left: 2.6rem;
+      }
+
+      .side-nav {
+        display: none; /* hide side nav on small screens */
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Y2K side scroll indicator -->
+  <nav class="side-nav">
+    <ul>
+      <li><a href="#projects" class="active">Projects</a></li>
+      <li><a href="#roots">Roots</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <header>
-    <div class="logo">Jesus Hernandez</div>
+    <div class="logo">JESUS HERNANDEZ</div>
     <nav>
       <a href="#projects">Projects</a>
       <a href="#roots">Roots</a>
@@ -495,13 +703,13 @@
     <!-- Hero -->
     <section class="hero">
       <div>
-        <h1 class="hero-title">First Generation Computer Engineering student building real world systems</h1>
+        <h1 class="hero-title">Building real-world systems from silicon to software</h1>
 
         <p class="hero-subtitle">
-          I am Jesus Hernandez, a First Generation Computer Engineering student with Mayan heritage and
-          family roots in Chihuahua. I care about building systems that matter in the real
-          world, whether that is detecting space debris, designing PCBs, or creating tools
-          that make technology more accessible for everyday people.
+          I’m <strong>Jesus Hernandez</strong>, a Mexican computer engineering student with Mayan
+          and Chihuahua roots. I like projects where hardware and software collide:
+          custom instruction set simulators, PCBs, embedded systems, and research on
+          how we detect and manage space debris.
         </p>
 
         <p class="hero-subtitle">
@@ -517,42 +725,35 @@
 
         <div class="hero-buttons">
           <a class="btn btn-primary jaguar-hover" href="#projects">View projects</a>
-          <a class="btn btn-ghost" href="Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
         </div>
       </div>
 
       <aside class="hero-card">
-        <!-- Make sure this image exists: images/jesus.jpg -->
+        <!-- Update this path if your file name is different -->
         <img
-          src="images/jesus.jpeg"
+          src="images/jesus.jpg"
           alt="Portrait of Jesus Hernandez"
           class="profile-photo"
         >
 
         <h3>Quick snapshot</h3>
         <ul class="hero-list">
-          <li>First Generation computer engineering student at San Jose State University</li>
-          <li>Proud of my Mayan heritage and family roots in Chihuahua</li>
-          <li>Focused on robotics, embedded systems, and assistive technology</li>
-          <li>Experience with C, C++, Python, Verilog, and KiCad</li>
+          <li>Computer Engineering student at San Jose State University</li>
+          <li>Proudly Mexican with Mayan heritage and family roots in Chihuahua</li>
+          <li>Hands-on with C/C++, Python, Verilog, KiCad, and x86 assembly</li>
+          <li>Interested in robotics, embedded systems, and space sustainability</li>
         </ul>
       </aside>
     </section>
 
     <!-- Goals stripe -->
-    <section id="goals" style="margin-bottom:2.5rem;">
-      <div style="
-        background:rgba(2, 6, 23, 0.96);
-        border-radius:0.9rem;
-        padding:1rem 1.25rem;
-        border:1px solid rgba(250, 204, 21, 0.4);
-        font-size:0.9rem;
-        box-shadow:0 10px 24px rgba(0,0,0,0.7);
-      ">
-        <strong>Currently looking for:</strong>
-        <span style="color:#e5e7eb;">
-          Summer internships in robotics, embedded systems, or AI driven products.
-          I am especially interested in teams that blend hardware with intelligent
+    <section id="goals" style="margin-bottom:2.3rem;">
+      <div class="goals-card">
+        <strong>Currently looking for</strong>
+        <span>
+          &nbsp;Summer internships in robotics, embedded systems, or AI-driven hardware products.
+          I’m especially excited about teams that combine hands-on hardware with intelligent
           software and care about accessibility and sustainability.
         </span>
       </div>
@@ -561,18 +762,18 @@
     <!-- Projects -->
     <section id="projects">
       <h2>Selected projects</h2>
-      <p class="section-subtitle">Hands-on work in robotics, embedded systems, and digital design.</p>
+      <p class="section-subtitle">A mix of low level systems, digital design, and hardware.</p>
 
       <div class="projects-grid">
         <article class="project-card">
           <div>
             <div class="project-title">Custom Instruction Set Computer Simulator</div>
-            <div class="project-meta">C, x86 Assembly</div>
+            <div class="project-meta">C · x86 Assembly</div>
             <p class="project-description">
               Designed and implemented a custom instruction set simulator in C with x86 assembly
               support. Built an ALU, instruction decoder, and binary input format, then used GDB
-              to debug real programs running on my simulated machine. This project sharpened my
-              understanding of how hardware, compilers, and operating systems fit together.
+              to debug real programs running on my simulated machine. Helped me connect the dots
+              between compilers, architecture, and operating systems.
             </p>
             <div class="project-tags">
               <span class="project-tag">Computer Architecture</span>
@@ -590,12 +791,12 @@
         <article class="project-card">
           <div>
             <div class="project-title">LM386 Audio Amplifier PCB</div>
-            <div class="project-meta">KiCad, Soldering, Testing</div>
+            <div class="project-meta">KiCad · Soldering · Testing</div>
             <p class="project-description">
               Took an audio amplifier from breadboard to manufactured PCB. Captured the schematic
-              in KiCad, selected footprints, routed traces with ground planes, and iterated on
-              track widths for manufacturability. Soldered and tested the board, measuring gain
-              and debugging noise issues with a scope and multimeter.
+              in KiCad, assigned footprints, routed traces with ground planes, and tuned trace
+              widths for manufacturability. Soldered and tested the board, measuring gain and
+              debugging noise with an oscilloscope and multimeter.
             </p>
             <div class="project-tags">
               <span class="project-tag">PCB Design</span>
@@ -618,9 +819,8 @@
             <div class="project-meta">C++</div>
             <p class="project-description">
               Implemented a C++ polynomial library with dynamic memory, operator overloading, and
-              careful object lifecycle management. Focused on writing clean, testable code that
-              supports polynomial evaluation, addition, subtraction, and multiplication while
-              avoiding memory leaks.
+              clean object lifecycle handling. Supports polynomial evaluation, addition,
+              subtraction, and multiplication while avoiding memory leaks with careful ownership.
             </p>
             <div class="project-tags">
               <span class="project-tag">C++</span>
@@ -640,20 +840,19 @@
     <section id="roots">
       <h2>Roots and identity</h2>
       <p class="section-subtitle">
-        My background is a big part of why I care about who technology serves.
+        My background shapes the kind of engineer I want to be.
       </p>
 
       <div class="projects-grid">
         <article class="project-card">
           <div>
-            <div class="project-title">Proudly Mexican with Mayan and Chihuahua roots</div>
+            <div class="project-title">Proudly Mexican, with Mayan and Chihuahua roots</div>
             <div class="project-meta">Personal background</div>
             <p class="project-description">
               I come from a Mexican family with Mayan heritage and deep ties to Chihuahua.
-              Growing up around hard working people, and seeing how access to education and
-              technology can be uneven, shaped how I think as an engineer. When I work on
-              robotics, embedded systems, or research projects, I am always thinking about who
-              could benefit from these tools and how to make them more inclusive and practical.
+              Growing up around hard-working people, I saw how access to education and
+              technology isn’t always equal. That pushes me to build tools and systems that
+              aren’t just technically impressive, but actually useful for real communities.
             </p>
           </div>
         </article>
@@ -674,9 +873,9 @@
             <div class="project-meta">Research paper</div>
             <p class="project-description">
               Investigated methods to detect and identify end-of-life satellites and orbital
-              debris, including ground-based radar, optical tracking, and in situ sensing
-              approaches. Focused on limitations in current detection pipelines and how improved
-              sensing could support safer active debris removal missions.
+              debris, including ground-based radar, optical tracking, and in-situ sensing.
+              Focused on limitations in current detection pipelines and how improved sensing
+              could support safer active debris removal missions.
             </p>
           </div>
           <div class="project-links">
@@ -689,12 +888,10 @@
             <div class="project-title">Sustainable Solutions to Reduce Aviation Pollution</div>
             <div class="project-meta">Team research proposal — Engineering 100W</div>
             <p class="project-description">
-              Co-authored a comprehensive proposal analyzing how the aviation industry can
-              reduce emissions and environmental impact using three major strategies:
-              sustainable aviation fuels (SAFs), electric vertical takeoff and landing aircraft
-              (eVTOL), and electric propulsion systems. The project evaluates technology,
-              cost-benefit tradeoffs, policy frameworks, and realistic timelines for adoption,
-              presenting a multi-stage transition plan for cleaner aviation.
+              Co-authored a proposal analyzing how the aviation industry can reduce emissions
+              using sustainable aviation fuels (SAFs), eVTOL concepts, and electric propulsion.
+              Looked at technology readiness, cost-benefit tradeoffs, and realistic adoption
+              timelines to build a multi-stage roadmap for cleaner aviation.
             </p>
           </div>
           <div class="project-links">
@@ -719,7 +916,7 @@
         </div>
 
         <div class="skills-card">
-          <h3>Hardware and tools</h3>
+          <h3>Hardware & tools</h3>
           <ul>
             <li>KiCad PCB design</li>
             <li>Oscilloscope and multimeter usage</li>
@@ -747,8 +944,8 @@
         Reach me by email:
         <a class="jaguar-hover" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
         <br><br>
-        I’m always excited to connect about robotics, embedded systems, AI, and
-        projects that bridge hardware with real-world impact.
+        I’m always happy to connect about robotics, embedded systems, AI, or
+        anything that mixes hardware and real-world impact.
         <br><br>
         GitHub:
         <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
@@ -759,14 +956,12 @@
   </main>
 
   <footer>
-    © <span id="year"></span> Jesus Hernandez. Built with GitHub Pages.
-    <br>
-    <span style="opacity:0.75;">Background inspired by public-domain artwork from the Palenque archaeological site (Wikimedia Commons).</span>
+    © <span id="year"></span> Jesus Hernandez. Built on GitHub Pages with a Y2K-inspired theme.
   </footer>
 
   <script>
     window.addEventListener("DOMContentLoaded", function () {
-      // Set year
+      // Year in footer
       var yearSpan = document.getElementById("year");
       if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
@@ -787,8 +982,7 @@
         "into robotics and embedded systems",
         "digging into space debris detection research",
         "from a proud Mexican and Mayan background",
-        "getting ready to graduate and build real-world systems",
-        "finally Platnium in League"
+        "getting ready to graduate and ship real-world systems"
       ];
 
       var dyn = document.getElementById("dynamic-text");
@@ -804,7 +998,7 @@
             dyn.textContent = current.slice(0, ++charIndex);
             if (charIndex === current.length) {
               deleting = true;
-              setTimeout(typeLoop, 1400); // pause at full text
+              setTimeout(typeLoop, 1400);
               return;
             }
           } else {
@@ -814,15 +1008,15 @@
               phraseIndex = (phraseIndex + 1) % phrases.length;
             }
           }
-          setTimeout(typeLoop, deleting ? 40 : 70);
+          setTimeout(typeLoop, deleting ? 45 : 70);
         }
 
         typeLoop();
       }
 
-      // Scroll spy for sections
+      // Scroll spy for header nav + side nav
       var sections = document.querySelectorAll("main section[id]");
-      var navLinks = document.querySelectorAll("header nav a");
+      var navLinks = document.querySelectorAll("header nav a, .side-nav a");
 
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(
