@@ -15,12 +15,12 @@
 
   <style>
     :root {
-      --bg-dark: #020617;
-      --bg-panel: rgba(15, 23, 42, 0.96);
-      --accent-cyan: #22d3ee;
-      --accent-purple: #a855f7;
-      --accent-pink: #fb37ff;
-      --accent-neon: #facc15;
+      --bg-dark: #02040a;
+      --bg-panel: rgba(3, 7, 18, 0.96);
+      --accent-green: #22ff00;
+      --accent-green-soft: #4ade80;
+      --accent-green-neon: #bbf7d0;
+      --accent-emerald: #10b981;
       --text-main: #e5e7eb;
     }
 
@@ -33,32 +33,32 @@
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text-main);
 
-      /* Y2K cyber gradient background */
+      /* Green cyber background + collage */
       background:
-        radial-gradient(circle at 0% 0%, #0ea5e933 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, #fb37ff33 0, transparent 55%),
-        linear-gradient(135deg, #020617 0, #020617 32%, #0f172a 60%, #020617 100%);
+        linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+        url("images/cyber-bg.jpg");
+      background-size: cover;
+      background-position: center;
       background-attachment: fixed;
     }
 
     body::before {
-      /* subtle scan-line overlay */
+      /* scan-line + subtle matrix code overlay */
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: linear-gradient(
-        to bottom,
-        rgba(15, 23, 42, 0.45) 1px,
-        transparent 1px
-      );
-      background-size: 100% 3px;
-      opacity: 0.25;
+      background-image:
+        linear-gradient(to bottom, rgba(22, 163, 74, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 118, 110, 0.22) 1px, transparent 1px);
+      background-size: 100% 3px, 3px 100%;
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
       z-index: -1;
     }
 
     a {
-      color: var(--accent-cyan);
+      color: var(--accent-green-soft);
       text-decoration: none;
     }
 
@@ -73,11 +73,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(3, 7, 18, 0.92);
+      background: rgba(3, 7, 18, 0.96);
       position: sticky;
       top: 0;
       z-index: 20;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.7);
       backdrop-filter: blur(20px);
     }
 
@@ -87,7 +87,8 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       font-size: 0.78rem;
-      color: var(--accent-neon);
+      color: var(--accent-green-neon);
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
     }
 
     header nav a {
@@ -104,8 +105,8 @@
     }
 
     header nav a.active {
-      color: var(--accent-neon);
-      border-color: var(--accent-neon);
+      color: var(--accent-green-neon);
+      border-color: var(--accent-green-neon);
     }
 
     main {
@@ -139,11 +140,11 @@
       font-size: 0.65rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #a5b4fc;
+      color: #bbf7d0;
       padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(34, 197, 94, 0.6);
+      background: radial-gradient(circle at top, rgba(3, 7, 18, 0.98), rgba(6, 78, 59, 0.98));
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -169,15 +170,37 @@
 
     .side-nav a.active {
       color: #020617;
-      background: linear-gradient(135deg, #22d3ee, #a855f7);
-      border-color: #e5e7eb;
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.75);
+      background: linear-gradient(135deg, #22ff00, #4ade80);
+      border-color: #ecfdf5;
+      box-shadow: 0 0 18px rgba(74, 222, 128, 0.9);
       transform: translateX(-2px);
     }
 
     .side-nav a.active::before {
-      background: #facc15;
-      box-shadow: 0 0 10px #facc15;
+      background: #bef264;
+      box-shadow: 0 0 10px #bef264;
+    }
+
+    /* Full-screen slide sections */
+
+    .full-section {
+      min-height: 100vh;
+      box-sizing: border-box;
+      padding-top: 6rem;   /* avoid hiding under header */
+      padding-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      scroll-margin-top: 90px;  /* when using #anchors */
+    }
+
+    @media (max-width: 900px) {
+      .full-section {
+        min-height: auto;
+        padding-top: 4.5rem;
+        padding-bottom: 2.5rem;
+        justify-content: flex-start;
+      }
     }
 
     /* Hero */
@@ -187,33 +210,31 @@
       grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
       gap: 2.2rem;
       align-items: center;
-      margin-bottom: 3.3rem;
       background:
-        radial-gradient(circle at 0% -10%, rgba(56, 189, 248, 0.45), transparent 60%),
-        radial-gradient(circle at 120% 120%, rgba(244, 114, 182, 0.4), transparent 60%),
-        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+        radial-gradient(circle at 0% -10%, rgba(132, 204, 22, 0.4), transparent 60%),
+        radial-gradient(circle at 120% 120%, rgba(34, 197, 94, 0.4), transparent 60%),
+        linear-gradient(135deg, rgba(3, 7, 18, 0.96), rgba(0, 0, 0, 0.98));
       border-radius: 1.8rem;
       padding: 2.4rem 2.3rem;
-      border: 1px solid rgba(148, 163, 184, 0.9);
+      border: 1px solid rgba(22, 163, 74, 0.9);
       box-shadow:
-        0 0 0 1px rgba(15, 23, 42, 1),
-        0 26px 52px rgba(0, 0, 0, 0.75);
+        0 0 0 1px rgba(0, 0, 0, 0.9),
+        0 26px 52px rgba(0, 0, 0, 0.9);
       position: relative;
       overflow: hidden;
     }
 
     .hero::after {
-      /* Y2K glow ring */
       content: "";
       position: absolute;
       width: 260px;
       height: 260px;
       border-radius: 50%;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
+      border: 1px dashed rgba(74, 222, 128, 0.6);
       top: -60px;
       right: -80px;
-      box-shadow: 0 0 40px rgba(94, 234, 212, 0.45);
-      opacity: 0.4;
+      box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
+      opacity: 0.5;
       pointer-events: none;
     }
 
@@ -224,18 +245,19 @@
       margin-bottom: 1rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+      color: #bbf7d0;
+      text-shadow: 0 0 16px rgba(22, 163, 74, 0.9);
     }
 
     .hero-subtitle {
       font-size: 0.98rem;
-      color: #d1d5db;
+      color: #d1fae5;
       line-height: 1.6;
       margin-bottom: 1rem;
     }
 
     .hero-subtitle strong {
-      color: var(--accent-neon);
+      color: var(--accent-green-soft);
     }
 
     .hero-tags {
@@ -249,8 +271,8 @@
       padding: 0.25rem 0.7rem;
       font-size: 0.75rem;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(3, 7, 18, 0.9);
+      border: 1px solid rgba(34, 197, 94, 0.9);
       color: #e5e7eb;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -284,44 +306,45 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #22d3ee, #a855f7);
+      background: linear-gradient(135deg, #22ff00, #4ade80);
       color: #020617;
       font-weight: 600;
-      border-color: #e5e7eb;
+      border-color: #ecfdf5;
       box-shadow:
-        0 0 12px rgba(56, 189, 248, 0.7),
-        0 0 22px rgba(168, 85, 247, 0.7);
+        0 0 12px rgba(34, 197, 94, 0.9),
+        0 0 22px rgba(22, 163, 74, 0.9);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow:
-        0 0 15px rgba(56, 189, 248, 0.9),
-        0 0 28px rgba(168, 85, 247, 0.9);
+        0 0 18px rgba(74, 222, 128, 1),
+        0 0 30px rgba(22, 163, 74, 1);
     }
 
     .btn-ghost {
-      background: rgba(15, 23, 42, 0.9);
-      border-color: rgba(148, 163, 184, 0.8);
+      background: rgba(3, 7, 18, 0.9);
+      border-color: rgba(55, 65, 81, 0.9);
       color: #e5e7eb;
     }
 
     .btn-ghost:hover {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 1), rgba(30, 64, 175, 1));
+      background: radial-gradient(circle at top, #064e3b, #020617);
       transform: translateY(-2px);
-      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8);
-      border-color: var(--accent-cyan);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.9);
+      border-color: var(--accent-green-soft);
     }
 
     .hero-card {
       background:
-        linear-gradient(135deg, rgba(30, 64, 175, 0.96), rgba(15, 23, 42, 0.98));
+        radial-gradient(circle at 0% 0%, rgba(22, 163, 74, 0.4), transparent 55%),
+        linear-gradient(135deg, rgba(6, 95, 70, 0.98), rgba(3, 7, 18, 0.98));
       border-radius: 1.5rem;
       padding: 1.6rem 1.4rem;
-      border: 1px solid rgba(148, 163, 184, 0.9);
+      border: 1px solid rgba(34, 197, 94, 0.9);
       box-shadow:
-        0 0 0 1px rgba(15, 23, 42, 1),
-        0 18px 34px rgba(0, 0, 0, 0.75);
+        0 0 0 1px rgba(0, 0, 0, 0.9),
+        0 18px 34px rgba(0, 0, 0, 0.9);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -337,7 +360,7 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #bbf7d0;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .profile-photo {
@@ -351,13 +374,13 @@
       background:
         conic-gradient(
           from 180deg,
-          #22d3ee,
-          #a855f7,
-          #fb37ff,
-          #facc15,
-          #22d3ee
+          #22ff00,
+          #4ade80,
+          #22c55e,
+          #16a34a,
+          #22ff00
         );
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 1);
     }
 
     .hero-card h3 {
@@ -365,7 +388,7 @@
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: var(--accent-neon);
+      color: var(--accent-green-soft);
       margin-bottom: 1rem;
       text-align: left;
       font-family: "Orbitron", system-ui;
@@ -385,22 +408,20 @@
 
     .dynamic-text {
       font-weight: 600;
-      color: var(--accent-neon);
-      border-right: 2px solid var(--accent-neon);
+      color: var(--accent-green-neon);
+      border-right: 2px solid var(--accent-green-neon);
       padding-right: 4px;
       white-space: nowrap;
     }
 
-    /* Sections + dividers */
+    /* Sections + neon dividers */
 
     section {
       margin-bottom: 3rem;
-      padding-bottom: 2.4rem;
       position: relative;
     }
 
     section::after {
-      /* neon divider */
       content: "";
       position: absolute;
       left: 0;
@@ -410,17 +431,13 @@
       background: linear-gradient(
         90deg,
         transparent,
-        rgba(56, 189, 248, 0.9),
-        rgba(168, 85, 247, 0.9),
-        rgba(244, 114, 182, 0.9),
+        rgba(34, 197, 94, 0.95),
+        rgba(22, 163, 74, 0.95),
+        rgba(34, 197, 94, 0.95),
         transparent
       );
-      opacity: 0.7;
+      opacity: 0.9;
       pointer-events: none;
-    }
-
-    section:last-of-type {
-      padding-bottom: 0;
     }
 
     section:last-of-type::after {
@@ -436,10 +453,11 @@
       font-family: "Orbitron", system-ui;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: #bbf7d0;
     }
 
     section h2::before {
-      /* Y2K glowing orb watermark */
+      /* glowing green orb watermark */
       content: "";
       position: absolute;
       left: 0.6rem;
@@ -449,43 +467,43 @@
       height: 26px;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 30% 20%, #facc15, transparent 60%),
-        radial-gradient(circle at 70% 80%, #22d3ee, transparent 60%),
-        linear-gradient(135deg, #0f172a, #1f2937);
+        radial-gradient(circle at 30% 20%, #bef264, transparent 60%),
+        radial-gradient(circle at 70% 80%, #22c55e, transparent 60%),
+        linear-gradient(135deg, #022c22, #022c22);
       box-shadow:
-        0 0 12px rgba(250, 204, 21, 0.9),
-        0 0 18px rgba(56, 189, 248, 0.7);
-      opacity: 0.85;
+        0 0 12px rgba(190, 242, 100, 1),
+        0 0 18px rgba(22, 163, 74, 0.9);
+      opacity: 0.9;
     }
 
     .section-subtitle {
       font-size: 0.9rem;
-      color: #cbd5f5;
+      color: #bbf7d0;
       margin-top: -0.6rem;
       margin-bottom: 1.5rem;
       padding-left: 3.1rem;
     }
 
-    /* Stripe card */
+    /* goals stripe (not full-screen) */
 
     .goals-card {
       background: var(--bg-panel);
       border-radius: 1rem;
       padding: 1rem 1.3rem;
-      border: 1px solid rgba(148, 163, 184, 0.8);
+      border: 1px solid rgba(34, 197, 94, 0.8);
       font-size: 0.9rem;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.9);
     }
 
     .goals-card strong {
-      color: var(--accent-cyan);
+      color: var(--accent-green-soft);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 0.78rem;
       font-family: "Orbitron", system-ui;
     }
 
-    /* Project / skills cards */
+    /* project / skills cards */
 
     .projects-grid {
       display: grid;
@@ -498,8 +516,8 @@
       background: var(--bg-panel);
       border-radius: 1rem;
       padding: 1rem;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(22, 163, 74, 0.7);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.95);
       transition:
         transform 0.15s ease,
         box-shadow 0.15s ease,
@@ -515,7 +533,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.15), transparent 55%);
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.3), transparent 60%);
       opacity: 0;
       transition: opacity 0.18s ease;
       pointer-events: none;
@@ -524,10 +542,10 @@
     .project-card:hover,
     .skills-card:hover {
       transform: translateY(-4px);
-      border-color: var(--accent-cyan);
+      border-color: var(--accent-green-soft);
       box-shadow:
-        0 0 18px rgba(56, 189, 248, 0.5),
-        0 18px 42px rgba(0, 0, 0, 0.9);
+        0 0 18px rgba(34, 197, 94, 0.7),
+        0 18px 42px rgba(0, 0, 0, 1);
     }
 
     .project-card:hover::before,
@@ -567,9 +585,9 @@
       font-size: 0.7rem;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      color: var(--accent-neon);
-      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(34, 197, 94, 0.9);
+      color: #bbf7d0;
+      background: rgba(3, 7, 18, 0.95);
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
@@ -590,7 +608,7 @@
       margin-bottom: 0.6rem;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--accent-cyan);
+      color: var(--accent-green-soft);
       font-family: "Orbitron", system-ui;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -607,7 +625,7 @@
       margin-bottom: 0.3rem;
     }
 
-    /* Jaguar hover (kept from previous version, now neon :) */
+    /* Jaguar hover */
 
     .jaguar-hover::after {
       content: "🐆";
@@ -631,12 +649,12 @@
 
     footer {
       padding: 1.6rem 8vw 2rem 8vw;
-      border-top: 1px solid rgba(148, 163, 184, 0.6);
+      border-top: 1px solid rgba(34, 197, 94, 0.7);
       font-size: 0.8rem;
-      color: #cbd5f5;
-      background: rgba(3, 7, 18, 0.98);
+      color: #bbf7d0;
+      background: rgba(0, 0, 0, 0.98);
       text-align: center;
-      box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 -12px 36px rgba(0, 0, 0, 1);
     }
 
     @media (max-width: 900px) {
@@ -670,14 +688,14 @@
       }
 
       .side-nav {
-        display: none; /* hide side nav on small screens */
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Y2K side scroll indicator -->
+  <!-- side nav -->
   <nav class="side-nav">
     <ul>
       <li><a href="#projects" class="active">Projects</a></li>
@@ -700,8 +718,8 @@
   </header>
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
+    <!-- Hero (full screen) -->
+    <section class="hero full-section">
       <div>
         <h1 class="hero-title">Building real-world systems from silicon to software</h1>
 
@@ -725,21 +743,20 @@
 
         <div class="hero-buttons">
           <a class="btn btn-primary jaguar-hover" href="#projects">View projects</a>
-          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
+          <a class="btn btn-ghost" href="Resume.pdf" target="_blank" rel="noopener">Download resume</a>
         </div>
       </div>
 
       <aside class="hero-card">
-        <!-- Update this path if your file name is different -->
         <img
-          src="images/jesus.jpg"
+          src="images/jesus.jpeg"
           alt="Portrait of Jesus Hernandez"
           class="profile-photo"
         >
 
         <h3>Quick snapshot</h3>
         <ul class="hero-list">
-          <li>Computer Engineering student at San Jose State University</li>
+          <li>First-generation computer engineering student at San Jose State University</li>
           <li>Proudly Mexican with Mayan heritage and family roots in Chihuahua</li>
           <li>Hands-on with C/C++, Python, Verilog, KiCad, and x86 assembly</li>
           <li>Interested in robotics, embedded systems, and space sustainability</li>
@@ -747,7 +764,7 @@
       </aside>
     </section>
 
-    <!-- Goals stripe -->
+    <!-- Goals stripe (not full screen) -->
     <section id="goals" style="margin-bottom:2.3rem;">
       <div class="goals-card">
         <strong>Currently looking for</strong>
@@ -760,7 +777,7 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects">
+    <section id="projects" class="full-section">
       <h2>Selected projects</h2>
       <p class="section-subtitle">A mix of low level systems, digital design, and hardware.</p>
 
@@ -794,9 +811,9 @@
             <div class="project-meta">KiCad · Soldering · Testing</div>
             <p class="project-description">
               Took an audio amplifier from breadboard to manufactured PCB. Captured the schematic
-              in KiCad, assigned footprints, routed traces with ground planes, and tuned trace
-              widths for manufacturability. Soldered and tested the board, measuring gain and
-              debugging noise with an oscilloscope and multimeter.
+              in KiCad, selected footprints, routed traces with ground planes, and iterated on
+              track widths for manufacturability. Soldered and tested the board, measuring gain
+              and debugging noise issues with a scope and multimeter.
             </p>
             <div class="project-tags">
               <span class="project-tag">PCB Design</span>
@@ -837,7 +854,7 @@
     </section>
 
     <!-- Roots / Identity -->
-    <section id="roots">
+    <section id="roots" class="full-section">
       <h2>Roots and identity</h2>
       <p class="section-subtitle">
         My background shapes the kind of engineer I want to be.
@@ -860,7 +877,7 @@
     </section>
 
     <!-- Research -->
-    <section id="research">
+    <section id="research" class="full-section">
       <h2>Research and writing</h2>
       <p class="section-subtitle">
         Technical writing and research experience in space systems and sustainable engineering.
@@ -902,7 +919,7 @@
     </section>
 
     <!-- Skills -->
-    <section id="skills">
+    <section id="skills" class="full-section">
       <h2>Skills</h2>
       <div class="skills-grid">
         <div class="skills-card">
@@ -937,7 +954,7 @@
     </section>
 
     <!-- Contact -->
-    <section id="contact">
+    <section id="contact" class="full-section">
       <h2>Contact</h2>
 
       <p class="contact">
@@ -956,7 +973,7 @@
   </main>
 
   <footer>
-    © <span id="year"></span> Jesus Hernandez. Built on GitHub Pages with a Y2K-inspired theme.
+    © <span id="year"></span> Jesus Hernandez. Green cyber edition built on GitHub Pages.
   </footer>
 
   <script>
