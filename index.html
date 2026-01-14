@@ -2,1274 +2,879 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jesus Hernandez | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jesus Hernandez | Computer Engineering Portfolio</title>
 
-  <!-- Fonts: pixel UI + “old web ad” serif/gothic -->
+  <!-- Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=UnifrakturCook:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #05060a;
-      --panel: rgba(6, 8, 14, 0.92);
-      --text: #e7e7ee;
-
-      --crtGreen: #46ff7f;
-      --crtGreen2:#1cff5a;
-      --crtBlue: #6bd3ff;
-      --crtMag: #ff58d9;
-      --crtAmber: #ffd36b;
-
-      --shadow: rgba(0,0,0,0.78);
-
-      /* “beige” PC frame */
-      --beige1:#d8d4c9;
-      --beige2:#bdb7ac;
-      --beige3:#7d776e;
-      --beige4:#2a2724;
-
-      --ieBlue1:#1e5cff;
-      --ieBlue2:#0f2f88;
-
-      --radius: 14px;
+      --bg:#040a06;
+      --panel:#07120a;
+      --panel2:#08160c;
+      --text:#d7ffe2;
+      --muted:#9ad6ab;
+      --line:rgba(47,255,120,.22);
+      --line2:rgba(47,255,120,.10);
+      --neon:#2bff78;
+      --neon2:#00ffb3;
+      --warn:#ff3b3b;
+      --shadow:0 18px 55px rgba(0,0,0,.55);
+      --radius:22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
 
-    *{ box-sizing:border-box; }
-    html, body{
-      height:100%;
-      margin:0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    /* ===== CRT / old-web background ===== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      overflow-x:hidden;
+      margin:0;
       background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(107,211,255,0.14), transparent 60%),
-        radial-gradient(900px 520px at 75% 25%, rgba(255,88,217,0.10), transparent 65%),
-        radial-gradient(1000px 700px at 50% 85%, rgba(70,255,127,0.09), transparent 60%),
-        linear-gradient(180deg, #03040a, #06071a 55%, #03040a);
+        radial-gradient(1200px 800px at 75% 15%, rgba(0,255,179,.12), transparent 55%),
+        radial-gradient(900px 700px at 15% 85%, rgba(43,255,120,.10), transparent 55%),
+        linear-gradient(180deg, #020603, #020603 35%, #020603);
+      color:var(--text);
+      font-family:var(--sans);
+      overflow:hidden;
     }
 
-    /* Optional image layer (if you add a collage/texture):
-       Put your image at /images/y2k-bg.jpg or delete this block. */
-    body::after{
-      content:"";
-      position: fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.86)),
-        url("images/BackgroundWebsite.jpg");
-      background-size: cover;
-      background-position: center;
-      opacity: 0.25;
-      z-index:-6;
-      filter: contrast(1.05) saturate(1.1);
-    }
-
-    /* CRT scanlines + vignette + slight noise */
+    /* Y2K CRT scan + noise */
     body::before{
       content:"";
-      position: fixed;
+      position:fixed;
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(circle at 50% 40%, rgba(70,255,127,0.12), transparent 55%),
-        radial-gradient(circle at 50% 50%, rgba(107,211,255,0.08), transparent 60%),
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0.00), rgba(0,0,0,0.65)),
         repeating-linear-gradient(
           to bottom,
-          rgba(255,255,255,0.06) 0px,
-          rgba(255,255,255,0.06) 1px,
+          rgba(255,255,255,.03),
+          rgba(255,255,255,.03) 1px,
           rgba(0,0,0,0) 3px,
           rgba(0,0,0,0) 6px
         );
-      mix-blend-mode: overlay;
-      opacity: 0.32;
-      z-index:-5;
-      animation: crtFlicker 5.5s infinite ease-in-out;
+      mix-blend-mode:overlay;
+      opacity:.22;
+      z-index:1;
     }
-
-    @keyframes crtFlicker{
-      0%,100%{ opacity:0.28; }
-      18%{ opacity:0.34; }
-      47%{ opacity:0.26; }
-      72%{ opacity:0.38; }
-    }
-
-    /* Tiny animated “film grain” layer */
-    .grain{
-      position: fixed;
+    body::after{
+      content:"";
+      position:fixed;
       inset:0;
       pointer-events:none;
-      z-index:-4;
-      opacity: 0.10;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-      animation: grainMove 2.2s steps(2) infinite;
-    }
-    @keyframes grainMove{
-      0%{ transform: translate(0,0); }
-      25%{ transform: translate(-8px,6px); }
-      50%{ transform: translate(6px,-10px); }
-      75%{ transform: translate(-4px,-6px); }
-      100%{ transform: translate(0,0); }
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      opacity:.08;
+      z-index:1;
     }
 
-    a{ color: var(--crtBlue); text-decoration:none; }
-    a:hover{ text-decoration: underline; }
-
-    /* ===== Top header (keep simple) ===== */
+    /* Top nav */
     header{
-      position: fixed;
-      top:0; left:0; right:0;
-      z-index: 80;
-      padding: 10px 16px;
-      background: linear-gradient(180deg, rgba(14,16,26,0.96), rgba(7,9,14,0.92));
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
-    }
-    .topbar{
-      max-width: 1200px;
-      margin: 0 auto;
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:10;
+      padding:14px 18px;
       display:flex;
       align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    nav{
+      pointer-events:auto;
+      width:min(1100px, 96vw);
+      display:flex;
+      gap:10px;
+      align-items:center;
       justify-content:space-between;
-      gap:12px;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(8,22,12,.78), rgba(4,10,6,.62));
+      box-shadow:0 12px 45px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
     }
     .brand{
       display:flex;
-      align-items:center;
       gap:10px;
-      user-select:none;
+      align-items:center;
+      font-family:var(--mono);
+      letter-spacing:.2px;
+      white-space:nowrap;
     }
-    .brand-badge{
-      width: 14px; height:14px;
-      border-radius: 3px;
-      background: linear-gradient(135deg, var(--crtBlue), var(--crtMag));
-      box-shadow: 0 0 14px rgba(107,211,255,0.32);
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--neon);
+      box-shadow:0 0 12px rgba(43,255,120,.65);
     }
-    .brand-title{
-      font-family: "Press Start 2P", monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: #f2f2ff;
-      text-shadow: 0 0 14px rgba(255,255,255,0.10);
-      white-space: nowrap;
-    }
-
-    nav{
+    .navlinks{
       display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap: wrap;
+      gap:6px;
+      flex-wrap:wrap;
       justify-content:flex-end;
+      align-items:center;
     }
     .navlink{
-      font-family: "Press Start 2P", monospace;
-      font-size: 9px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      color: #f2f2ff;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      position: relative;
-      overflow:hidden;
-    }
-    .navlink::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(70,255,127,0.22), transparent);
-      transform: translateX(-120%) rotate(15deg);
-      transition: transform .45s ease;
+      font-family:var(--mono);
+      font-size:12px;
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease, color .12s ease;
     }
     .navlink:hover{
-      transform: translateY(-1px);
-      border-color: rgba(107,211,255,0.35);
-      box-shadow: 0 0 18px rgba(107,211,255,0.14);
-      text-decoration:none;
+      transform:translateY(-1px);
+      border-color:var(--line);
+      background:rgba(43,255,120,.06);
+      color:var(--text);
     }
-    .navlink:hover::after{ transform: translateX(120%) rotate(15deg); }
     .navlink.active{
-      border-color: rgba(70,255,127,0.55);
-      box-shadow: 0 0 18px rgba(70,255,127,0.14);
+      border-color:rgba(43,255,120,.5);
+      background:rgba(43,255,120,.10);
+      color:var(--text);
+      box-shadow:0 0 0 3px rgba(43,255,120,.08) inset;
     }
 
-    /* ===== MAIN = scroll snap container ===== */
-    main{
-      height: 100vh;
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
-      scroll-padding-top: 74px;
+    /* Side scrollspy */
+    .side{
+      position:fixed;
+      right:16px;
+      top:50%;
+      transform:translateY(-50%);
+      z-index:9;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      pointer-events:none;
+    }
+    .side a{
+      pointer-events:auto;
+      width:14px;height:14px;border-radius:999px;
+      border:1px solid rgba(43,255,120,.35);
+      background:rgba(4,10,6,.55);
+      box-shadow:0 10px 25px rgba(0,0,0,.35);
+      position:relative;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .side a::after{
+      content:attr(data-label);
+      position:absolute;
+      right:22px;
+      top:50%;
+      transform:translateY(-50%);
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(215,255,226,.85);
+      background:rgba(8,22,12,.88);
+      border:1px solid var(--line);
+      padding:6px 8px;
+      border-radius:999px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .12s ease, transform .12s ease;
+      white-space:nowrap;
+    }
+    .side a:hover::after{
+      opacity:1;
+      transform:translateY(-50%) translateX(-2px);
+    }
+    .side a.active{
+      background:rgba(43,255,120,.22);
+      border-color:rgba(43,255,120,.75);
+      transform:scale(1.08);
+      box-shadow:0 0 0 4px rgba(43,255,120,.10), 0 0 18px rgba(43,255,120,.28);
+    }
+
+    /* Scroll container */
+    #scrollRoot{
+      position:absolute;
+      inset:0;
+      padding-top:78px;
+      overflow-y:auto;
+      scroll-snap-type:y mandatory;
+      scroll-behavior:smooth;
+      z-index:2;
     }
 
     section.snap{
-      scroll-snap-align: start;
-      min-height: 100vh;
-      padding: 90px 16px 38px;
+      scroll-snap-align:start;
+      min-height:calc(100vh - 78px);
       display:flex;
       align-items:center;
       justify-content:center;
-      position: relative;
+      padding:34px 18px 56px;
     }
 
-    .container{
-      width: min(1120px, 94vw);
-      margin: 0 auto;
-    }
-
-    /* ===== Side section tracker (already requested) ===== */
-    .side{
-      position: fixed;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 90;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .side a{
-      font-family: "Press Start 2P", monospace;
-      font-size: 8px;
-      letter-spacing: 0.06em;
-      color: #f2f2ff;
-      padding: 10px 10px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.40);
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      min-width: 132px;
-      justify-content: space-between;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      position: relative;
+    /* “Window” cards */
+    .window{
+      width:min(1080px, 96vw);
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(8,22,12,.78), rgba(4,10,6,.62));
+      box-shadow:var(--shadow);
+      position:relative;
       overflow:hidden;
     }
-    .side a::after{
+    .window::before{
       content:"";
       position:absolute;
-      inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(107,211,255,0.18), transparent);
-      transform: translateX(-140%) rotate(18deg);
-      transition: transform .55s ease;
-    }
-    .side a:hover{
-      transform: translateX(-2px);
-      border-color: rgba(107,211,255,0.35);
-      box-shadow: 0 0 18px rgba(107,211,255,0.12), 0 10px 24px rgba(0,0,0,0.50);
-      text-decoration:none;
-    }
-    .side a:hover::after{ transform: translateX(140%) rotate(18deg); }
-    .side a.active{
-      border-color: rgba(70,255,127,0.60);
-      box-shadow: 0 0 22px rgba(70,255,127,0.14), 0 10px 26px rgba(0,0,0,0.55);
-    }
-    .dot{
-      width: 8px; height: 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.25);
-      flex: 0 0 auto;
-    }
-    .side a.active .dot{
-      background: var(--crtGreen);
-      box-shadow: 0 0 14px rgba(70,255,127,0.60);
-    }
-
-    @media (max-width: 900px){
-      .side{ display:none; }
-      nav{ display:none; }
-      main{ scroll-snap-type: y proximity; }
-    }
-
-    /* ===== “1999 browser / Shockwave era” window ===== */
-    .window{
-      position: relative;
-      border-radius: var(--radius);
-      overflow:hidden;
-
-      /* outer beige frame */
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.0));
-      box-shadow:
-        0 18px 50px var(--shadow),
-        0 0 0 1px rgba(255,255,255,0.06);
-    }
-
-    /* Thick “PC plastic” border */
-    .frame{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, var(--beige1), var(--beige2));
-      padding: 10px;
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,0.35),
-        inset -2px -2px 0 rgba(0,0,0,0.35);
-    }
-
-    /* Inner CRT panel */
-    .crt{
-      border-radius: 12px;
+      inset:-2px;
+      border-radius:var(--radius);
       background:
-        radial-gradient(900px 500px at 50% 30%, rgba(70,255,127,0.12), transparent 60%),
-        radial-gradient(700px 380px at 60% 55%, rgba(107,211,255,0.10), transparent 62%),
-        linear-gradient(180deg, rgba(10,12,18,0.98), rgba(6,7,12,0.96));
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.08),
-        inset 0 0 80px rgba(0,0,0,0.65);
-      overflow:hidden;
+        radial-gradient(650px 140px at 18% 0%, rgba(43,255,120,.20), transparent 65%),
+        radial-gradient(520px 130px at 82% 0%, rgba(0,255,179,.14), transparent 65%);
+      opacity:.9;
+      pointer-events:none;
+      z-index:0;
     }
-
-    /* “IE title bar” */
-    .titlebar{
+    .chrome{
+      position:relative;
+      z-index:1;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      background: linear-gradient(180deg, rgba(40,86,255,0.75), rgba(16,40,120,0.75));
-      border-bottom: 1px solid rgba(255,255,255,0.18);
-      font-family: "VT323", monospace;
-      font-size: 18px;
-      color: #eaf0ff;
-      letter-spacing: 0.02em;
-      text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+      padding:12px 14px;
+      border-bottom:1px solid var(--line2);
+      background:rgba(0,0,0,.18);
+      font-family:var(--mono);
+      font-size:12px;
+      color:rgba(215,255,226,.75);
     }
-    .title-left{
+    .chrome .left{
       display:flex;
+      gap:10px;
       align-items:center;
-      gap: 10px;
-      white-space: nowrap;
     }
-    .ie-icon{
-      width: 14px; height: 14px;
-      border-radius: 3px;
-      background:
-        radial-gradient(circle at 30% 30%, var(--crtAmber), transparent 55%),
-        linear-gradient(135deg, var(--crtBlue), var(--crtMag));
-      box-shadow: 0 0 10px rgba(255,211,107,0.22);
-      flex: 0 0 auto;
-    }
-    .title-right{
+    .lights{
       display:flex;
-      gap: 6px;
+      gap:6px;
+      align-items:center;
     }
-    .winbtn{
-      width: 16px; height: 16px;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.20);
-      border: 1px solid rgba(0,0,0,0.22);
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.25), inset -1px -1px 0 rgba(0,0,0,0.35);
+    .light{width:10px;height:10px;border-radius:50%}
+    .l1{background:#ff5f57}
+    .l2{background:#febc2e}
+    .l3{background:#28c840}
+
+    .chrome .tag{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      opacity:.95;
+    }
+    .kbd{
+      border:1px solid rgba(43,255,120,.25);
+      padding:2px 6px;
+      border-radius:7px;
+      color:rgba(215,255,226,.85);
+      background:rgba(43,255,120,.06);
+      font-size:11px;
     }
 
-    /* Toolbar row like old browser UI */
-    .toolbar{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      background: linear-gradient(180deg, rgba(230,228,221,0.95), rgba(190,186,176,0.92));
-      border-bottom: 1px solid rgba(0,0,0,0.20);
-      font-family: "VT323", monospace;
-      color: #1b1b1f;
-    }
-    .toolbtn{
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(0,0,0,0.18);
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.65), inset -1px -1px 0 rgba(0,0,0,0.18);
-      cursor: default;
-      user-select:none;
-      font-size: 16px;
-      display:flex;
-      align-items:center;
-      gap: 6px;
-    }
-    .toolbtn .ico{
-      width: 10px; height:10px;
-      border-radius: 2px;
-      background: #2a60ff;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.20);
-    }
-    .addr{
-      flex: 1 1 auto;
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      padding-left: 6px;
-    }
-    .addr label{
-      font-size:16px;
-      opacity:0.85;
-    }
-    .addrbox{
-      flex: 1 1 auto;
-      background: rgba(255,255,255,0.70);
-      border: 1px solid rgba(0,0,0,0.22);
-      border-radius: 6px;
-      padding: 4px 8px;
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.60), inset -1px -1px 0 rgba(0,0,0,0.12);
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      min-width: 140px;
-      font-size:16px;
-    }
-    .caret{
-      width: 8px;
-      height: 14px;
-      background: rgba(0,0,0,0.85);
-      margin-left: 8px;
-      animation: blink 1s steps(2) infinite;
-    }
-    @keyframes blink{ 50%{ opacity:0; } }
-
-    /* Inner content */
     .content{
-      padding: 18px;
-      position: relative;
+      position:relative;
+      z-index:1;
+      padding:26px 22px 30px;
     }
 
-    /* Subtle CRT “green glow” overlay inside content */
-    .content::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 50% 20%, rgba(70,255,127,0.10), transparent 55%),
-        radial-gradient(circle at 40% 70%, rgba(107,211,255,0.06), transparent 58%);
-      opacity: 0.8;
-      mix-blend-mode: screen;
+    h1,h2,h3{margin:0}
+    h1{
+      font-family:var(--mono);
+      letter-spacing:.2px;
+      font-size:clamp(28px, 3.1vw, 42px);
+      line-height:1.1;
     }
-
-    /* ===== HERO ===== */
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 18px;
-      align-items: stretch;
-      position: relative;
-      z-index: 2;
-    }
-    @media (max-width: 900px){
-      .hero-grid{ grid-template-columns: 1fr; }
-    }
-
-    .headline{
-      font-family: "UnifrakturCook", serif;
-      font-size: clamp(28px, 3.2vw, 42px);
-      line-height: 1.05;
-      margin: 0 0 10px 0;
-      color: #eaf0ff;
-      text-shadow:
-        0 0 18px rgba(107,211,255,0.22),
-        0 0 22px rgba(70,255,127,0.12);
-      letter-spacing: 0.02em;
-    }
-
     .sub{
-      font-family: "VT323", monospace;
-      font-size: 20px;
-      line-height: 1.35;
-      margin: 0 0 12px 0;
-      color: rgba(231,231,238,0.88);
-      text-shadow: 0 0 10px rgba(0,0,0,0.35);
+      margin-top:10px;
+      font-family:var(--mono);
+      color:rgba(154,214,171,.95);
+      line-height:1.45;
+      max-width:70ch;
+      font-size:14px;
     }
-
-    .type{
-      display:inline-block;
-      border-bottom: 2px dotted rgba(70,255,127,0.55);
-      color: var(--crtGreen);
-      text-shadow: 0 0 14px rgba(70,255,127,0.20);
-      padding: 0 4px;
-      font-family: "Press Start 2P", monospace;
-      font-size: 14px;
-      transform: translateY(-2px);
-    }
-
-    .chips{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 12px 0 6px;
-      position: relative;
-      z-index: 2;
-    }
-    .chip{
-      font-family: "Press Start 2P", monospace;
-      font-size: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-    }
-    .chip.lime{ border-color: rgba(70,255,127,0.35); }
-    .chip.cyan{ border-color: rgba(107,211,255,0.35); }
-    .chip.mag{ border-color: rgba(255,88,217,0.30); }
-
-    .cta-row{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .btn{
-      font-family: "Press Start 2P", monospace;
-      font-size: 9px;
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: #f2f2ff;
-      cursor: pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 8px;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease;
-      position: relative;
-      overflow:hidden;
-      text-decoration:none;
-    }
-    .btn::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(70,255,127,0.22), transparent);
-      transform: translateX(-130%) rotate(14deg);
-      transition: transform .55s ease;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(107,211,255,0.35);
-      box-shadow: 0 0 20px rgba(107,211,255,0.14);
-      filter: brightness(1.05);
-      text-decoration:none;
-    }
-    .btn:hover::after{ transform: translateX(130%) rotate(14deg); }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(70,255,127,0.20), rgba(107,211,255,0.12));
-      border-color: rgba(70,255,127,0.35);
-      box-shadow: 0 0 0 rgba(0,0,0,0);
-    }
-
-    .hint{
-      margin-top: 10px;
-      font-family: "Press Start 2P", monospace;
-      font-size: 8px;
-      color: rgba(231,231,238,0.70);
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Profile card */
-    .profile{
-      height: 100%;
-      display:flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      z-index: 2;
-    }
-    .profile img{
-      width:100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
-      filter: contrast(1.05) saturate(1.05);
-    }
-    .mini{
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      padding: 12px;
-      font-family: "VT323", monospace;
-      font-size: 18px;
-      line-height: 1.35;
-      color: rgba(231,231,238,0.90);
-    }
-
-    /* Section headings */
-    .h2{
-      font-family: "Press Start 2P", monospace;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      margin: 0 0 10px 0;
-      color: #f7f7ff;
-      position: relative;
-      z-index: 2;
-    }
-    .p{
-      margin: 0;
-      color: rgba(231,231,238,0.88);
-      line-height: 1.75;
-      font-size: 14px;
-      position: relative;
-      z-index: 2;
-    }
-
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-      position: relative;
-      z-index: 2;
+      grid-template-columns: 1.15fr .85fr;
+      gap:20px;
+      align-items:start;
+      margin-top:18px;
     }
     @media (max-width: 900px){
-      .grid{ grid-template-columns: 1fr; }
+      .grid{grid-template-columns:1fr}
+      .side{display:none}
+      #scrollRoot{padding-top:92px}
+      section.snap{min-height:calc(100vh - 92px)}
     }
 
     .card{
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      padding: 12px;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.45);
+      border:1px solid var(--line2);
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(7,18,10,.70), rgba(4,10,6,.55));
+      padding:16px 14px;
     }
-    .card strong{
-      font-family: "Press Start 2P", monospace;
-      font-size: 9px;
-      color: var(--crtAmber);
-      display:block;
-      margin-bottom: 8px;
-      letter-spacing: 0.06em;
+    .label{
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(215,255,226,.70);
+      margin-bottom:8px;
+      letter-spacing:.1px;
+    }
+    .pillrow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      font-family:var(--mono);
+      font-size:11px;
+      border:1px solid rgba(43,255,120,.20);
+      background:rgba(43,255,120,.06);
+      color:rgba(215,255,226,.88);
+      padding:6px 10px;
+      border-radius:999px;
     }
 
-    /* Little “PLUGIN REQUIRED” badge to match Shockwave-era vibe (not copyrighted) */
-    .badge{
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
       display:inline-flex;
       align-items:center;
-      gap: 8px;
-      font-family: "Press Start 2P", monospace;
-      font-size: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.28);
-      color: rgba(242,242,255,0.92);
-      box-shadow: 0 0 18px rgba(70,255,127,0.10);
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:12px;
+      border:1px solid rgba(43,255,120,.28);
+      background:rgba(43,255,120,.08);
+      color:var(--text);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
     }
-    .badge .plug{
-      width: 10px; height:10px;
-      border-radius: 2px;
-      background: var(--crtGreen);
-      box-shadow: 0 0 12px rgba(70,255,127,0.45);
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(43,255,120,.65);
+      background:rgba(0,255,179,.10);
+    }
+    .btn.secondary{
+      border-color:rgba(215,255,226,.18);
+      background:rgba(215,255,226,.04);
+      color:rgba(215,255,226,.88);
     }
 
-    /* Make windows animate in nicely */
-    .reveal{
-      opacity: 0;
-      transform: translateY(18px) scale(0.985);
+    /* Rotating text */
+    .type{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-top:8px;
+      font-family:var(--mono);
+      font-size:13px;
+      color:rgba(215,255,226,.92);
+    }
+    .cursor{
+      width:10px;height:18px;
+      background:rgba(43,255,120,.85);
+      box-shadow:0 0 14px rgba(43,255,120,.60);
+      display:inline-block;
+      animation:blink .9s step-end infinite;
+    }
+    @keyframes blink{50%{opacity:0}}
+
+    /* Section titles */
+    .sectionTitle{
+      font-family:var(--mono);
+      font-size:18px;
+      margin-bottom:10px;
+      color:rgba(215,255,226,.95);
+    }
+    .list{
+      display:grid;
+      gap:10px;
+    }
+    .item{
+      border:1px solid rgba(43,255,120,.16);
+      border-radius:16px;
+      background:rgba(0,0,0,.18);
+      padding:14px 12px;
+    }
+    .item h3{
+      font-family:var(--mono);
+      font-size:14px;
+      margin-bottom:6px;
+      color:rgba(215,255,226,.94);
+    }
+    .item p{
+      margin:0;
+      color:rgba(154,214,171,.95);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    /* Reveal defaults */
+    .reveal{opacity:0; transform: translateY(12px);}
+
+    /* Hero “letters” helper */
+    .letter{display:inline-block; opacity:0}
+
+    /* Footer small */
+    .tiny{
+      margin-top:14px;
+      color:rgba(154,214,171,.80);
+      font-family:var(--mono);
+      font-size:11px;
     }
   </style>
 </head>
 
 <body>
-  <div class="grain" aria-hidden="true"></div>
 
-  <header>
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-badge"></div>
-        <div class="brand-title">JESUS HERNANDEZ // PORTFOLIO</div>
-      </div>
-
-      <nav>
-        <a class="navlink" href="#home">HOME</a>
-        <a class="navlink" href="#projects">PROJECTS</a>
-        <a class="navlink" href="#research">RESEARCH</a>
-        <a class="navlink" href="#skills">SKILLS</a>
-        <a class="navlink" href="#contact">CONTACT</a>
-      </nav>
+<header>
+  <nav>
+    <div class="brand">
+      <span class="dot"></span>
+      <span>Jesus Hernandez</span>
+      <span style="opacity:.6">|</span>
+      <span style="opacity:.85">Computer Engineering</span>
     </div>
-  </header>
 
-  <!-- Side scroll tracker -->
-  <div class="side" aria-label="Section tracker">
-    <a href="#home" data-section="home"><span>HOME</span><span class="dot"></span></a>
-    <a href="#goals" data-section="goals"><span>GOALS</span><span class="dot"></span></a>
-    <a href="#projects" data-section="projects"><span>PROJECTS</span><span class="dot"></span></a>
-    <a href="#roots" data-section="roots"><span>ROOTS</span><span class="dot"></span></a>
-    <a href="#research" data-section="research"><span>RESEARCH</span><span class="dot"></span></a>
-    <a href="#skills" data-section="skills"><span>SKILLS</span><span class="dot"></span></a>
-    <a href="#contact" data-section="contact"><span>CONTACT</span><span class="dot"></span></a>
-  </div>
+    <div class="navlinks">
+      <a class="navlink" href="#home">Home</a>
+      <a class="navlink" href="#projects">Projects</a>
+      <a class="navlink" href="#research">Research</a>
+      <a class="navlink" href="#skills">Skills</a>
+      <a class="navlink" href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
 
-  <main id="scrollRoot">
+<div class="side">
+  <a href="#home" data-section="home" data-label="home"></a>
+  <a href="#projects" data-section="projects" data-label="projects"></a>
+  <a href="#research" data-section="research" data-label="research"></a>
+  <a href="#skills" data-section="skills" data-label="skills"></a>
+  <a href="#contact" data-section="contact" data-label="contact"></a>
+</div>
 
-    <!-- HOME -->
-    <section id="home" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left">
-                  <span class="ie-icon"></span>
-                  <span>about:blank - Microsoft Internet Explorer</span>
-                </div>
-                <div class="title-right">
-                  <div class="winbtn" title="Minimize"></div>
-                  <div class="winbtn" title="Maximize"></div>
-                  <div class="winbtn" title="Close"></div>
-                </div>
-              </div>
+<main id="scrollRoot">
 
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>Back</div>
-                <div class="toolbtn"><span class="ico"></span>Forward</div>
-                <div class="toolbtn"><span class="ico"></span>Refresh</div>
-                <div class="toolbtn"><span class="ico"></span>Home</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox">
-                    <span>about:blank</span>
-                    <span class="caret" aria-hidden="true"></span>
-                  </div>
-                </div>
-              </div>
+  <!-- HOME -->
+  <section id="home" class="snap">
+    <div class="window reveal">
+      <div class="chrome">
+        <div class="left">
+          <div class="lights">
+            <span class="light l1"></span>
+            <span class="light l2"></span>
+            <span class="light l3"></span>
+          </div>
+          <span>system://portfolio/home</span>
+        </div>
+        <div class="tag">
+          <span class="kbd">scroll</span>
+          <span class="kbd">click sections</span>
+        </div>
+      </div>
 
-              <div class="content">
-                <div class="hero-grid">
-                  <div>
-                    <h1 class="headline" id="heroTitle">
-                      Hi, I’m Jesus Hernandez.<br/>
-                      I build <span class="type" id="typeText">robots</span>
-                    </h1>
+      <div class="content">
+        <h1 id="heroTitle">Hi, I am <span style="color:var(--neon)">Jesus</span>.</h1>
+        <div class="type">
+          <span>I build</span>
+          <span id="typeText"></span>
+          <span class="cursor"></span>
+        </div>
+        <p class="sub" id="heroSub">
+          Computer Engineering student at SJSU. I like building hardware plus software systems that actually do something in the real world: embedded, robotics, and clean engineering.
+        </p>
 
-                    <p class="sub" id="heroSub">
-                      Computer Engineering student focused on robotics, embedded systems, and projects that actually work.
-                      I like building real systems: code + circuits + debugging + demos.
-                    </p>
+        <div class="grid">
+          <div class="card">
+            <div class="label">quick links</div>
+            <div class="btnrow">
+              <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="btn secondary" href="mailto:jesus.m.hernandez01@sjsu.edu">Email</a>
+              <!-- Replace with your PDF file path in your repo -->
+              <a class="btn secondary" href="assets/Jesus_Hernandez_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+            </div>
+            <div class="tiny">Tip: put your resume PDF in /assets/ and keep this link stable.</div>
+          </div>
 
-                    <div class="chips">
-                      <span class="chip lime">EMBEDDED</span>
-                      <span class="chip cyan">ROBOTICS</span>
-                      <span class="chip mag">HARDWARE</span>
-                      <span class="chip cyan">C/C++</span>
-                      <span class="chip lime">VERILOG</span>
-                    </div>
-
-                    <div class="cta-row">
-                      <a class="btn primary" href="#projects">ENTER PROJECTS</a>
-                      <a class="btn" href="#contact">CONTACT</a>
-                      <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">GITHUB</a>
-                    </div>
-
-                    <div class="hint">
-                      TIP: scroll to snap between sections. <span style="margin-left:10px" class="badge"><span class="plug"></span>PLUGIN REQUIRED: vibes</span>
-                    </div>
-                  </div>
-
-                  <div class="profile">
-                    <!-- Put your photo at: /images/profile.jpg -->
-                    <img src="images/jesus.jpeg" alt="Jesus Hernandez profile photo">
-                    <div class="mini">
-                      <div class="h2">STATUS</div>
-                      <div>
-                        Building a portfolio that shows <b>real engineering</b>, not just class assignments.
-                        Always improving: cleaner code, better documentation, stronger demos.
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- hero-grid -->
-              </div><!-- content -->
-            </div><!-- crt -->
-          </div><!-- frame -->
-        </div><!-- window -->
-      </div><!-- container -->
-    </section>
-
-    <!-- GOALS -->
-    <section id="goals" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Goals - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>Favorites</div>
-                <div class="toolbtn"><span class="ico"></span>History</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///goals.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
-
-              <div class="content">
-                <div class="h2">GOALS</div>
-                <p class="p">
-                  I’m aiming for robotics and embedded roles where I can design, build, and test systems end-to-end:
-                  firmware + hardware + verification. I care about engineering that’s ethical, purposeful, and reliable.
-                </p>
-
-                <div class="grid">
-                  <div class="card">
-                    <strong>SHORT TERM</strong>
-                    Build standout projects that prove I can ship real systems: sensors, control, embedded code, and testing.
-                  </div>
-                  <div class="card">
-                    <strong>MID TERM</strong>
-                    Internship where I contribute to robotics/AI products, especially embedded + autonomy.
-                  </div>
-                  <div class="card">
-                    <strong>LONG TERM</strong>
-                    Robotics engineering career focused on useful machines that help people and solve real problems.
-                  </div>
-                </div>
-              </div>
-
+          <div class="card">
+            <div class="label">focus areas</div>
+            <div class="pillrow">
+              <span class="pill">Embedded Systems</span>
+              <span class="pill">Digital Logic</span>
+              <span class="pill">C/C++</span>
+              <span class="pill">Robotics</span>
+              <span class="pill">Verification</span>
+              <span class="pill">PCB Design</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Projects - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>Search</div>
-                <div class="toolbtn"><span class="ico"></span>Tools</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///projects.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
+  <!-- PROJECTS -->
+  <section id="projects" class="snap">
+    <div class="window reveal">
+      <div class="chrome">
+        <div class="left">
+          <div class="lights">
+            <span class="light l1"></span>
+            <span class="light l2"></span>
+            <span class="light l3"></span>
+          </div>
+          <span>system://portfolio/projects</span>
+        </div>
+        <div class="tag">
+          <span class="kbd">featured</span>
+        </div>
+      </div>
 
-              <div class="content">
-                <div class="h2">PROJECTS</div>
-                <p class="p">
-                  These are the builds I’m most proud of — projects that show engineering thinking, debugging, and execution.
-                  (I keep improving documentation, screenshots, and writeups.)
-                </p>
+      <div class="content">
+        <div class="sectionTitle">Projects</div>
+        <div class="list">
+          <div class="item">
+            <h3>Polynomial Class Library (C++)</h3>
+            <p>Dynamic memory management, operator overloading, correct copy behavior, and evaluation.</p>
+          </div>
+          <div class="item">
+            <h3>Digital Logic and Verification (Verilog)</h3>
+            <p>FSMs, adders, counters, D flip flops, testbenches, and waveform validation.</p>
+          </div>
+          <div class="item">
+            <h3>Instruction Set Simulator (C + x86)</h3>
+            <p>Instruction parsing, ALU ops, binary IO, debugging on Linux.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <div class="grid">
-                  <div class="card">
-                    <strong>POLYNOMIAL CLASS (C++)</strong>
-                    Dynamic memory, operator overloading, correctness and lifecycle. Clean implementation + tests.
-                  </div>
-                  <div class="card">
-                    <strong>DIGITAL LOGIC (VERILOG)</strong>
-                    FSMs, adders, verification with testbenches and waveforms. RTL design and debugging.
-                  </div>
-                  <div class="card">
-                    <strong>PCB: LM386 AMP</strong>
-                    KiCad schematic + layout, ground strategy, assembly/soldering, real hardware validation.
-                  </div>
-                </div>
+  <!-- RESEARCH -->
+  <section id="research" class="snap">
+    <div class="window reveal">
+      <div class="chrome">
+        <div class="left">
+          <div class="lights">
+            <span class="light l1"></span>
+            <span class="light l2"></span>
+            <span class="light l3"></span>
+          </div>
+          <span>system://portfolio/research</span>
+        </div>
+        <div class="tag">
+          <span class="kbd">NASA</span>
+          <span class="kbd">systems</span>
+        </div>
+      </div>
 
-                <div class="hint">Next upgrade: add “View Demo” + “View Repo” buttons per project.</div>
-              </div>
+      <div class="content">
+        <div class="sectionTitle">Research</div>
+        <div class="list">
+          <div class="item">
+            <h3>Orbital debris detection and identification</h3>
+            <p>Studying ground radar, optical sensing, and in situ methods; proposing improvements for small particle detection in real time.</p>
+          </div>
+          <div class="item">
+            <h3>Proposal writing and evaluation (L'SPACE)</h3>
+            <p>Technical trade studies, subsystem framing, and stakeholder style documentation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- SKILLS -->
+  <section id="skills" class="snap">
+    <div class="window reveal">
+      <div class="chrome">
+        <div class="left">
+          <div class="lights">
+            <span class="light l1"></span>
+            <span class="light l2"></span>
+            <span class="light l3"></span>
+          </div>
+          <span>system://portfolio/skills</span>
+        </div>
+        <div class="tag">
+          <span class="kbd">tooling</span>
+          <span class="kbd">stack</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="sectionTitle">Skills</div>
+        <div class="grid">
+          <div class="card">
+            <div class="label">languages</div>
+            <div class="pillrow">
+              <span class="pill">C</span><span class="pill">C++</span><span class="pill">Python</span>
+              <span class="pill">Verilog</span><span class="pill">x86 Assembly</span><span class="pill">Java</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="label">tools</div>
+            <div class="pillrow">
+              <span class="pill">KiCad</span><span class="pill">Git/GitHub</span><span class="pill">Linux</span>
+              <span class="pill">ModelSim</span><span class="pill">VS Code</span><span class="pill">Eclipse</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ROOTS -->
-    <section id="roots" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Roots - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>Links</div>
-                <div class="toolbtn"><span class="ico"></span>Mail</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///roots.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
-
-              <div class="content">
-                <div class="h2">ROOTS</div>
-                <p class="p">
-                  I’m proud of being Mexican. That pride shows up in how I work: resilience, curiosity, and building real skills.
-                  I’m serious about becoming an engineer who makes things that matter.
-                </p>
-
-                <div class="grid">
-                  <div class="card">
-                    <strong>VALUES</strong>
-                    Purposeful innovation, consistency, and being accountable for results.
-                  </div>
-                  <div class="card">
-                    <strong>STYLE</strong>
-                    I like projects that combine hardware + software and end in a real demo.
-                  </div>
-                  <div class="card">
-                    <strong>WHY</strong>
-                    Engineering is my path to build a strong future and help people through technology.
-                  </div>
-                </div>
-              </div>
-
-            </div>
+  <!-- CONTACT -->
+  <section id="contact" class="snap">
+    <div class="window reveal">
+      <div class="chrome">
+        <div class="left">
+          <div class="lights">
+            <span class="light l1"></span>
+            <span class="light l2"></span>
+            <span class="light l3"></span>
           </div>
+          <span>system://portfolio/contact</span>
+        </div>
+        <div class="tag">
+          <span class="kbd">reach me</span>
         </div>
       </div>
-    </section>
 
-    <!-- RESEARCH -->
-    <section id="research" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Research - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>Options</div>
-                <div class="toolbtn"><span class="ico"></span>Help</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///research.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
-
-              <div class="content">
-                <div class="h2">RESEARCH</div>
-                <p class="p">
-                  I’m interested in systems-level research that connects sensing, detection, and reliability —
-                  especially for aerospace and robotics. I’ve done literature review + engineering recommendations
-                  for detection and identification of orbital debris / end-of-life satellites.
-                </p>
-
-                <div class="grid">
-                  <div class="card">
-                    <strong>FOCUS</strong>
-                    Detection methods: radar/optical/in-situ sensing, real-time constraints, and system limitations.
-                  </div>
-                  <div class="card">
-                    <strong>SKILL</strong>
-                    Turning papers into design requirements, trade studies, and practical recommendations.
-                  </div>
-                  <div class="card">
-                    <strong>NEXT</strong>
-                    Build a small “research-to-prototype” demo: sensor input → classification → output.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+      <div class="content">
+        <div class="sectionTitle">Contact</div>
+        <p class="sub">
+          Want to talk robotics, embedded, or a project opportunity? Email me and I will reply.
+        </p>
+        <div class="btnrow">
+          <a class="btn" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
+          <a class="btn secondary" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">github.com/JesusHernandezComputerEngineering</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- SKILLS -->
-    <section id="skills" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Skills - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>View</div>
-                <div class="toolbtn"><span class="ico"></span>Format</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///skills.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
+</main>
 
-              <div class="content">
-                <div class="h2">SKILLS</div>
-                <div class="grid">
-                  <div class="card">
-                    <strong>LANGUAGES</strong>
-                    C/C++, Java, Python, x86 Assembly, Verilog
-                  </div>
-                  <div class="card">
-                    <strong>TOOLS</strong>
-                    Git/GitHub, KiCad, Linux, VS Code, Eclipse, GDB
-                  </div>
-                  <div class="card">
-                    <strong>HARDWARE</strong>
-                    Debugging, soldering, schematics, PCB layout, electronics fundamentals
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="snap">
-      <div class="container">
-        <div class="window reveal">
-          <div class="frame">
-            <div class="crt">
-              <div class="titlebar">
-                <div class="title-left"><span class="ie-icon"></span><span>Contact - Internet Explorer</span></div>
-                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-              </div>
-              <div class="toolbar">
-                <div class="toolbtn"><span class="ico"></span>File</div>
-                <div class="toolbtn"><span class="ico"></span>Edit</div>
-                <div class="addr">
-                  <label>Address</label>
-                  <div class="addrbox"><span>file:///contact.html</span><span class="caret" aria-hidden="true"></span></div>
-                </div>
-              </div>
-
-              <div class="content">
-                <div class="h2">CONTACT</div>
-                <p class="p">Want to talk projects, internships, or collaborations? Reach out:</p>
-
-                <div class="grid">
-                  <div class="card">
-                    <strong>EMAIL</strong>
-                    <a href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
-                  </div>
-                  <div class="card">
-                    <strong>GITHUB</strong>
-                    <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
-                      github.com/JesusHernandezComputerEngineering
-                    </a>
-                  </div>
-                  <div class="card">
-                    <strong>SITE</strong>
-                    jesushernandezcomputerengineering.github.io
-                  </div>
-                </div>
-
-                <div class="hint">If you want next: add a “Downloads” area (resume PDF) + a fake “Shockwave install” modal.</div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- anime.js -->
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+  <!-- anime.js (loaded without SRI to avoid integrity mismatches on GitHub Pages) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
 
   <script>
-    // ========= 1) Typing rotator =========
-    (function(){
-      const el = document.getElementById("typeText");
-      const words = ["robots", "embedded systems", "hardware", "projects", "verification", "cool stuff"];
-      let i = 0, j = 0, deleting = false;
+    // ================================================================
+    // Robust UI scripts (won't break if an element/library is missing)
+    // ================================================================
+    document.addEventListener("DOMContentLoaded", () => {
 
-      function tick(){
-        const w = words[i % words.length];
-        if(!deleting){
-          j++;
-          el.textContent = w.slice(0, j);
-          if(j >= w.length){
-            deleting = true;
-            setTimeout(tick, 900);
-            return;
+      // ========= 1) Typing rotator ("I build ...") =========
+      (function(){
+        const el = document.getElementById("typeText");
+        if(!el) return;
+
+        const words = ["robots", "embedded systems", "hardware", "projects", "verification", "cool stuff"];
+        let i = 0, j = 0, deleting = false;
+
+        function tick(){
+          // If the element got removed (route changes, edits, etc.), stop safely
+          if(!document.body.contains(el)) return;
+
+          const w = words[i % words.length];
+
+          if(!deleting){
+            j++;
+            el.textContent = w.slice(0, j);
+            if(j >= w.length){
+              deleting = true;
+              setTimeout(tick, 900);
+              return;
+            }
+          }else{
+            j--;
+            el.textContent = w.slice(0, j);
+            if(j <= 0){
+              deleting = false;
+              i++;
+            }
           }
-        }else{
-          j--;
-          el.textContent = w.slice(0, j);
-          if(j <= 0){
-            deleting = false;
-            i++;
-          }
+          setTimeout(tick, deleting ? 35 : 55);
         }
-        setTimeout(tick, deleting ? 35 : 55);
-      }
-      tick();
-    })();
+        tick();
+      })();
 
-    // ========= 2) Scroll spy (side + top nav highlight) =========
-    (function(){
-      const root = document.getElementById("scrollRoot");
-      const sections = Array.from(document.querySelectorAll("section.snap"));
-      const sideLinks = Array.from(document.querySelectorAll(".side a"));
-      const topLinks  = Array.from(document.querySelectorAll("nav .navlink"));
+      // ========= 2) Scroll spy (side + top nav highlight) =========
+      (function(){
+        const root = document.getElementById("scrollRoot");
+        const sections = Array.from(document.querySelectorAll("section.snap"));
+        const sideLinks = Array.from(document.querySelectorAll(".side a"));
+        const topLinks  = Array.from(document.querySelectorAll("nav .navlink"));
 
-      const byId = (id) => sections.find(s => s.id === id);
+        if(!root || sections.length === 0) return;
 
-      function setActive(id){
-        sideLinks.forEach(a => a.classList.toggle("active", a.dataset.section === id));
-        topLinks.forEach(a => {
-          const hash = (a.getAttribute("href") || "").replace("#","");
-          a.classList.toggle("active", hash === id);
-        });
-      }
+        const byId = (id) => sections.find(s => s.id === id);
 
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            setActive(e.target.id);
-          }
-        });
-      }, { root, threshold: 0.55 });
-
-      sections.forEach(s => obs.observe(s));
-
-      [...sideLinks, ...topLinks].forEach(a=>{
-        a.addEventListener("click", (ev)=>{
-          const hash = (a.getAttribute("href") || "").trim();
-          if(!hash.startsWith("#")) return;
-          ev.preventDefault();
-          const id = hash.slice(1);
-          const target = byId(id);
-          if(!target) return;
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      });
-
-      setActive("home");
-    })();
-
-    // ========= 3) anime.js “boot in” + per-section reveal =========
-    (function(){
-      const windows = Array.from(document.querySelectorAll(".window.reveal"));
-
-      // initial boot for first window
-      anime({
-        targets: windows[0],
-        opacity: [0, 1],
-        translateY: [24, 0],
-        scale: [0.985, 1],
-        duration: 780,
-        easing: "easeOutExpo"
-      });
-
-      // title text “letter pop” (only on home)
-      const hero = document.getElementById("heroTitle");
-      const heroSub = document.getElementById("heroSub");
-
-      // Wrap hero title letters for anime
-      function wrapLetters(el){
-        const text = el.innerHTML;
-        // keep <br/> and spans intact: wrap only text nodes by splitting carefully
-        // simple approach: wrap only plain text segments
-        const tmp = document.createElement("div");
-        tmp.innerHTML = text;
-        const walker = document.createTreeWalker(tmp, NodeFilter.SHOW_TEXT, null);
-
-        const textNodes = [];
-        while(walker.nextNode()) textNodes.push(walker.currentNode);
-
-        textNodes.forEach(node=>{
-          const frag = document.createDocumentFragment();
-          const chars = node.textContent.split("");
-          chars.forEach(ch=>{
-            const span = document.createElement("span");
-            span.className = "letter";
-            span.textContent = ch;
-            frag.appendChild(span);
+        function setActive(id){
+          sideLinks.forEach(a => a.classList.toggle("active", a.dataset.section === id));
+          topLinks.forEach(a => {
+            const hash = (a.getAttribute("href") || "").replace("#","");
+            a.classList.toggle("active", hash === id);
           });
-          node.parentNode.replaceChild(frag, node);
+        }
+
+        const obs = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting) setActive(e.target.id);
+          });
+        }, { root, threshold: 0.55 });
+
+        sections.forEach(s => obs.observe(s));
+
+        [...sideLinks, ...topLinks].forEach(a=>{
+          a.addEventListener("click", (ev)=>{
+            const hash = (a.getAttribute("href") || "").trim();
+            if(!hash.startsWith("#")) return;
+            ev.preventDefault();
+            const id = hash.slice(1);
+            const target = byId(id);
+            if(!target) return;
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
         });
 
-        el.innerHTML = tmp.innerHTML;
-      }
+        setActive("home");
+      })();
 
-      wrapLetters(hero);
+      // ========= 3) anime.js “boot in” + per-section reveal =========
+      // Wait briefly for anime.js (in case the CDN is slow). If it's not available,
+      // the site still works — it just won't animate.
+      (function(){
+        function whenAnimeReady(cb){
+          if(window.anime) return cb();
+          const start = performance.now();
+          (function poll(){
+            if(window.anime) return cb();
+            if(performance.now() - start > 2500) return; // give up silently
+            requestAnimationFrame(poll);
+          })();
+        }
 
-      anime.timeline({ easing: "easeOutExpo" })
-        .add({
-          targets: "#heroTitle .letter",
-          opacity: [0, 1],
-          translateY: [10, 0],
-          duration: 520,
-          delay: anime.stagger(10),
-        })
-        .add({
-          targets: heroSub,
-          opacity: [0, 1],
-          translateY: [10, 0],
-          duration: 520
-        }, "-=240");
+        whenAnimeReady(() => {
+          const windows = Array.from(document.querySelectorAll(".window.reveal"));
+          if(windows.length === 0) return;
 
-      // Per-section reveal when section becomes active
-      const root = document.getElementById("scrollRoot");
-      const sections = Array.from(document.querySelectorAll("section.snap"));
-
-      const seen = new Set();
-      const revealObs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(!e.isIntersecting) return;
-          const win = e.target.querySelector(".window.reveal");
-          if(!win || seen.has(win)) return;
-          seen.add(win);
-
-          anime({
-            targets: win,
+          // initial boot for first window
+          window.anime({
+            targets: windows[0],
             opacity: [0, 1],
-            translateY: [18, 0],
+            translateY: [24, 0],
             scale: [0.985, 1],
-            duration: 680,
+            duration: 780,
             easing: "easeOutExpo"
           });
 
-          // tiny “CRT jitter” for flavor
-          anime({
-            targets: win,
-            translateX: [0, 1, -1, 0],
-            duration: 220,
-            easing: "linear",
-            delay: 220
+          // title text “letter pop” (only on home)
+          const hero = document.getElementById("heroTitle");
+          const heroSub = document.getElementById("heroSub");
+
+          function wrapLetters(el){
+            if(!el) return;
+            const tmp = document.createElement("div");
+            tmp.innerHTML = el.innerHTML;
+
+            const walker = document.createTreeWalker(tmp, NodeFilter.SHOW_TEXT, null);
+            const textNodes = [];
+            while(walker.nextNode()) textNodes.push(walker.currentNode);
+
+            textNodes.forEach(node=>{
+              const frag = document.createDocumentFragment();
+              node.textContent.split("").forEach(ch=>{
+                const span = document.createElement("span");
+                span.className = "letter";
+                span.textContent = ch;
+                frag.appendChild(span);
+              });
+              node.parentNode.replaceChild(frag, node);
+            });
+
+            el.innerHTML = tmp.innerHTML;
+          }
+
+          if(hero){
+            wrapLetters(hero);
+
+            window.anime.timeline({ easing: "easeOutExpo" })
+              .add({
+                targets: "#heroTitle .letter",
+                opacity: [0, 1],
+                translateY: [10, 0],
+                duration: 520,
+                delay: window.anime.stagger(10),
+              })
+              .add({
+                targets: heroSub,
+                opacity: [0, 1],
+                translateY: [10, 0],
+                duration: 520
+              }, "-=240");
+          }
+
+          // Per-section reveal when section becomes active
+          const root = document.getElementById("scrollRoot");
+          const sections = Array.from(document.querySelectorAll("section.snap"));
+          if(!root || sections.length === 0) return;
+
+          const seen = new Set();
+          const revealObs = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+              if(!e.isIntersecting) return;
+              const win = e.target.querySelector(".window.reveal");
+              if(!win || seen.has(win)) return;
+              seen.add(win);
+
+              window.anime({
+                targets: win,
+                opacity: [0, 1],
+                translateY: [18, 0],
+                scale: [0.985, 1],
+                duration: 680,
+                easing: "easeOutExpo"
+              });
+
+              // tiny “CRT jitter” for flavor
+              window.anime({
+                targets: win,
+                translateX: [0, 1, -1, 0],
+                duration: 220,
+                easing: "linear",
+                delay: 220
+              });
+            });
+          }, { root, threshold: 0.60 });
+
+          sections.forEach(s => revealObs.observe(s));
+
+          // Hover “micro-jitter” on buttons + side links (very Y2K)
+          const hoverTargets = document.querySelectorAll(".btn, .navlink, .side a");
+          hoverTargets.forEach(el=>{
+            el.addEventListener("mouseenter", ()=>{
+              window.anime.remove(el);
+              window.anime({
+                targets: el,
+                translateX: [0, -1, 1, 0],
+                duration: 220,
+                easing: "linear"
+              });
+            });
           });
         });
-      }, { root, threshold: 0.60 });
-
-      sections.forEach(s => revealObs.observe(s));
-
-      // Hover “micro-jitter” on buttons + side links (very Y2K)
-      const hoverTargets = document.querySelectorAll(".btn, .navlink, .side a");
-      hoverTargets.forEach(el=>{
-        el.addEventListener("mouseenter", ()=>{
-          anime.remove(el);
-          anime({
-            targets: el,
-            translateX: [0, -1, 1, 0],
-            duration: 220,
-            easing: "linear"
-          });
-        });
-      });
-    })();
+      })();
+    });
   </script>
 </body>
 </html>
