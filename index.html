@@ -5,152 +5,172 @@
   <title>Jesus Hernandez | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts (Y2K-ish: pixel + UI) -->
+  <!-- Fonts: pixel UI + “old web ad” serif/gothic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=UnifrakturCook:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg: #05060a;
-      --panel: rgba(8, 10, 16, 0.92);
+      --panel: rgba(6, 8, 14, 0.92);
       --text: #e7e7ee;
 
-      --lime: #41ff7a;
-      --cyan: #46d7ff;
-      --mag: #ff55dd;
-      --yellow: #ffe66d;
+      --crtGreen: #46ff7f;
+      --crtGreen2:#1cff5a;
+      --crtBlue: #6bd3ff;
+      --crtMag: #ff58d9;
+      --crtAmber: #ffd36b;
 
-      --shadow: rgba(0,0,0,0.75);
+      --shadow: rgba(0,0,0,0.78);
 
-      --ui-1: #e8e8ef; /* light bevel */
-      --ui-2: #a7a7b4; /* mid bevel */
-      --ui-3: #34344a; /* dark bevel */
-      --ui-4: #111222; /* deepest */
+      /* “beige” PC frame */
+      --beige1:#d8d4c9;
+      --beige2:#bdb7ac;
+      --beige3:#7d776e;
+      --beige4:#2a2724;
+
+      --ieBlue1:#1e5cff;
+      --ieBlue2:#0f2f88;
+
+      --radius: 14px;
     }
 
     *{ box-sizing:border-box; }
     html, body{
-      height: 100%;
-      margin: 0;
+      height:100%;
+      margin:0;
       background: var(--bg);
       color: var(--text);
-      scroll-behavior: smooth;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      scroll-behavior: smooth;
     }
 
-    /* Y2K/CRT background */
+    /* ===== CRT / old-web background ===== */
     body{
+      overflow-x:hidden;
       background:
-        radial-gradient(1200px 600px at 25% 10%, rgba(70,215,255,0.14), transparent 60%),
-        radial-gradient(900px 500px at 75% 25%, rgba(255,85,221,0.12), transparent 65%),
-        radial-gradient(1000px 700px at 50% 85%, rgba(65,255,122,0.10), transparent 60%),
-        linear-gradient(180deg, #03040a, #06071a 50%, #03040a);
-      overflow-x: hidden;
+        radial-gradient(1200px 600px at 20% 10%, rgba(107,211,255,0.14), transparent 60%),
+        radial-gradient(900px 520px at 75% 25%, rgba(255,88,217,0.10), transparent 65%),
+        radial-gradient(1000px 700px at 50% 85%, rgba(70,255,127,0.09), transparent 60%),
+        linear-gradient(180deg, #03040a, #06071a 55%, #03040a);
     }
 
-    /* Optional image layer (add images/y2k-bg.jpg or remove this block) */
+    /* Optional image layer (if you add a collage/texture):
+       Put your image at /images/y2k-bg.jpg or delete this block. */
     body::after{
       content:"";
       position: fixed;
-      inset: 0;
+      inset:0;
       pointer-events:none;
       background:
-        linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.86)),
+        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.86)),
         url("images/y2k-bg.jpg");
       background-size: cover;
       background-position: center;
-      opacity: 0.35;
-      z-index: -3;
+      opacity: 0.25;
+      z-index:-6;
+      filter: contrast(1.05) saturate(1.1);
     }
 
-    /* CRT scanlines + glow */
+    /* CRT scanlines + vignette + slight noise */
     body::before{
       content:"";
       position: fixed;
-      inset: 0;
+      inset:0;
       pointer-events:none;
       background:
+        radial-gradient(circle at 50% 40%, rgba(70,255,127,0.12), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(107,211,255,0.08), transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0.00), rgba(0,0,0,0.65)),
         repeating-linear-gradient(
           to bottom,
-          rgba(255,255,255,0.05) 0px,
-          rgba(255,255,255,0.05) 1px,
-          rgba(0,0,0,0) 2px,
-          rgba(0,0,0,0) 4px
-        ),
-        radial-gradient(circle at 50% 50%, rgba(70,215,255,0.10), transparent 55%);
+          rgba(255,255,255,0.06) 0px,
+          rgba(255,255,255,0.06) 1px,
+          rgba(0,0,0,0) 3px,
+          rgba(0,0,0,0) 6px
+        );
       mix-blend-mode: overlay;
-      opacity: 0.35;
-      z-index: -2;
+      opacity: 0.32;
+      z-index:-5;
       animation: crtFlicker 5.5s infinite ease-in-out;
     }
 
     @keyframes crtFlicker{
-      0%, 100% { opacity: 0.32; }
-      25% { opacity: 0.38; }
-      55% { opacity: 0.30; }
-      70% { opacity: 0.42; }
+      0%,100%{ opacity:0.28; }
+      18%{ opacity:0.34; }
+      47%{ opacity:0.26; }
+      72%{ opacity:0.38; }
     }
 
-    a{
-      color: var(--cyan);
-      text-decoration: none;
+    /* Tiny animated “film grain” layer */
+    .grain{
+      position: fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-4;
+      opacity: 0.10;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      animation: grainMove 2.2s steps(2) infinite;
     }
+    @keyframes grainMove{
+      0%{ transform: translate(0,0); }
+      25%{ transform: translate(-8px,6px); }
+      50%{ transform: translate(6px,-10px); }
+      75%{ transform: translate(-4px,-6px); }
+      100%{ transform: translate(0,0); }
+    }
+
+    a{ color: var(--crtBlue); text-decoration:none; }
     a:hover{ text-decoration: underline; }
 
-    /* Header (IE-ish bar) */
+    /* ===== Top header (keep simple) ===== */
     header{
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 50;
+      top:0; left:0; right:0;
+      z-index: 80;
       padding: 10px 16px;
-      background: linear-gradient(180deg, rgba(18,20,34,0.96), rgba(8,10,16,0.92));
+      background: linear-gradient(180deg, rgba(14,16,26,0.96), rgba(7,9,14,0.92));
       border-bottom: 1px solid rgba(255,255,255,0.10);
       backdrop-filter: blur(10px);
     }
-
     .topbar{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
       max-width: 1200px;
       margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
-
     .brand{
       display:flex;
       align-items:center;
-      gap: 10px;
+      gap:10px;
       user-select:none;
     }
-
     .brand-badge{
-      width: 14px; height: 14px;
+      width: 14px; height:14px;
       border-radius: 3px;
-      background: linear-gradient(135deg, var(--cyan), var(--mag));
-      box-shadow: 0 0 12px rgba(70,215,255,0.35);
+      background: linear-gradient(135deg, var(--crtBlue), var(--crtMag));
+      box-shadow: 0 0 14px rgba(107,211,255,0.32);
     }
-
     .brand-title{
       font-family: "Press Start 2P", monospace;
       font-size: 10px;
       letter-spacing: 0.08em;
       color: #f2f2ff;
-      text-shadow: 0 0 12px rgba(255,255,255,0.12);
+      text-shadow: 0 0 14px rgba(255,255,255,0.10);
       white-space: nowrap;
     }
 
     nav{
       display:flex;
       align-items:center;
-      gap: 10px;
+      gap:10px;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content:flex-end;
     }
-
     .navlink{
       font-family: "Press Start 2P", monospace;
       font-size: 9px;
@@ -160,26 +180,37 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
       transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      position: relative;
+      overflow:hidden;
+    }
+    .navlink::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(70,255,127,0.22), transparent);
+      transform: translateX(-120%) rotate(15deg);
+      transition: transform .45s ease;
     }
     .navlink:hover{
       transform: translateY(-1px);
-      border-color: rgba(70,215,255,0.35);
-      box-shadow: 0 0 16px rgba(70,215,255,0.18);
+      border-color: rgba(107,211,255,0.35);
+      box-shadow: 0 0 18px rgba(107,211,255,0.14);
+      text-decoration:none;
     }
+    .navlink:hover::after{ transform: translateX(120%) rotate(15deg); }
     .navlink.active{
-      border-color: rgba(65,255,122,0.45);
-      box-shadow: 0 0 16px rgba(65,255,122,0.18);
+      border-color: rgba(70,255,127,0.55);
+      box-shadow: 0 0 18px rgba(70,255,127,0.14);
     }
 
-    /* MAIN = scroll snap container */
+    /* ===== MAIN = scroll snap container ===== */
     main{
       height: 100vh;
       overflow-y: auto;
       scroll-snap-type: y mandatory;
-      scroll-padding-top: 74px; /* header height */
+      scroll-padding-top: 74px;
     }
 
-    /* Full page sections */
     section.snap{
       scroll-snap-align: start;
       min-height: 100vh;
@@ -191,85 +222,17 @@
     }
 
     .container{
-      width: min(1100px, 94vw);
+      width: min(1120px, 94vw);
       margin: 0 auto;
     }
 
-    /* IE / Y2K window component */
-    .window{
-      background: var(--panel);
-      border-radius: 14px;
-      box-shadow:
-        0 18px 50px var(--shadow),
-        0 0 0 1px rgba(255,255,255,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Bevel frame */
-    .window::before{
-      content:"";
-      position:absolute;
-      inset: 0;
-      border-radius: 14px;
-      pointer-events:none;
-      box-shadow:
-        inset 2px 2px 0 rgba(255,255,255,0.20),
-        inset -2px -2px 0 rgba(0,0,0,0.55);
-    }
-
-    .titlebar{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      background: linear-gradient(90deg, rgba(70,215,255,0.18), rgba(255,85,221,0.10));
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .title-left{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-family: "Press Start 2P", monospace;
-      font-size: 9px;
-      color: #f2f2ff;
-      letter-spacing: 0.06em;
-    }
-
-    .ie-icon{
-      width: 14px; height: 14px;
-      border-radius: 4px;
-      background:
-        radial-gradient(circle at 30% 30%, var(--yellow), transparent 55%),
-        linear-gradient(135deg, var(--cyan), var(--mag));
-      box-shadow: 0 0 12px rgba(255,230,109,0.25);
-    }
-
-    .title-right{
-      display:flex;
-      gap: 8px;
-    }
-    .winbtn{
-      width: 16px; height: 16px;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.18), inset -1px -1px 0 rgba(0,0,0,0.40);
-    }
-
-    .content{
-      padding: 18px;
-    }
-
-    /* Side scroll indicator (shows what section you're in) */
+    /* ===== Side section tracker (already requested) ===== */
     .side{
       position: fixed;
       right: 14px;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 60;
+      z-index: 90;
       display:flex;
       flex-direction: column;
       gap: 10px;
@@ -287,66 +250,260 @@
       display:flex;
       align-items:center;
       gap: 8px;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      min-width: 120px;
+      min-width: 132px;
       justify-content: space-between;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      position: relative;
+      overflow:hidden;
+    }
+    .side a::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(107,211,255,0.18), transparent);
+      transform: translateX(-140%) rotate(18deg);
+      transition: transform .55s ease;
     }
     .side a:hover{
       transform: translateX(-2px);
-      border-color: rgba(70,215,255,0.35);
-      box-shadow: 0 0 18px rgba(70,215,255,0.14), 0 10px 24px rgba(0,0,0,0.50);
+      border-color: rgba(107,211,255,0.35);
+      box-shadow: 0 0 18px rgba(107,211,255,0.12), 0 10px 24px rgba(0,0,0,0.50);
+      text-decoration:none;
     }
+    .side a:hover::after{ transform: translateX(140%) rotate(18deg); }
     .side a.active{
-      border-color: rgba(65,255,122,0.55);
-      box-shadow: 0 0 20px rgba(65,255,122,0.14), 0 10px 26px rgba(0,0,0,0.55);
+      border-color: rgba(70,255,127,0.60);
+      box-shadow: 0 0 22px rgba(70,255,127,0.14), 0 10px 26px rgba(0,0,0,0.55);
     }
     .dot{
       width: 8px; height: 8px;
       border-radius: 999px;
       background: rgba(255,255,255,0.25);
-      box-shadow: 0 0 0 transparent;
       flex: 0 0 auto;
     }
     .side a.active .dot{
-      background: var(--lime);
-      box-shadow: 0 0 12px rgba(65,255,122,0.55);
+      background: var(--crtGreen);
+      box-shadow: 0 0 14px rgba(70,255,127,0.60);
     }
 
-    /* HERO layout */
+    @media (max-width: 900px){
+      .side{ display:none; }
+      nav{ display:none; }
+      main{ scroll-snap-type: y proximity; }
+    }
+
+    /* ===== “1999 browser / Shockwave era” window ===== */
+    .window{
+      position: relative;
+      border-radius: var(--radius);
+      overflow:hidden;
+
+      /* outer beige frame */
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.0));
+      box-shadow:
+        0 18px 50px var(--shadow),
+        0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    /* Thick “PC plastic” border */
+    .frame{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--beige1), var(--beige2));
+      padding: 10px;
+      box-shadow:
+        inset 2px 2px 0 rgba(255,255,255,0.35),
+        inset -2px -2px 0 rgba(0,0,0,0.35);
+    }
+
+    /* Inner CRT panel */
+    .crt{
+      border-radius: 12px;
+      background:
+        radial-gradient(900px 500px at 50% 30%, rgba(70,255,127,0.12), transparent 60%),
+        radial-gradient(700px 380px at 60% 55%, rgba(107,211,255,0.10), transparent 62%),
+        linear-gradient(180deg, rgba(10,12,18,0.98), rgba(6,7,12,0.96));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        inset 0 0 80px rgba(0,0,0,0.65);
+      overflow:hidden;
+    }
+
+    /* “IE title bar” */
+    .titlebar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(40,86,255,0.75), rgba(16,40,120,0.75));
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      font-family: "VT323", monospace;
+      font-size: 18px;
+      color: #eaf0ff;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+    }
+    .title-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .ie-icon{
+      width: 14px; height: 14px;
+      border-radius: 3px;
+      background:
+        radial-gradient(circle at 30% 30%, var(--crtAmber), transparent 55%),
+        linear-gradient(135deg, var(--crtBlue), var(--crtMag));
+      box-shadow: 0 0 10px rgba(255,211,107,0.22);
+      flex: 0 0 auto;
+    }
+    .title-right{
+      display:flex;
+      gap: 6px;
+    }
+    .winbtn{
+      width: 16px; height: 16px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.20);
+      border: 1px solid rgba(0,0,0,0.22);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.25), inset -1px -1px 0 rgba(0,0,0,0.35);
+    }
+
+    /* Toolbar row like old browser UI */
+    .toolbar{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: linear-gradient(180deg, rgba(230,228,221,0.95), rgba(190,186,176,0.92));
+      border-bottom: 1px solid rgba(0,0,0,0.20);
+      font-family: "VT323", monospace;
+      color: #1b1b1f;
+    }
+    .toolbtn{
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(0,0,0,0.18);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.65), inset -1px -1px 0 rgba(0,0,0,0.18);
+      cursor: default;
+      user-select:none;
+      font-size: 16px;
+      display:flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .toolbtn .ico{
+      width: 10px; height:10px;
+      border-radius: 2px;
+      background: #2a60ff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.20);
+    }
+    .addr{
+      flex: 1 1 auto;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding-left: 6px;
+    }
+    .addr label{
+      font-size:16px;
+      opacity:0.85;
+    }
+    .addrbox{
+      flex: 1 1 auto;
+      background: rgba(255,255,255,0.70);
+      border: 1px solid rgba(0,0,0,0.22);
+      border-radius: 6px;
+      padding: 4px 8px;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.60), inset -1px -1px 0 rgba(0,0,0,0.12);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      min-width: 140px;
+      font-size:16px;
+    }
+    .caret{
+      width: 8px;
+      height: 14px;
+      background: rgba(0,0,0,0.85);
+      margin-left: 8px;
+      animation: blink 1s steps(2) infinite;
+    }
+    @keyframes blink{ 50%{ opacity:0; } }
+
+    /* Inner content */
+    .content{
+      padding: 18px;
+      position: relative;
+    }
+
+    /* Subtle CRT “green glow” overlay inside content */
+    .content::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(70,255,127,0.10), transparent 55%),
+        radial-gradient(circle at 40% 70%, rgba(107,211,255,0.06), transparent 58%);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+    }
+
+    /* ===== HERO ===== */
     .hero-grid{
       display:grid;
       grid-template-columns: 1.6fr 1fr;
       gap: 18px;
       align-items: stretch;
+      position: relative;
+      z-index: 2;
     }
     @media (max-width: 900px){
       .hero-grid{ grid-template-columns: 1fr; }
-      .side{ display:none; } /* hide side nav on small screens */
-      nav{ display:none; }   /* keep it clean on mobile */
-      main{ scroll-snap-type: y proximity; }
     }
 
     .headline{
-      font-family: "Press Start 2P", monospace;
-      font-size: clamp(14px, 2.2vw, 18px);
-      line-height: 1.55;
-      margin: 0 0 12px 0;
-      color: #f7f7ff;
-      text-shadow: 0 0 18px rgba(70,215,255,0.15);
+      font-family: "UnifrakturCook", serif;
+      font-size: clamp(28px, 3.2vw, 42px);
+      line-height: 1.05;
+      margin: 0 0 10px 0;
+      color: #eaf0ff;
+      text-shadow:
+        0 0 18px rgba(107,211,255,0.22),
+        0 0 22px rgba(70,255,127,0.12);
+      letter-spacing: 0.02em;
     }
 
     .sub{
+      font-family: "VT323", monospace;
+      font-size: 20px;
+      line-height: 1.35;
+      margin: 0 0 12px 0;
+      color: rgba(231,231,238,0.88);
+      text-shadow: 0 0 10px rgba(0,0,0,0.35);
+    }
+
+    .type{
+      display:inline-block;
+      border-bottom: 2px dotted rgba(70,255,127,0.55);
+      color: var(--crtGreen);
+      text-shadow: 0 0 14px rgba(70,255,127,0.20);
+      padding: 0 4px;
+      font-family: "Press Start 2P", monospace;
       font-size: 14px;
-      line-height: 1.7;
-      color: rgba(231,231,238,0.86);
-      margin: 0 0 14px 0;
+      transform: translateY(-2px);
     }
 
     .chips{
       display:flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 14px 0 6px;
+      margin: 12px 0 6px;
+      position: relative;
+      z-index: 2;
     }
     .chip{
       font-family: "Press Start 2P", monospace;
@@ -356,15 +513,17 @@
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.06);
     }
-    .chip.lime{ border-color: rgba(65,255,122,0.35); }
-    .chip.cyan{ border-color: rgba(70,215,255,0.35); }
-    .chip.mag{ border-color: rgba(255,85,221,0.35); }
+    .chip.lime{ border-color: rgba(70,255,127,0.35); }
+    .chip.cyan{ border-color: rgba(107,211,255,0.35); }
+    .chip.mag{ border-color: rgba(255,88,217,0.30); }
 
     .cta-row{
       display:flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 14px;
+      margin-top: 12px;
+      position: relative;
+      z-index: 2;
     }
 
     .btn{
@@ -376,21 +535,44 @@
       background: rgba(255,255,255,0.06);
       color: #f2f2ff;
       cursor: pointer;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap: 8px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease;
+      position: relative;
+      overflow:hidden;
+      text-decoration:none;
+    }
+    .btn::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(70,255,127,0.22), transparent);
+      transform: translateX(-130%) rotate(14deg);
+      transition: transform .55s ease;
     }
     .btn:hover{
       transform: translateY(-1px);
-      border-color: rgba(70,215,255,0.35);
-      box-shadow: 0 0 18px rgba(70,215,255,0.12);
+      border-color: rgba(107,211,255,0.35);
+      box-shadow: 0 0 20px rgba(107,211,255,0.14);
+      filter: brightness(1.05);
       text-decoration:none;
     }
+    .btn:hover::after{ transform: translateX(130%) rotate(14deg); }
     .btn.primary{
-      background: linear-gradient(135deg, rgba(65,255,122,0.22), rgba(70,215,255,0.14));
-      border-color: rgba(65,255,122,0.35);
+      background: linear-gradient(135deg, rgba(70,255,127,0.20), rgba(107,211,255,0.12));
+      border-color: rgba(70,255,127,0.35);
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .hint{
+      margin-top: 10px;
+      font-family: "Press Start 2P", monospace;
+      font-size: 8px;
+      color: rgba(231,231,238,0.70);
+      position: relative;
+      z-index: 2;
     }
 
     /* Profile card */
@@ -399,34 +581,27 @@
       display:flex;
       flex-direction: column;
       gap: 12px;
+      position: relative;
+      z-index: 2;
     }
-
     .profile img{
-      width: 100%;
+      width:100%;
       height: 230px;
       object-fit: cover;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      filter: contrast(1.05) saturate(1.05);
     }
-
     .mini{
-      font-size: 13px;
-      line-height: 1.7;
-      color: rgba(231,231,238,0.88);
-      padding: 12px;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.05);
-    }
-
-    .type{
-      display:inline-block;
-      border-right: 2px solid rgba(255,255,255,0.75);
-      padding-right: 4px;
-      white-space: nowrap;
-      color: var(--lime);
-      text-shadow: 0 0 12px rgba(65,255,122,0.18);
+      padding: 12px;
+      font-family: "VT323", monospace;
+      font-size: 18px;
+      line-height: 1.35;
+      color: rgba(231,231,238,0.90);
     }
 
     /* Section headings */
@@ -436,53 +611,78 @@
       letter-spacing: 0.06em;
       margin: 0 0 10px 0;
       color: #f7f7ff;
+      position: relative;
+      z-index: 2;
     }
     .p{
       margin: 0;
       color: rgba(231,231,238,0.88);
       line-height: 1.75;
       font-size: 14px;
+      position: relative;
+      z-index: 2;
     }
 
-    /* Cards / grids */
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-top: 12px;
+      position: relative;
+      z-index: 2;
     }
     @media (max-width: 900px){
       .grid{ grid-template-columns: 1fr; }
     }
 
     .card{
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.05);
       padding: 12px;
       box-shadow: 0 12px 26px rgba(0,0,0,0.45);
     }
-
     .card strong{
       font-family: "Press Start 2P", monospace;
       font-size: 9px;
-      color: var(--yellow);
+      color: var(--crtAmber);
       display:block;
       margin-bottom: 8px;
       letter-spacing: 0.06em;
     }
 
-    /* Footer hint */
-    .hint{
-      margin-top: 10px;
+    /* Little “PLUGIN REQUIRED” badge to match Shockwave-era vibe (not copyrighted) */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
       font-family: "Press Start 2P", monospace;
       font-size: 8px;
-      color: rgba(231,231,238,0.70);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.28);
+      color: rgba(242,242,255,0.92);
+      box-shadow: 0 0 18px rgba(70,255,127,0.10);
+    }
+    .badge .plug{
+      width: 10px; height:10px;
+      border-radius: 2px;
+      background: var(--crtGreen);
+      box-shadow: 0 0 12px rgba(70,255,127,0.45);
+    }
+
+    /* Make windows animate in nicely */
+    .reveal{
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
     }
   </style>
 </head>
 
 <body>
+  <div class="grain" aria-hidden="true"></div>
+
   <header>
     <div class="topbar">
       <div class="brand">
@@ -516,62 +716,82 @@
     <!-- HOME -->
     <section id="home" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left">
-              <span class="ie-icon"></span>
-              <span>about:blank - Microsoft Internet Explorer</span>
-            </div>
-            <div class="title-right">
-              <div class="winbtn" title="Minimize"></div>
-              <div class="winbtn" title="Maximize"></div>
-              <div class="winbtn" title="Close"></div>
-            </div>
-          </div>
-
-          <div class="content">
-            <div class="hero-grid">
-              <div>
-                <h1 class="headline">
-                  Hi, I’m Jesus Hernandez.<br/>
-                  I build <span class="type" id="typeText">robots</span>
-                </h1>
-
-                <p class="sub">
-                  Computer Engineering student focused on robotics, embedded systems, and practical engineering projects.
-                  I like building things that are real: code, circuits, hardware, and systems that actually work.
-                </p>
-
-                <div class="chips">
-                  <span class="chip lime">EMBEDDED</span>
-                  <span class="chip cyan">ROBOTICS</span>
-                  <span class="chip mag">HARDWARE</span>
-                  <span class="chip cyan">C/C++</span>
-                  <span class="chip lime">VERILOG</span>
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left">
+                  <span class="ie-icon"></span>
+                  <span>about:blank - Microsoft Internet Explorer</span>
                 </div>
-
-                <div class="cta-row">
-                  <a class="btn primary" href="#projects">ENTER PROJECTS</a>
-                  <a class="btn" href="#contact">CONTACT</a>
-                  <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">GITHUB</a>
+                <div class="title-right">
+                  <div class="winbtn" title="Minimize"></div>
+                  <div class="winbtn" title="Maximize"></div>
+                  <div class="winbtn" title="Close"></div>
                 </div>
-
-                <div class="hint">TIP: scroll to snap between sections.</div>
               </div>
 
-              <div class="profile">
-                <!-- Put your photo at: /images/profile.jpg -->
-                <img src="images/profile.jpg" alt="Jesus Hernandez profile photo">
-                <div class="mini">
-                  <div class="h2">STATUS</div>
-                  <div class="p">
-                    Building a portfolio that shows <b>real engineering</b>, not just class assignments.
-                    Always improving: cleaner code, better documentation, and stronger demos.
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>Back</div>
+                <div class="toolbtn"><span class="ico"></span>Forward</div>
+                <div class="toolbtn"><span class="ico"></span>Refresh</div>
+                <div class="toolbtn"><span class="ico"></span>Home</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox">
+                    <span>about:blank</span>
+                    <span class="caret" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
-            </div><!-- hero-grid -->
-          </div><!-- content -->
+
+              <div class="content">
+                <div class="hero-grid">
+                  <div>
+                    <h1 class="headline" id="heroTitle">
+                      Hi, I’m Jesus Hernandez.<br/>
+                      I build <span class="type" id="typeText">robots</span>
+                    </h1>
+
+                    <p class="sub" id="heroSub">
+                      Computer Engineering student focused on robotics, embedded systems, and projects that actually work.
+                      I like building real systems: code + circuits + debugging + demos.
+                    </p>
+
+                    <div class="chips">
+                      <span class="chip lime">EMBEDDED</span>
+                      <span class="chip cyan">ROBOTICS</span>
+                      <span class="chip mag">HARDWARE</span>
+                      <span class="chip cyan">C/C++</span>
+                      <span class="chip lime">VERILOG</span>
+                    </div>
+
+                    <div class="cta-row">
+                      <a class="btn primary" href="#projects">ENTER PROJECTS</a>
+                      <a class="btn" href="#contact">CONTACT</a>
+                      <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">GITHUB</a>
+                    </div>
+
+                    <div class="hint">
+                      TIP: scroll to snap between sections. <span style="margin-left:10px" class="badge"><span class="plug"></span>PLUGIN REQUIRED: vibes</span>
+                    </div>
+                  </div>
+
+                  <div class="profile">
+                    <!-- Put your photo at: /images/profile.jpg -->
+                    <img src="images/profile.jpg" alt="Jesus Hernandez profile photo">
+                    <div class="mini">
+                      <div class="h2">STATUS</div>
+                      <div>
+                        Building a portfolio that shows <b>real engineering</b>, not just class assignments.
+                        Always improving: cleaner code, better documentation, stronger demos.
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- hero-grid -->
+              </div><!-- content -->
+            </div><!-- crt -->
+          </div><!-- frame -->
         </div><!-- window -->
       </div><!-- container -->
     </section>
@@ -579,31 +799,45 @@
     <!-- GOALS -->
     <section id="goals" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Goals - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">GOALS</div>
-            <p class="p">
-              I’m aiming for robotics and embedded roles where I can design, build, and test systems end-to-end:
-              firmware + hardware + verification. I care about engineering that’s ethical, purposeful, and reliable.
-            </p>
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Goals - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
+              </div>
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>Favorites</div>
+                <div class="toolbtn"><span class="ico"></span>History</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///goals.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
+              </div>
 
-            <div class="grid">
-              <div class="card">
-                <strong>SHORT TERM</strong>
-                Build standout projects that prove I can ship real systems: sensors, control, embedded code, and testing.
+              <div class="content">
+                <div class="h2">GOALS</div>
+                <p class="p">
+                  I’m aiming for robotics and embedded roles where I can design, build, and test systems end-to-end:
+                  firmware + hardware + verification. I care about engineering that’s ethical, purposeful, and reliable.
+                </p>
+
+                <div class="grid">
+                  <div class="card">
+                    <strong>SHORT TERM</strong>
+                    Build standout projects that prove I can ship real systems: sensors, control, embedded code, and testing.
+                  </div>
+                  <div class="card">
+                    <strong>MID TERM</strong>
+                    Internship where I contribute to robotics/AI products, especially embedded + autonomy.
+                  </div>
+                  <div class="card">
+                    <strong>LONG TERM</strong>
+                    Robotics engineering career focused on useful machines that help people and solve real problems.
+                  </div>
+                </div>
               </div>
-              <div class="card">
-                <strong>MID TERM</strong>
-                Internship where I contribute to robotics/AI products, especially embedded + autonomy.
-              </div>
-              <div class="card">
-                <strong>LONG TERM</strong>
-                Robotics engineering career focused on useful machines that help people and solve real problems.
-              </div>
+
             </div>
           </div>
         </div>
@@ -613,34 +847,48 @@
     <!-- PROJECTS -->
     <section id="projects" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Projects - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">PROJECTS</div>
-            <p class="p">
-              These are the builds I’m most proud of — projects that show engineering thinking, debugging, and execution.
-              (I keep improving documentation, screenshots, and writeups.)
-            </p>
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Projects - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
+              </div>
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>Search</div>
+                <div class="toolbtn"><span class="ico"></span>Tools</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///projects.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
+              </div>
 
-            <div class="grid">
-              <div class="card">
-                <strong>POLYNOMIAL CLASS (C++)</strong>
-                Dynamic memory, operator overloading, correctness and lifecycle. Clean implementation + tests.
+              <div class="content">
+                <div class="h2">PROJECTS</div>
+                <p class="p">
+                  These are the builds I’m most proud of — projects that show engineering thinking, debugging, and execution.
+                  (I keep improving documentation, screenshots, and writeups.)
+                </p>
+
+                <div class="grid">
+                  <div class="card">
+                    <strong>POLYNOMIAL CLASS (C++)</strong>
+                    Dynamic memory, operator overloading, correctness and lifecycle. Clean implementation + tests.
+                  </div>
+                  <div class="card">
+                    <strong>DIGITAL LOGIC (VERILOG)</strong>
+                    FSMs, adders, verification with testbenches and waveforms. RTL design and debugging.
+                  </div>
+                  <div class="card">
+                    <strong>PCB: LM386 AMP</strong>
+                    KiCad schematic + layout, ground strategy, assembly/soldering, real hardware validation.
+                  </div>
+                </div>
+
+                <div class="hint">Next upgrade: add “View Demo” + “View Repo” buttons per project.</div>
               </div>
-              <div class="card">
-                <strong>DIGITAL LOGIC (VERILOG)</strong>
-                FSMs, adders, verification with testbenches and waveforms. RTL design and debugging.
-              </div>
-              <div class="card">
-                <strong>PCB: LM386 AMP</strong>
-                KiCad schematic + layout, ground strategy, assembly/soldering, real hardware validation.
-              </div>
+
             </div>
-
-            <div class="hint">You can add “View Source” buttons later for each project with repo links.</div>
           </div>
         </div>
       </div>
@@ -649,30 +897,45 @@
     <!-- ROOTS -->
     <section id="roots" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Roots - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">ROOTS</div>
-            <p class="p">
-              I’m proud of being Mexican. That pride shows up in how I work: resilience, curiosity, and building real skills.
-              I’m serious about becoming an engineer who makes things that matter.
-            </p>
-            <div class="grid">
-              <div class="card">
-                <strong>VALUES</strong>
-                Purposeful innovation, consistency, and being accountable for results.
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Roots - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
               </div>
-              <div class="card">
-                <strong>STYLE</strong>
-                I like projects that combine hardware + software and end in a real demo.
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>Links</div>
+                <div class="toolbtn"><span class="ico"></span>Mail</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///roots.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
               </div>
-              <div class="card">
-                <strong>WHY</strong>
-                Engineering is my path to build a strong future and help people through technology.
+
+              <div class="content">
+                <div class="h2">ROOTS</div>
+                <p class="p">
+                  I’m proud of being Mexican. That pride shows up in how I work: resilience, curiosity, and building real skills.
+                  I’m serious about becoming an engineer who makes things that matter.
+                </p>
+
+                <div class="grid">
+                  <div class="card">
+                    <strong>VALUES</strong>
+                    Purposeful innovation, consistency, and being accountable for results.
+                  </div>
+                  <div class="card">
+                    <strong>STYLE</strong>
+                    I like projects that combine hardware + software and end in a real demo.
+                  </div>
+                  <div class="card">
+                    <strong>WHY</strong>
+                    Engineering is my path to build a strong future and help people through technology.
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -682,32 +945,46 @@
     <!-- RESEARCH -->
     <section id="research" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Research - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">RESEARCH</div>
-            <p class="p">
-              I’m interested in systems-level research that connects sensing, detection, and reliability —
-              especially for aerospace and robotics. I’ve done literature review + engineering recommendations
-              for detection and identification of orbital debris / end-of-life satellites.
-            </p>
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Research - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
+              </div>
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>Options</div>
+                <div class="toolbtn"><span class="ico"></span>Help</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///research.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
+              </div>
 
-            <div class="grid">
-              <div class="card">
-                <strong>FOCUS</strong>
-                Detection methods: radar/optical/in-situ sensing, real-time constraints, and system limitations.
+              <div class="content">
+                <div class="h2">RESEARCH</div>
+                <p class="p">
+                  I’m interested in systems-level research that connects sensing, detection, and reliability —
+                  especially for aerospace and robotics. I’ve done literature review + engineering recommendations
+                  for detection and identification of orbital debris / end-of-life satellites.
+                </p>
+
+                <div class="grid">
+                  <div class="card">
+                    <strong>FOCUS</strong>
+                    Detection methods: radar/optical/in-situ sensing, real-time constraints, and system limitations.
+                  </div>
+                  <div class="card">
+                    <strong>SKILL</strong>
+                    Turning papers into design requirements, trade studies, and practical recommendations.
+                  </div>
+                  <div class="card">
+                    <strong>NEXT</strong>
+                    Build a small “research-to-prototype” demo: sensor input → classification → output.
+                  </div>
+                </div>
               </div>
-              <div class="card">
-                <strong>SKILL</strong>
-                Turning papers into design requirements, trade studies, and practical recommendations.
-              </div>
-              <div class="card">
-                <strong>NEXT</strong>
-                Build a small “research-to-prototype” demo: sensor input → classification → output.
-              </div>
+
             </div>
           </div>
         </div>
@@ -717,26 +994,40 @@
     <!-- SKILLS -->
     <section id="skills" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Skills - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">SKILLS</div>
-            <div class="grid">
-              <div class="card">
-                <strong>LANGUAGES</strong>
-                C/C++, Java, Python, x86 Assembly, Verilog
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Skills - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
               </div>
-              <div class="card">
-                <strong>TOOLS</strong>
-                Git/GitHub, KiCad, Linux, VS Code, Eclipse, GDB
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>View</div>
+                <div class="toolbtn"><span class="ico"></span>Format</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///skills.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
               </div>
-              <div class="card">
-                <strong>HARDWARE</strong>
-                Debugging, soldering, schematics, PCB layout, basic electronics fundamentals
+
+              <div class="content">
+                <div class="h2">SKILLS</div>
+                <div class="grid">
+                  <div class="card">
+                    <strong>LANGUAGES</strong>
+                    C/C++, Java, Python, x86 Assembly, Verilog
+                  </div>
+                  <div class="card">
+                    <strong>TOOLS</strong>
+                    Git/GitHub, KiCad, Linux, VS Code, Eclipse, GDB
+                  </div>
+                  <div class="card">
+                    <strong>HARDWARE</strong>
+                    Debugging, soldering, schematics, PCB layout, electronics fundamentals
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -746,34 +1037,47 @@
     <!-- CONTACT -->
     <section id="contact" class="snap">
       <div class="container">
-        <div class="window">
-          <div class="titlebar">
-            <div class="title-left"><span class="ie-icon"></span><span>Contact - Internet Explorer</span></div>
-            <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
-          </div>
-          <div class="content">
-            <div class="h2">CONTACT</div>
-            <p class="p">
-              Want to talk projects, internships, or collaborations? Reach out:
-            </p>
-            <div class="grid">
-              <div class="card">
-                <strong>EMAIL</strong>
-                <a href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
+        <div class="window reveal">
+          <div class="frame">
+            <div class="crt">
+              <div class="titlebar">
+                <div class="title-left"><span class="ie-icon"></span><span>Contact - Internet Explorer</span></div>
+                <div class="title-right"><div class="winbtn"></div><div class="winbtn"></div><div class="winbtn"></div></div>
               </div>
-              <div class="card">
-                <strong>GITHUB</strong>
-                <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
-                  github.com/JesusHernandezComputerEngineering
-                </a>
+              <div class="toolbar">
+                <div class="toolbtn"><span class="ico"></span>File</div>
+                <div class="toolbtn"><span class="ico"></span>Edit</div>
+                <div class="addr">
+                  <label>Address</label>
+                  <div class="addrbox"><span>file:///contact.html</span><span class="caret" aria-hidden="true"></span></div>
+                </div>
               </div>
-              <div class="card">
-                <strong>SITE</strong>
-                jesushernandezcomputerengineering.github.io
-              </div>
-            </div>
 
-            <div class="hint">If you want, I can add a “fake IE address bar” + back/forward buttons next.</div>
+              <div class="content">
+                <div class="h2">CONTACT</div>
+                <p class="p">Want to talk projects, internships, or collaborations? Reach out:</p>
+
+                <div class="grid">
+                  <div class="card">
+                    <strong>EMAIL</strong>
+                    <a href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
+                  </div>
+                  <div class="card">
+                    <strong>GITHUB</strong>
+                    <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">
+                      github.com/JesusHernandezComputerEngineering
+                    </a>
+                  </div>
+                  <div class="card">
+                    <strong>SITE</strong>
+                    jesushernandezcomputerengineering.github.io
+                  </div>
+                </div>
+
+                <div class="hint">If you want next: add a “Downloads” area (resume PDF) + a fake “Shockwave install” modal.</div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -781,14 +1085,15 @@
 
   </main>
 
+  <!-- anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-0oS6XlXG+o3u6e4j0bq8rF+2m4c4V2L8tqgYkYkqJYzO2C0E2H0sN8p9D8X3Y6a8fJ3m0J8nq5wQ9mB2nQmYyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script>
-    // Typing rotator (Y2K “status text” vibe)
+    // ========= 1) Typing rotator =========
     (function(){
       const el = document.getElementById("typeText");
       const words = ["robots", "embedded systems", "hardware", "projects", "verification", "cool stuff"];
-      let i = 0;
-      let j = 0;
-      let deleting = false;
+      let i = 0, j = 0, deleting = false;
 
       function tick(){
         const w = words[i % words.length];
@@ -813,12 +1118,12 @@
       tick();
     })();
 
-    // Scroll spy (side + top nav highlight)
+    // ========= 2) Scroll spy (side + top nav highlight) =========
     (function(){
       const root = document.getElementById("scrollRoot");
       const sections = Array.from(document.querySelectorAll("section.snap"));
       const sideLinks = Array.from(document.querySelectorAll(".side a"));
-      const topLinks = Array.from(document.querySelectorAll("nav .navlink"));
+      const topLinks  = Array.from(document.querySelectorAll("nav .navlink"));
 
       const byId = (id) => sections.find(s => s.id === id);
 
@@ -840,7 +1145,6 @@
 
       sections.forEach(s => obs.observe(s));
 
-      // Ensure clicking side links scrolls inside main container (not the page)
       [...sideLinks, ...topLinks].forEach(a=>{
         a.addEventListener("click", (ev)=>{
           const hash = (a.getAttribute("href") || "").trim();
@@ -853,8 +1157,118 @@
         });
       });
 
-      // Default active
       setActive("home");
+    })();
+
+    // ========= 3) anime.js “boot in” + per-section reveal =========
+    (function(){
+      const windows = Array.from(document.querySelectorAll(".window.reveal"));
+
+      // initial boot for first window
+      anime({
+        targets: windows[0],
+        opacity: [0, 1],
+        translateY: [24, 0],
+        scale: [0.985, 1],
+        duration: 780,
+        easing: "easeOutExpo"
+      });
+
+      // title text “letter pop” (only on home)
+      const hero = document.getElementById("heroTitle");
+      const heroSub = document.getElementById("heroSub");
+
+      // Wrap hero title letters for anime
+      function wrapLetters(el){
+        const text = el.innerHTML;
+        // keep <br/> and spans intact: wrap only text nodes by splitting carefully
+        // simple approach: wrap only plain text segments
+        const tmp = document.createElement("div");
+        tmp.innerHTML = text;
+        const walker = document.createTreeWalker(tmp, NodeFilter.SHOW_TEXT, null);
+
+        const textNodes = [];
+        while(walker.nextNode()) textNodes.push(walker.currentNode);
+
+        textNodes.forEach(node=>{
+          const frag = document.createDocumentFragment();
+          const chars = node.textContent.split("");
+          chars.forEach(ch=>{
+            const span = document.createElement("span");
+            span.className = "letter";
+            span.textContent = ch;
+            frag.appendChild(span);
+          });
+          node.parentNode.replaceChild(frag, node);
+        });
+
+        el.innerHTML = tmp.innerHTML;
+      }
+
+      wrapLetters(hero);
+
+      anime.timeline({ easing: "easeOutExpo" })
+        .add({
+          targets: "#heroTitle .letter",
+          opacity: [0, 1],
+          translateY: [10, 0],
+          duration: 520,
+          delay: anime.stagger(10),
+        })
+        .add({
+          targets: heroSub,
+          opacity: [0, 1],
+          translateY: [10, 0],
+          duration: 520
+        }, "-=240");
+
+      // Per-section reveal when section becomes active
+      const root = document.getElementById("scrollRoot");
+      const sections = Array.from(document.querySelectorAll("section.snap"));
+
+      const seen = new Set();
+      const revealObs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(!e.isIntersecting) return;
+          const win = e.target.querySelector(".window.reveal");
+          if(!win || seen.has(win)) return;
+          seen.add(win);
+
+          anime({
+            targets: win,
+            opacity: [0, 1],
+            translateY: [18, 0],
+            scale: [0.985, 1],
+            duration: 680,
+            easing: "easeOutExpo"
+          });
+
+          // tiny “CRT jitter” for flavor
+          anime({
+            targets: win,
+            translateX: [0, 1, -1, 0],
+            duration: 220,
+            easing: "linear",
+            delay: 220
+          });
+        });
+      }, { root, threshold: 0.60 });
+
+      sections.forEach(s => revealObs.observe(s));
+
+      // Hover “micro-jitter” on buttons + side links (very Y2K)
+      const hoverTargets = document.querySelectorAll(".btn, .navlink, .side a");
+      hoverTargets.forEach(el=>{
+        el.addEventListener("mouseenter", ()=>{
+          anime.remove(el);
+          anime({
+            targets: el,
+            translateX: [0, -1, 1, 0],
+            duration: 220,
+            easing: "linear"
+          });
+        });
+      });
     })();
   </script>
 </body>
