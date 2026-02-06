@@ -1,28 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jesus Hernandez | Computer Engineering Portfolio</title>
-
-  <!-- Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Jesus Hernandez — Computer Engineering</title>
+  <meta name="description" content="Portfolio of Jesus Hernandez (SJSU). Embedded systems, digital design, robotics, and software." />
 
   <style>
     :root{
-      --bg:#040a06;
-      --panel:#07120a;
-      --panel2:#08160c;
-      --text:#d7ffe2;
-      --muted:#9ad6ab;
-      --line:rgba(47,255,120,.22);
-      --line2:rgba(47,255,120,.10);
-      --neon:#2bff78;
-      --neon2:#00ffb3;
-      --warn:#ff3b3b;
-      --shadow:0 18px 55px rgba(0,0,0,.55);
-      --radius:22px;
+      --bg: #0b0b0f;
+      --paper: rgba(255,255,255,.06);
+      --paper2: rgba(255,255,255,.10);
+      --ink: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.62);
+      --hairline: rgba(255,255,255,.14);
+      --accent: #b7ffcf; /* soft mint */
+      --accent2: #ffd6f4; /* soft pink */
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 18px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
@@ -32,849 +27,536 @@
     body{
       margin:0;
       background:
-        radial-gradient(1200px 800px at 75% 15%, rgba(0,255,179,.12), transparent 55%),
-        radial-gradient(900px 700px at 15% 85%, rgba(43,255,120,.10), transparent 55%),
-        linear-gradient(180deg, #020603, #020603 35%, #020603);
-      color:var(--text);
-      font-family:var(--sans);
-      overflow:hidden;
+        radial-gradient(900px 700px at 70% 20%, rgba(183,255,207,.08), transparent 58%),
+        radial-gradient(900px 650px at 20% 80%, rgba(255,214,244,.07), transparent 58%),
+        linear-gradient(180deg, #0a0a0e, #07070b);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow-x:hidden;
     }
 
-    /* Y2K CRT scan + noise */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.03),
-          rgba(255,255,255,.03) 1px,
-          rgba(0,0,0,0) 3px,
-          rgba(0,0,0,0) 6px
-        );
-      mix-blend-mode:overlay;
-      opacity:.22;
-      z-index:1;
-    }
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-      opacity:.08;
-      z-index:1;
-    }
+    a{ color: var(--ink); text-decoration:none }
+    a:hover{ opacity:.85 }
 
-    /* Top nav */
+    /* ====== Top bar ====== */
     header{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      z-index:10;
-      padding:14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(11,11,15,.78), rgba(11,11,15,.35));
+      border-bottom: 1px solid var(--hairline);
+    }
+    .top{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 18px;
       display:flex;
       align-items:center;
-      justify-content:center;
-      pointer-events:none;
+      justify-content: space-between;
+      gap: 14px;
     }
-    nav{
-      pointer-events:auto;
-      width:min(1100px, 96vw);
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:linear-gradient(180deg, rgba(8,22,12,.78), rgba(4,10,6,.62));
-      box-shadow:0 12px 45px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-    .brand{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-family:var(--mono);
-      letter-spacing:.2px;
-      white-space:nowrap;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:var(--neon);
-      box-shadow:0 0 12px rgba(43,255,120,.65);
-    }
-    .navlinks{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      align-items:center;
-    }
-    .navlink{
-      font-family:var(--mono);
-      font-size:12px;
-      text-decoration:none;
-      color:var(--muted);
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition:transform .12s ease, border-color .12s ease, background .12s ease, color .12s ease;
-    }
-    .navlink:hover{
-      transform:translateY(-1px);
-      border-color:var(--line);
-      background:rgba(43,255,120,.06);
-      color:var(--text);
-    }
-    .navlink.active{
-      border-color:rgba(43,255,120,.5);
-      background:rgba(43,255,120,.10);
-      color:var(--text);
-      box-shadow:0 0 0 3px rgba(43,255,120,.08) inset;
-    }
-
-    /* Side scrollspy */
-    .side{
-      position:fixed;
-      right:16px;
-      top:50%;
-      transform:translateY(-50%);
-      z-index:9;
+    .stamp{
       display:flex;
       flex-direction:column;
-      gap:10px;
-      pointer-events:none;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      user-select:none;
     }
-    .side a{
-      pointer-events:auto;
-      width:14px;height:14px;border-radius:999px;
-      border:1px solid rgba(43,255,120,.35);
-      background:rgba(4,10,6,.55);
-      box-shadow:0 10px 25px rgba(0,0,0,.35);
-      position:relative;
-      transition:transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .side a::after{
-      content:attr(data-label);
-      position:absolute;
-      right:22px;
-      top:50%;
-      transform:translateY(-50%);
-      font-family:var(--mono);
-      font-size:11px;
-      color:rgba(215,255,226,.85);
-      background:rgba(8,22,12,.88);
-      border:1px solid var(--line);
-      padding:6px 8px;
-      border-radius:999px;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .12s ease, transform .12s ease;
-      white-space:nowrap;
-    }
-    .side a:hover::after{
-      opacity:1;
-      transform:translateY(-50%) translateX(-2px);
-    }
-    .side a.active{
-      background:rgba(43,255,120,.22);
-      border-color:rgba(43,255,120,.75);
-      transform:scale(1.08);
-      box-shadow:0 0 0 4px rgba(43,255,120,.10), 0 0 18px rgba(43,255,120,.28);
-    }
-
-    /* Scroll container */
-    #scrollRoot{
-      position:absolute;
-      inset:0;
-      padding-top:78px;
-      overflow-y:auto;
-      scroll-snap-type:y mandatory;
-      scroll-behavior:smooth;
-      z-index:2;
-    }
-
-    section.snap{
-      scroll-snap-align:start;
-      min-height:calc(100vh - 78px);
+    .nav{
       display:flex;
       align-items:center;
-      justify-content:center;
-      padding:34px 18px 56px;
-    }
-
-    /* “Window” cards */
-    .window{
-      width:min(1080px, 96vw);
-      border-radius:var(--radius);
-      border:1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(8,22,12,.78), rgba(4,10,6,.62));
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .window::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius:var(--radius);
-      background:
-        radial-gradient(650px 140px at 18% 0%, rgba(43,255,120,.20), transparent 65%),
-        radial-gradient(520px 130px at 82% 0%, rgba(0,255,179,.14), transparent 65%);
-      opacity:.9;
-      pointer-events:none;
-      z-index:0;
-    }
-    .chrome{
-      position:relative;
-      z-index:1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 14px;
-      border-bottom:1px solid var(--line2);
-      background:rgba(0,0,0,.18);
-      font-family:var(--mono);
-      font-size:12px;
-      color:rgba(215,255,226,.75);
-    }
-    .chrome .left{
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .lights{
-      display:flex;
-      gap:6px;
-      align-items:center;
-    }
-    .light{width:10px;height:10px;border-radius:50%}
-    .l1{background:#ff5f57}
-    .l2{background:#febc2e}
-    .l3{background:#28c840}
-
-    .chrome .tag{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      opacity:.95;
-    }
-    .kbd{
-      border:1px solid rgba(43,255,120,.25);
-      padding:2px 6px;
-      border-radius:7px;
-      color:rgba(215,255,226,.85);
-      background:rgba(43,255,120,.06);
-      font-size:11px;
-    }
-
-    .content{
-      position:relative;
-      z-index:1;
-      padding:26px 22px 30px;
-    }
-
-    h1,h2,h3{margin:0}
-    h1{
-      font-family:var(--mono);
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 12px;
       letter-spacing:.2px;
-      font-size:clamp(28px, 3.1vw, 42px);
-      line-height:1.1;
     }
-    .sub{
-      margin-top:10px;
-      font-family:var(--mono);
-      color:rgba(154,214,171,.95);
-      line-height:1.45;
-      max-width:70ch;
-      font-size:14px;
+    .nav a{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
     }
-    .grid{
+    .nav a:hover{
+      border-color: var(--hairline);
+      background: rgba(255,255,255,.05);
+    }
+
+    /* ====== Layout ====== */
+    main{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 18px 80px;
+    }
+
+    .hero{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
-      gap:20px;
+      gap: 18px;
       align-items:start;
-      margin-top:18px;
+      margin-top: 10px;
     }
-    @media (max-width: 900px){
-      .grid{grid-template-columns:1fr}
-      .side{display:none}
-      #scrollRoot{padding-top:92px}
-      section.snap{min-height:calc(100vh - 92px)}
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
     }
 
-    .card{
-      border:1px solid var(--line2);
-      border-radius:18px;
-      background:linear-gradient(180deg, rgba(7,18,10,.70), rgba(4,10,6,.55));
-      padding:16px 14px;
+    .panel{
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .label{
-      font-family:var(--mono);
-      font-size:11px;
-      color:rgba(215,255,226,.70);
-      margin-bottom:8px;
-      letter-spacing:.1px;
+    .panel .inner{ padding: 18px; }
+
+    .kicker{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing:.2px;
+      margin-bottom: 10px;
     }
-    .pillrow{
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(34px, 4.6vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      font-weight: 760;
+    }
+    .sub{
+      margin: 0 0 14px;
+      color: rgba(255,255,255,.78);
+      line-height: 1.55;
+      max-width: 70ch;
+      font-size: 15px;
+    }
+    .chips{
       display:flex;
-      gap:8px;
       flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
     }
-    .pill{
-      font-family:var(--mono);
-      font-size:11px;
-      border:1px solid rgba(43,255,120,.20);
-      background:rgba(43,255,120,.06);
-      color:rgba(215,255,226,.88);
-      padding:6px 10px;
-      border-radius:999px;
+    .chip{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.80);
+      border: 1px solid var(--hairline);
+      background: rgba(255,255,255,.05);
+      padding: 8px 10px;
+      border-radius: 999px;
     }
 
-    .btnrow{
+    .btnRow{
       display:flex;
-      gap:10px;
       flex-wrap:wrap;
-      margin-top:14px;
+      gap: 10px;
+      margin-top: 14px;
     }
     .btn{
       display:inline-flex;
       align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:12px;
-      border:1px solid rgba(43,255,120,.28);
-      background:rgba(43,255,120,.08);
-      color:var(--text);
-      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--hairline);
+      background: rgba(255,255,255,.06);
+      font-family: var(--mono);
+      font-size: 12px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
     }
     .btn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(43,255,120,.65);
-      background:rgba(0,255,179,.10);
-    }
-    .btn.secondary{
-      border-color:rgba(215,255,226,.18);
-      background:rgba(215,255,226,.04);
-      color:rgba(215,255,226,.88);
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
     }
 
-    /* Rotating text */
-    .type{
-      display:inline-flex;
+    /* ====== “Stickers” (draggable) ====== */
+    .stage{
+      min-height: 420px;
+      position: relative;
+      border-top: 1px solid var(--hairline);
+      background:
+        radial-gradient(700px 480px at 50% 30%, rgba(183,255,207,.06), transparent 60%),
+        radial-gradient(650px 500px at 55% 90%, rgba(255,214,244,.05), transparent 60%);
+    }
+    .stageNote{
+      position:absolute;
+      top: 14px;
+      left: 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      user-select:none;
+      display:flex;
       align-items:center;
-      gap:10px;
-      margin-top:8px;
-      font-family:var(--mono);
-      font-size:13px;
-      color:rgba(215,255,226,.92);
+      gap: 10px;
     }
-    .cursor{
-      width:10px;height:18px;
-      background:rgba(43,255,120,.85);
-      box-shadow:0 0 14px rgba(43,255,120,.60);
-      display:inline-block;
-      animation:blink .9s step-end infinite;
+    .stageNote .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
     }
-    @keyframes blink{50%{opacity:0}}
 
-    /* Section titles */
-    .sectionTitle{
-      font-family:var(--mono);
-      font-size:18px;
-      margin-bottom:10px;
-      color:rgba(215,255,226,.95);
+    .sticker{
+      position:absolute;
+      width: min(320px, 78vw);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(10,10,14,.65);
+      box-shadow: 0 24px 70px rgba(0,0,0,.55);
+      overflow:hidden;
+      cursor: grab;
+      user-select:none;
+      touch-action:none;
+      transform: translate3d(0,0,0);
     }
-    .list{
+    .sticker:active{ cursor: grabbing; }
+    .sticker .bar{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.78);
+    }
+    .sticker .bar .mini{
+      display:flex;
+      gap:6px;
+      align-items:center;
+    }
+    .pill{
+      width: 9px; height: 9px; border-radius: 999px;
+      background: rgba(255,255,255,.18);
+    }
+    .sticker .content{ padding: 12px; }
+    .sticker img{
+      width:100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      display:block;
+    }
+    .sticker h3{
+      margin: 10px 0 6px;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .sticker p{
+      margin: 0;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* ====== Sections ====== */
+    .section{
+      margin-top: 18px;
+      padding: 16px 0 0;
+    }
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .grid{
       display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card{
+      grid-column: span 6;
+      border: 1px solid var(--hairline);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 14px;
+      font-family: var(--mono);
+      letter-spacing:.2px;
+    }
+    .card p{
+      margin: 0 0 10px;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .card .links{
+      display:flex;
       gap:10px;
+      flex-wrap:wrap;
+      font-family: var(--mono);
+      font-size: 12px;
     }
-    .item{
-      border:1px solid rgba(43,255,120,.16);
-      border-radius:16px;
-      background:rgba(0,0,0,.18);
-      padding:14px 12px;
+    .card .links a{
+      border-bottom: 1px solid rgba(255,255,255,.25);
+      padding-bottom: 2px;
     }
-    .item h3{
-      font-family:var(--mono);
-      font-size:14px;
-      margin-bottom:6px;
-      color:rgba(215,255,226,.94);
-    }
-    .item p{
-      margin:0;
-      color:rgba(154,214,171,.95);
-      font-size:13px;
-      line-height:1.45;
+    @media (max-width: 900px){
+      .card{ grid-column: span 12; }
     }
 
-    /* Reveal defaults */
-    .reveal{opacity:0; transform: translateY(12px);}
-
-    /* Hero “letters” helper */
-    .letter{display:inline-block; opacity:0}
-
-    /* Footer small */
-    .tiny{
-      margin-top:14px;
-      color:rgba(154,214,171,.80);
-      font-family:var(--mono);
-      font-size:11px;
+    footer{
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--hairline);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap:wrap;
     }
   </style>
 </head>
 
 <body>
-
 <header>
-  <nav>
-    <div class="brand">
-      <span class="dot"></span>
-      <span>Jesus Hernandez</span>
-      <span style="opacity:.6">|</span>
-      <span style="opacity:.85">Computer Engineering</span>
+  <div class="top">
+    <div class="stamp">
+      <div id="dateLine">--/--/----</div>
+      <div id="timeLine">--:-- --</div>
     </div>
 
-    <div class="navlinks">
-      <a class="navlink" href="#home">Home</a>
-      <a class="navlink" href="#projects">Projects</a>
-      <a class="navlink" href="#research">Research</a>
-      <a class="navlink" href="#skills">Skills</a>
-      <a class="navlink" href="#contact">Contact</a>
-    </div>
-  </nav>
+    <nav class="nav">
+      <a href="#projects">PROJECTS</a>
+      <a href="#research">RESEARCH</a>
+      <a href="#skills">SKILLS</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </div>
 </header>
 
-<div class="side">
-  <a href="#home" data-section="home" data-label="home"></a>
-  <a href="#projects" data-section="projects" data-label="projects"></a>
-  <a href="#research" data-section="research" data-label="research"></a>
-  <a href="#skills" data-section="skills" data-label="skills"></a>
-  <a href="#contact" data-section="contact" data-label="contact"></a>
-</div>
-
-<main id="scrollRoot">
-
-  <!-- HOME -->
-  <section id="home" class="snap">
-    <div class="window reveal">
-      <div class="chrome">
-        <div class="left">
-          <div class="lights">
-            <span class="light l1"></span>
-            <span class="light l2"></span>
-            <span class="light l3"></span>
-          </div>
-          <span>system://portfolio/home</span>
-        </div>
-        <div class="tag">
-          <span class="kbd">scroll</span>
-          <span class="kbd">click sections</span>
-        </div>
-      </div>
-
-      <div class="content">
-        <h1 id="heroTitle">Hi, I am <span style="color:var(--neon)">Jesus</span>.</h1>
-        <div class="type">
-          <span>I build</span>
-          <span id="typeText"></span>
-          <span class="cursor"></span>
-        </div>
-        <p class="sub" id="heroSub">
-          Computer Engineering student at SJSU. I like building hardware plus software systems that actually do something in the real world: embedded, robotics, and clean engineering.
-        </p>
-
-        <div class="grid">
-          <div class="card">
-            <div class="label">quick links</div>
-            <div class="btnrow">
-              <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="btn secondary" href="mailto:jesus.m.hernandez01@sjsu.edu">Email</a>
-              <!-- Replace with your PDF file path in your repo -->
-              <a class="btn secondary" href="assets/Jesus_Hernandez_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-            </div>
-            <div class="tiny">Tip: put your resume PDF in /assets/ and keep this link stable.</div>
-          </div>
-
-          <div class="card">
-            <div class="label">focus areas</div>
-            <div class="pillrow">
-              <span class="pill">Embedded Systems</span>
-              <span class="pill">Digital Logic</span>
-              <span class="pill">C/C++</span>
-              <span class="pill">Robotics</span>
-              <span class="pill">Verification</span>
-              <span class="pill">PCB Design</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="snap">
-    <div class="window reveal">
-      <div class="chrome">
-        <div class="left">
-          <div class="lights">
-            <span class="light l1"></span>
-            <span class="light l2"></span>
-            <span class="light l3"></span>
-          </div>
-          <span>system://portfolio/projects</span>
-        </div>
-        <div class="tag">
-          <span class="kbd">featured</span>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="sectionTitle">Projects</div>
-        <div class="list">
-          <div class="item">
-            <h3>Polynomial Class Library (C++)</h3>
-            <p>Dynamic memory management, operator overloading, correct copy behavior, and evaluation.</p>
-          </div>
-          <div class="item">
-            <h3>Digital Logic and Verification (Verilog)</h3>
-            <p>FSMs, adders, counters, D flip flops, testbenches, and waveform validation.</p>
-          </div>
-          <div class="item">
-            <h3>Instruction Set Simulator (C + x86)</h3>
-            <p>Instruction parsing, ALU ops, binary IO, debugging on Linux.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESEARCH -->
-  <section id="research" class="snap">
-    <div class="window reveal">
-      <div class="chrome">
-        <div class="left">
-          <div class="lights">
-            <span class="light l1"></span>
-            <span class="light l2"></span>
-            <span class="light l3"></span>
-          </div>
-          <span>system://portfolio/research</span>
-        </div>
-        <div class="tag">
-          <span class="kbd">NASA</span>
-          <span class="kbd">systems</span>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="sectionTitle">Research</div>
-        <div class="list">
-          <div class="item">
-            <h3>Orbital debris detection and identification</h3>
-            <p>Studying ground radar, optical sensing, and in situ methods; proposing improvements for small particle detection in real time.</p>
-          </div>
-          <div class="item">
-            <h3>Proposal writing and evaluation (L'SPACE)</h3>
-            <p>Technical trade studies, subsystem framing, and stakeholder style documentation.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="snap">
-    <div class="window reveal">
-      <div class="chrome">
-        <div class="left">
-          <div class="lights">
-            <span class="light l1"></span>
-            <span class="light l2"></span>
-            <span class="light l3"></span>
-          </div>
-          <span>system://portfolio/skills</span>
-        </div>
-        <div class="tag">
-          <span class="kbd">tooling</span>
-          <span class="kbd">stack</span>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="sectionTitle">Skills</div>
-        <div class="grid">
-          <div class="card">
-            <div class="label">languages</div>
-            <div class="pillrow">
-              <span class="pill">C</span><span class="pill">C++</span><span class="pill">Python</span>
-              <span class="pill">Verilog</span><span class="pill">x86 Assembly</span><span class="pill">Java</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="label">tools</div>
-            <div class="pillrow">
-              <span class="pill">KiCad</span><span class="pill">Git/GitHub</span><span class="pill">Linux</span>
-              <span class="pill">ModelSim</span><span class="pill">VS Code</span><span class="pill">Eclipse</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="snap">
-    <div class="window reveal">
-      <div class="chrome">
-        <div class="left">
-          <div class="lights">
-            <span class="light l1"></span>
-            <span class="light l2"></span>
-            <span class="light l3"></span>
-          </div>
-          <span>system://portfolio/contact</span>
-        </div>
-        <div class="tag">
-          <span class="kbd">reach me</span>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="sectionTitle">Contact</div>
+<main>
+  <div class="hero">
+    <section class="panel">
+      <div class="inner">
+        <div class="kicker">Computer Engineering · SJSU · Bay Area</div>
+        <h1>Jesus Hernandez</h1>
         <p class="sub">
-          Want to talk robotics, embedded, or a project opportunity? Email me and I will reply.
+          I build embedded and digital systems that are testable, documented, and real.
+          I like work where you can measure progress: waveforms, logs, signals, and results.
         </p>
-        <div class="btnrow">
-          <a class="btn" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
-          <a class="btn secondary" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">github.com/JesusHernandezComputerEngineering</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
+        <div class="chips">
+          <span class="chip">C/C++</span>
+          <span class="chip">Verilog</span>
+          <span class="chip">KiCad</span>
+          <span class="chip">Linux</span>
+          <span class="chip">Robotics</span>
+        </div>
+
+        <div class="btnRow">
+          <a class="btn" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">↗ GitHub</a>
+          <a class="btn" href="mailto:jesus.m.hernandez01@sjsu.edu">✉ Email</a>
+          <!-- put your resume at assets/resume.pdf -->
+          <a class="btn" href="assets/resume.pdf" target="_blank" rel="noreferrer">⬇ Resume</a>
+        </div>
+
+        <div class="section" id="projects">
+          <h2>Featured projects</h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Polynomial Class Library (C++)</h3>
+              <p>Dynamic arrays, operator overloading, correct copy behavior, evaluation, and clean API.</p>
+              <div class="links">
+                <a href="#" title="Replace with repo link">repo</a>
+                <a href="#" title="Replace with writeup link">writeup</a>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Digital Logic + Verification (Verilog)</h3>
+              <p>FSMs, adders, counters, testbenches, waveform validation, and readable RTL.</p>
+              <div class="links">
+                <a href="#" title="Replace with repo link">repo</a>
+                <a href="#" title="Replace with waveforms link">waveforms</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="research">
+          <h2>Research</h2>
+          <div class="grid">
+            <div class="card" style="grid-column: span 12;">
+              <h3>Orbital debris + end-of-life satellite detection</h3>
+              <p>Comparing radar, optical, and in situ sensing methods, focusing on improvements for real time small-particle detection.</p>
+              <div class="links">
+                <a href="#" title="Replace with pdf link in your repo">pdf</a>
+                <a href="#" title="Replace with sources link">sources</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="skills">
+          <h2>Skills</h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Languages</h3>
+              <p>C, C++, Python, Verilog, Java, x86 Assembly</p>
+            </div>
+            <div class="card">
+              <h3>Tools</h3>
+              <p>KiCad, Git/GitHub, Linux, ModelSim, VS Code, Eclipse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="contact">
+          <h2>Contact</h2>
+          <div class="grid">
+            <div class="card" style="grid-column: span 12;">
+              <h3>Let’s build</h3>
+              <p>Email me with the role + what you want me to build. I respond fastest by email.</p>
+              <div class="links">
+                <a href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a>
+                <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noreferrer">github</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <span>© <span id="year"></span> Jesus Hernandez</span>
+          <span>“drag to move” stickers on the right →</span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- Right: draggable “sticker stage” -->
+    <aside class="panel">
+      <div class="stage" id="stage">
+        <div class="stageNote"><span class="dot"></span> Drag to move</div>
+
+        <div class="sticker" data-drag style="left: 18px; top: 64px;">
+          <div class="bar">
+            <span>me.jpg</span>
+            <span class="mini"><span class="pill"></span><span class="pill"></span><span class="pill"></span></span>
+          </div>
+          <div class="content">
+            <img src="assets/me.jpg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'">
+            <h3>Hi, I’m Jesus.</h3>
+            <p>Computer Engineering at SJSU. I like embedded + robotics + clean documentation.</p>
+          </div>
+        </div>
+
+        <div class="sticker" data-drag style="left: 140px; top: 255px; width: min(340px, 82vw);">
+          <div class="bar">
+            <span>currently.txt</span>
+            <span class="mini"><span class="pill"></span><span class="pill"></span><span class="pill"></span></span>
+          </div>
+          <div class="content">
+            <h3>Currently</h3>
+            <p>
+              building: portfolio that feels like a product<br/>
+              learning: verification habits + cleaner repos<br/>
+              looking for: internships in embedded/robotics
+            </p>
+          </div>
+        </div>
+
+        <div class="sticker" data-drag style="left: 40px; top: 360px;">
+          <div class="bar">
+            <span>featured.project</span>
+            <span class="mini"><span class="pill"></span><span class="pill"></span><span class="pill"></span></span>
+          </div>
+          <div class="content">
+            <h3>Best demo</h3>
+            <p>Add a screenshot/GIF here later (waveforms, PCB render, or robot clip).</p>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+  </div>
 </main>
 
-  <!-- anime.js (loaded without SRI to avoid integrity mismatches on GitHub Pages) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script>
+  // ======= date/time stamp (like a “moment captured”) =======
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function formatDate(d){
+    const mm = pad(d.getMonth()+1);
+    const dd = pad(d.getDate());
+    const yyyy = d.getFullYear();
+    return `${mm}/${dd}/${yyyy}`;
+  }
+  function formatTime(d){
+    let h = d.getHours();
+    const m = pad(d.getMinutes());
+    const ampm = h >= 12 ? "PM" : "AM";
+    h = h % 12; if (h === 0) h = 12;
+    return `${h}:${m} ${ampm}`;
+  }
+  function tick(){
+    const d = new Date();
+    document.getElementById("dateLine").textContent = formatDate(d);
+    document.getElementById("timeLine").textContent = formatTime(d);
+  }
+  tick(); setInterval(tick, 15000);
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  <script>
-    // ================================================================
-    // Robust UI scripts (won't break if an element/library is missing)
-    // ================================================================
-    document.addEventListener("DOMContentLoaded", () => {
+  // ======= draggable stickers =======
+  (function(){
+    const stage = document.getElementById("stage");
+    let z = 10;
 
-      // ========= 1) Typing rotator ("I build ...") =========
-      (function(){
-        const el = document.getElementById("typeText");
-        if(!el) return;
+    function bringToFront(el){ el.style.zIndex = String(++z); }
 
-        const words = ["robots", "embedded systems", "hardware", "projects", "verification", "cool stuff"];
-        let i = 0, j = 0, deleting = false;
+    function pointerToStage(e){
+      const r = stage.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
 
-        function tick(){
-          // If the element got removed (route changes, edits, etc.), stop safely
-          if(!document.body.contains(el)) return;
+    function makeDraggable(el){
+      let dragging = false;
+      let start = {x:0,y:0};
+      let origin = {x:0,y:0};
 
-          const w = words[i % words.length];
+      el.addEventListener("pointerdown", (e)=>{
+        dragging = true;
+        bringToFront(el);
+        el.setPointerCapture(e.pointerId);
+        const p = pointerToStage(e);
+        start = p;
+        origin = {
+          x: parseFloat(el.style.left || "0"),
+          y: parseFloat(el.style.top || "0")
+        };
+      });
 
-          if(!deleting){
-            j++;
-            el.textContent = w.slice(0, j);
-            if(j >= w.length){
-              deleting = true;
-              setTimeout(tick, 900);
-              return;
-            }
-          }else{
-            j--;
-            el.textContent = w.slice(0, j);
-            if(j <= 0){
-              deleting = false;
-              i++;
-            }
-          }
-          setTimeout(tick, deleting ? 35 : 55);
-        }
-        tick();
-      })();
+      el.addEventListener("pointermove", (e)=>{
+        if(!dragging) return;
+        const p = pointerToStage(e);
+        const dx = p.x - start.x;
+        const dy = p.y - start.y;
+        el.style.left = (origin.x + dx) + "px";
+        el.style.top  = (origin.y + dy) + "px";
+      });
 
-      // ========= 2) Scroll spy (side + top nav highlight) =========
-      (function(){
-        const root = document.getElementById("scrollRoot");
-        const sections = Array.from(document.querySelectorAll("section.snap"));
-        const sideLinks = Array.from(document.querySelectorAll(".side a"));
-        const topLinks  = Array.from(document.querySelectorAll("nav .navlink"));
+      el.addEventListener("pointerup", ()=>{
+        dragging = false;
+      });
+      el.addEventListener("pointercancel", ()=>{
+        dragging = false;
+      });
+    }
 
-        if(!root || sections.length === 0) return;
-
-        const byId = (id) => sections.find(s => s.id === id);
-
-        function setActive(id){
-          sideLinks.forEach(a => a.classList.toggle("active", a.dataset.section === id));
-          topLinks.forEach(a => {
-            const hash = (a.getAttribute("href") || "").replace("#","");
-            a.classList.toggle("active", hash === id);
-          });
-        }
-
-        const obs = new IntersectionObserver((entries)=>{
-          entries.forEach(e=>{
-            if(e.isIntersecting) setActive(e.target.id);
-          });
-        }, { root, threshold: 0.55 });
-
-        sections.forEach(s => obs.observe(s));
-
-        [...sideLinks, ...topLinks].forEach(a=>{
-          a.addEventListener("click", (ev)=>{
-            const hash = (a.getAttribute("href") || "").trim();
-            if(!hash.startsWith("#")) return;
-            ev.preventDefault();
-            const id = hash.slice(1);
-            const target = byId(id);
-            if(!target) return;
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        });
-
-        setActive("home");
-      })();
-
-      // ========= 3) anime.js “boot in” + per-section reveal =========
-      // Wait briefly for anime.js (in case the CDN is slow). If it's not available,
-      // the site still works — it just won't animate.
-      (function(){
-        function whenAnimeReady(cb){
-          if(window.anime) return cb();
-          const start = performance.now();
-          (function poll(){
-            if(window.anime) return cb();
-            if(performance.now() - start > 2500) return; // give up silently
-            requestAnimationFrame(poll);
-          })();
-        }
-
-        whenAnimeReady(() => {
-          const windows = Array.from(document.querySelectorAll(".window.reveal"));
-          if(windows.length === 0) return;
-
-          // initial boot for first window
-          window.anime({
-            targets: windows[0],
-            opacity: [0, 1],
-            translateY: [24, 0],
-            scale: [0.985, 1],
-            duration: 780,
-            easing: "easeOutExpo"
-          });
-
-          // title text “letter pop” (only on home)
-          const hero = document.getElementById("heroTitle");
-          const heroSub = document.getElementById("heroSub");
-
-          function wrapLetters(el){
-            if(!el) return;
-            const tmp = document.createElement("div");
-            tmp.innerHTML = el.innerHTML;
-
-            const walker = document.createTreeWalker(tmp, NodeFilter.SHOW_TEXT, null);
-            const textNodes = [];
-            while(walker.nextNode()) textNodes.push(walker.currentNode);
-
-            textNodes.forEach(node=>{
-              const frag = document.createDocumentFragment();
-              node.textContent.split("").forEach(ch=>{
-                const span = document.createElement("span");
-                span.className = "letter";
-                span.textContent = ch;
-                frag.appendChild(span);
-              });
-              node.parentNode.replaceChild(frag, node);
-            });
-
-            el.innerHTML = tmp.innerHTML;
-          }
-
-          if(hero){
-            wrapLetters(hero);
-
-            window.anime.timeline({ easing: "easeOutExpo" })
-              .add({
-                targets: "#heroTitle .letter",
-                opacity: [0, 1],
-                translateY: [10, 0],
-                duration: 520,
-                delay: window.anime.stagger(10),
-              })
-              .add({
-                targets: heroSub,
-                opacity: [0, 1],
-                translateY: [10, 0],
-                duration: 520
-              }, "-=240");
-          }
-
-          // Per-section reveal when section becomes active
-          const root = document.getElementById("scrollRoot");
-          const sections = Array.from(document.querySelectorAll("section.snap"));
-          if(!root || sections.length === 0) return;
-
-          const seen = new Set();
-          const revealObs = new IntersectionObserver((entries)=>{
-            entries.forEach(e=>{
-              if(!e.isIntersecting) return;
-              const win = e.target.querySelector(".window.reveal");
-              if(!win || seen.has(win)) return;
-              seen.add(win);
-
-              window.anime({
-                targets: win,
-                opacity: [0, 1],
-                translateY: [18, 0],
-                scale: [0.985, 1],
-                duration: 680,
-                easing: "easeOutExpo"
-              });
-
-              // tiny “CRT jitter” for flavor
-              window.anime({
-                targets: win,
-                translateX: [0, 1, -1, 0],
-                duration: 220,
-                easing: "linear",
-                delay: 220
-              });
-            });
-          }, { root, threshold: 0.60 });
-
-          sections.forEach(s => revealObs.observe(s));
-
-          // Hover “micro-jitter” on buttons + side links (very Y2K)
-          const hoverTargets = document.querySelectorAll(".btn, .navlink, .side a");
-          hoverTargets.forEach(el=>{
-            el.addEventListener("mouseenter", ()=>{
-              window.anime.remove(el);
-              window.anime({
-                targets: el,
-                translateX: [0, -1, 1, 0],
-                duration: 220,
-                easing: "linear"
-              });
-            });
-          });
-        });
-      })();
-    });
-  </script>
+    document.querySelectorAll("[data-drag]").forEach(makeDraggable);
+  })();
+</script>
 </body>
 </html>
