@@ -16,8 +16,8 @@
 
       --panel: rgba(0,0,0,.55);
       --panelBorder: rgba(255,255,255,.10);
-      --btn: rgba(255,255,255,.08);
-      --btnHover: rgba(255,255,255,.12);
+      --link: rgba(255,255,255,.92);
+      --linkHover: rgba(255,255,255,1);
     }
 
     *{ box-sizing:border-box; }
@@ -29,6 +29,15 @@
       font-family: Arial, Helvetica, sans-serif;
       overflow:hidden;
     }
+
+    /* ===== SCREENS ROUTER ===== */
+    .screen{
+      position:fixed;
+      inset:0;
+      z-index:2;
+      display:none;
+    }
+    .screen.active{ display:block; }
 
     /* ===== Top strip ===== */
     .topbar{
@@ -48,24 +57,57 @@
       user-select:none;
     }
 
-    /* ===== SCREENS (each is a full page) ===== */
-    .screen{
+    /* ===== Secondary nav for inner pages ===== */
+    .subnav{
       position:fixed;
-      inset:0;
-      padding-top:34px; /* topbar space */
-      z-index: 1;
-      display:none;     /* only active shows */
+      top:34px; left:0; right:0;
+      height:38px;
+      z-index:49;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 18px;
+      background: rgba(0,0,0,.55);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      user-select:none;
+      padding: 0 12px;
     }
-    .screen.active{ display:block; }
+    .subnav a{
+      color: rgba(255,255,255,.78);
+      text-decoration:none;
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 6px 6px;
+      border-radius: 4px;
+      transition: opacity .12s ease, transform .12s ease;
+      opacity: .9;
+      white-space: nowrap;
+    }
+    .subnav a:hover{
+      color: rgba(255,255,255,1);
+      opacity: 1;
+      transform: translateY(-1px);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .subnav a.active{
+      color: rgba(255,255,255,1);
+      opacity: 1;
+    }
 
-    /* ===== Home: Video background ===== */
-    .home-bg{
+    /* hide subnav on home (because menu is centered already) */
+    .subnav.hidden{ display:none; }
+
+    /* ===== HOME: Video background ===== */
+    .bg-video{
       position:absolute;
       inset:0;
+      z-index:0;
       overflow:hidden;
       background:#000;
     }
-    .home-bg video{
+    .bg-video video{
       position:absolute;
       top:50%;
       left:50%;
@@ -77,60 +119,61 @@
       object-fit:cover;
       filter: saturate(1.05) contrast(1.05);
     }
-
-    /* ===== Section pages: Image background ===== */
-    .img-bg{
+    .overlay-home{
       position:absolute;
       inset:0;
-      background:#000;
-      overflow:hidden;
-    }
-    .img-bg::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: url("images/BackgroundWebsite.jpg") center / cover no-repeat;
-      filter: contrast(1.05) saturate(1.05);
-      transform: scale(1.03);
-    }
-    /* darken for readability */
-    .img-bg::after{
-      content:"";
-      position:absolute;
-      inset:0;
+      z-index:1;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 70%, rgba(0,0,0,.86) 100%);
-    }
-
-    /* ===== Shared overlay ===== */
-    .overlay{
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(circle at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,.58) 70%, rgba(0,0,0,.78) 100%);
+        radial-gradient(circle at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,.60) 70%, rgba(0,0,0,.80) 100%);
       pointer-events:none;
     }
 
-    /* ===== Center content (Home) ===== */
-    .center{
+    /* ===== INNER PAGES: Image background ===== */
+    .bg-image{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      background: #000 url("images/BackgroundWebsite.jpg") center/cover no-repeat;
+      filter: contrast(1.02) saturate(1.02);
+    }
+    .overlay-inner{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 70%, rgba(0,0,0,.88) 100%);
+      pointer-events:none;
+    }
+
+    /* ===== Layout containers ===== */
+    .screen-content{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      padding-top: 34px; /* topbar */
+    }
+    .screen-content.with-subnav{
+      padding-top: 34px + 38px;
+    }
+
+    /* Home center stack */
+    .home-center{
       position:absolute;
       inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding: 28px 18px 24px;
-      z-index: 2;
+      padding: 72px 18px 24px;
+      z-index:2;
     }
     .stack{
       text-shadow: var(--shadow);
       user-select:none;
       opacity: 0;
       transition: opacity 900ms ease;
-      transform: translateY(-6px);
     }
-    .stack.is-visible{ opacity:1; }
-
+    .stack.is-visible{ opacity: 1; }
     .logo{
       font-size: 34px;
       font-weight: 700;
@@ -159,7 +202,7 @@
       align-items:center;
     }
     .menu a{
-      color: var(--text);
+      color: var(--link);
       text-decoration:none;
       font-size: 13px;
       letter-spacing: .8px;
@@ -176,140 +219,177 @@
       text-underline-offset: 3px;
     }
 
-    /* ===== Page panel ===== */
-    .page{
+    /* ===== Inner page panel ===== */
+    .page-wrap{
       position:absolute;
-      inset:0;
-      z-index:2;
+      inset: 34px 0 0 0;
+      padding-top: 38px; /* space for subnav */
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 24px 18px;
+      z-index:2;
     }
+
     .panel{
       width: min(980px, 92vw);
+      max-height: calc(100vh - 34px - 38px - 44px);
+      overflow:auto;
       background: var(--panel);
       border: 1px solid var(--panelBorder);
-      border-radius: 12px;
-      box-shadow: 0 18px 70px rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      overflow:hidden;
+      border-radius: 14px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      padding: 18px 18px 16px;
     }
-    .panel-inner{
-      padding: 18px 18px 14px;
-    }
-    .panel-kicker{
-      font-size: 11px;
+
+    .panel h2{
+      margin: 0 0 10px;
+      font-size: 13px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: rgba(255,255,255,.78);
-      margin-bottom: 10px;
     }
 
+    /* ABOUT layout */
     .about-grid{
       display:grid;
       grid-template-columns: 320px 1fr;
       gap: 18px;
       align-items:start;
     }
-    .me-box{
-      border: 1px solid rgba(255,255,255,.12);
+
+    .me-card{
+      border: 1px solid rgba(255,255,255,.10);
       border-radius: 12px;
       overflow:hidden;
       background: rgba(0,0,0,.35);
-      min-height: 320px;
+    }
+    .me-photo{
+      width:100%;
+      aspect-ratio: 1/1;
+      background: rgba(0,0,0,.35);
       display:flex;
       align-items:center;
       justify-content:center;
       position:relative;
     }
-    .me-box img{
+    .me-photo img{
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit: cover;
       display:block;
-      opacity: .95;
+      filter: contrast(1.05) saturate(1.02);
     }
-    .me-hint{
+    .me-photo .placeholder{
       position:absolute;
-      left:10px; right:10px; bottom:10px;
-      font-size: 11px;
-      color: rgba(255,255,255,.72);
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 14px;
+      text-align:center;
+      color: rgba(255,255,255,.70);
+      font-size: 12px;
+      letter-spacing: .6px;
       background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 8px 10px;
-      border-radius: 10px;
+    }
+    .me-meta{
+      padding: 10px 12px 12px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.78);
+      line-height: 1.45;
     }
 
-    .h1{
-      margin:0;
+    .about-title{
+      margin: 0 0 6px;
       font-size: 28px;
       letter-spacing: .2px;
       line-height: 1.1;
     }
-    .typed-line{
-      margin-top: 8px;
-      font-size: 12.5px;
-      letter-spacing: 1.7px;
+
+    .iam-line{
+      margin: 10px 0 12px;
+      font-size: 13px;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.86);
+      color: rgba(255,255,255,.80);
     }
-    .typed-line .label{ color: rgba(255,255,255,.72); }
-    .typed-line .typed{ color: var(--red); }
+    .iam-line b{
+      color: var(--red);
+      font-weight: 700;
+    }
     .caret{
       display:inline-block;
-      width: 8px;
-      margin-left: 4px;
-      color: rgba(255,255,255,.75);
-      animation: blink 1s steps(2) infinite;
+      width: 10px;
+      margin-left: 2px;
+      border-right: 2px solid rgba(255,255,255,.70);
+      height: 14px;
+      transform: translateY(2px);
+      animation: blink 0.9s steps(2) infinite;
     }
-    @keyframes blink{ 50%{ opacity: 0; } }
+    @keyframes blink{
+      0%, 49% { opacity:1; }
+      50%, 100% { opacity:0; }
+    }
 
-    .p{
-      margin-top: 12px;
-      font-size: 13.5px;
+    .about-text{
+      color: rgba(255,255,255,.82);
       line-height: 1.55;
-      color: rgba(255,255,255,.86);
-    }
-    .bullets{
-      margin-top: 12px;
-      color: rgba(255,255,255,.84);
       font-size: 13.5px;
-      line-height: 1.45;
-      padding-left: 18px;
+      margin: 0 0 10px;
     }
-    .bullets li{ margin: 6px 0; }
 
-    .panel-footer{
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 12px 14px;
+    .hobbies{
+      margin-top: 10px;
+      padding-top: 10px;
       border-top: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.28);
+    }
+    .hobbies h3{
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+    }
+    .hobbies ul{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* Buttons row */
+    .panel-actions{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      justify-content:flex-end;
     }
     .btn{
       appearance:none;
-      border: 1px solid rgba(255,255,255,.12);
-      background: var(--btn);
-      color: rgba(255,255,255,.92);
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      letter-spacing: 1px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.90);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       cursor:pointer;
-      transition: transform .12s ease, background .12s ease;
+      transition: transform .12s ease, opacity .12s ease, border-color .12s ease;
     }
-    .btn:hover{ background: var(--btnHover); transform: translateY(-1px); }
-    .btn:active{ transform: translateY(0px); }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.26);
+    }
 
     /* ===== CRT overlay (scanlines + noise + vignette + flicker) ===== */
     .crt{
       position:fixed;
       inset:0;
-      z-index: 90;
+      z-index:60;
       pointer-events:none;
     }
     .crt::before{
@@ -333,13 +413,14 @@
       background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
       background-size: 3px 3px;
       opacity: .18;
+      transform: translateZ(0);
       animation: noiseMove 0.9s steps(2) infinite;
       mix-blend-mode: overlay;
     }
     .vignette{
       position:fixed;
       inset:0;
-      z-index: 88;
+      z-index:59;
       pointer-events:none;
       background: radial-gradient(circle at center,
         rgba(0,0,0,0) 35%,
@@ -350,7 +431,7 @@
     .flicker{
       position:fixed;
       inset:0;
-      z-index: 89;
+      z-index:58;
       pointer-events:none;
       background: rgba(255,255,255,0.03);
       opacity: 0;
@@ -374,39 +455,43 @@
     .boot{
       position:fixed;
       inset:0;
-      z-index: 120;
+      z-index:70;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:#000;
+      background: #000;
       color: rgba(180,255,180,.92);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       padding: 24px;
       transition: opacity 700ms ease, visibility 700ms ease;
     }
-    .boot.hidden{ opacity:0; visibility:hidden; }
+    .boot.hidden{
+      opacity: 0;
+      visibility: hidden;
+    }
     .boot-inner{
       width:min(720px, 92vw);
       text-align:left;
-      line-height:1.35;
+      line-height: 1.35;
       text-shadow: 0 0 14px rgba(0,255,0,.18);
     }
     .boot-title{
-      font-size:14px;
-      letter-spacing:1px;
-      margin-bottom:10px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: rgba(180,255,180,.9);
+      margin-bottom: 10px;
     }
     .boot-lines{
-      font-size:12.5px;
-      white-space:pre-wrap;
-      opacity:.95;
+      font-size: 12.5px;
+      opacity: .95;
+      white-space: pre-wrap;
     }
     .boot-bar{
-      margin-top:14px;
-      height:10px;
-      border:1px solid rgba(180,255,180,.45);
-      overflow:hidden;
+      margin-top: 14px;
+      height: 10px;
+      border: 1px solid rgba(180,255,180,.45);
       background: rgba(0,0,0,.35);
+      overflow:hidden;
     }
     .boot-bar > div{
       height:100%;
@@ -419,15 +504,18 @@
       margin-top: 12px;
       font-size: 11px;
       opacity: .75;
+      color: rgba(180,255,180,.8);
     }
     .poweron{
       position:absolute;
       inset:0;
-      background:#fff;
+      background: #fff;
       opacity:0;
       pointer-events:none;
     }
-    .poweron.play{ animation: powerOn 900ms ease forwards; }
+    .poweron.play{
+      animation: powerOn 900ms ease forwards;
+    }
     @keyframes powerOn{
       0%{ opacity:0; }
       10%{ opacity:.95; }
@@ -437,21 +525,24 @@
       100%{ opacity:0; }
     }
 
+    /* Mobile */
     @media (max-width: 860px){
       .about-grid{ grid-template-columns: 1fr; }
-      .me-box{ min-height: 260px; }
-      .h1{ font-size: 24px; }
+      .panel{ padding: 16px; }
+      .about-title{ font-size: 26px; }
     }
     @media (max-width: 420px){
       .logo{ font-size: 28px; }
       .menu a{ font-size: 12px; }
       .topbar{ font-size: 10px; letter-spacing: 1.5px; }
+      .subnav{ gap: 10px; }
     }
+
+    /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
-      .crt::after, .flicker{ animation:none; }
-      .menu a, .btn{ transition:none; }
+      .crt::after, .flicker, .caret{ animation:none; }
+      .menu a, .btn, .subnav a{ transition:none; }
       .poweron.play{ animation:none; }
-      .caret{ animation:none; }
     }
   </style>
 </head>
@@ -459,178 +550,212 @@
 <body>
   <div class="topbar">JESUS HERNANDEZ | PORTFOLIO</div>
 
-  <!-- BOOT -->
-  <div class="boot" id="boot" role="dialog" aria-label="Boot screen">
-    <div class="poweron" id="poweron" aria-hidden="true"></div>
-    <div class="boot-inner">
-      <div class="boot-title">JH BIOS v1.0  —  CRT INITIALIZATION</div>
-      <div class="boot-lines" id="bootLines"></div>
-      <div class="boot-bar" aria-hidden="true"><div id="bootFill"></div></div>
-      <div class="boot-hint">Click anywhere to skip.</div>
-    </div>
-  </div>
+  <!-- Subnav (hidden on Home) -->
+  <nav class="subnav hidden" id="subnav" aria-label="Sections">
+    <a href="#home" data-route="home">Home</a>
+    <a href="#about" data-route="about">About Me</a>
+    <a href="#skills" data-route="skills">Skills</a>
+    <a href="#projects" data-route="projects">Projects</a>
+    <a href="#research" data-route="research">Research</a>
+    <a href="#contact" data-route="contact">Contact</a>
+  </nav>
 
-  <!-- CRT -->
+  <!-- CRT effects -->
   <div class="vignette" aria-hidden="true"></div>
   <div class="flicker" aria-hidden="true"></div>
   <div class="crt" aria-hidden="true"></div>
 
-  <!-- ================= HOME SCREEN ================= -->
+  <!-- Boot screen -->
+  <div class="boot" id="boot" role="dialog" aria-label="Boot screen">
+    <div class="poweron" id="poweron" aria-hidden="true"></div>
+
+    <div class="boot-inner">
+      <div class="boot-title">JH BIOS v1.0  —  CRT INITIALIZATION</div>
+      <div class="boot-lines" id="bootLines"></div>
+
+      <div class="boot-bar" aria-hidden="true">
+        <div id="bootFill"></div>
+      </div>
+
+      <div class="boot-hint">Click anywhere to skip.</div>
+    </div>
+  </div>
+
+  <!-- =========================
+       HOME SCREEN
+  ========================== -->
   <section class="screen active" id="screen-home" aria-label="Home">
-    <div class="home-bg" aria-hidden="true">
+    <div class="bg-video" aria-hidden="true">
       <video autoplay muted loop playsinline preload="auto">
+        <!-- Your file is inside images/ -->
+        <source src="images/background.mp4" type="video/mp4" />
+        <!-- fallback if you kept beachVid.mp4 -->
         <source src="images/beachVid.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="overlay" aria-hidden="true"></div>
+    <div class="overlay-home" aria-hidden="true"></div>
 
-    <main class="center">
+    <main class="home-center">
       <div class="stack" id="stack">
         <h1 class="logo">Jesus Hernandez</h1>
         <div class="subline">Computer Engineering</div>
         <div class="timestamp" id="ts">Loading time...</div>
 
         <nav class="menu" aria-label="Main">
-          <a href="#about">About Me</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#research">Research</a>
-          <a href="#contact">Contact</a>
+          <a href="#about" data-route="about">About Me</a>
+          <a href="#skills" data-route="skills">Skills</a>
+          <a href="#projects" data-route="projects">Projects</a>
+          <a href="#research" data-route="research">Research</a>
+          <a href="#contact" data-route="contact">Contact</a>
         </nav>
       </div>
     </main>
   </section>
 
-  <!-- ================= ABOUT SCREEN ================= -->
+  <!-- =========================
+       ABOUT SCREEN
+  ========================== -->
   <section class="screen" id="screen-about" aria-label="About Me">
-    <div class="img-bg" aria-hidden="true"></div>
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="overlay-inner" aria-hidden="true"></div>
 
-    <div class="page">
-      <div class="panel" role="region" aria-label="About panel">
-        <div class="panel-inner">
-          <div class="panel-kicker">ABOUT ME</div>
+    <div class="page-wrap">
+      <div class="panel">
+        <h2>About Me</h2>
 
-          <div class="about-grid">
-            <!-- Put your photo at images/me.jpg -->
-            <div class="me-box">
-              <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.querySelector('.me-hint').style.display='block';">
-              <div class="me-hint" style="display:none;">Add your photo as: <b>images/me.jpg</b></div>
+        <div class="about-grid">
+          <div class="me-card">
+            <div class="me-photo">
+              <!-- Put your photo at: images/me.jpg -->
+              <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="placeholder" style="display:none;">
+                Add your photo as: <b style="margin-left:6px;">images/me.jpg</b>
+              </div>
+            </div>
+            <div class="me-meta">
+              <div><b>Location:</b> Bay Area, CA</div>
+              <div><b>School:</b> San Jose State University</div>
+              <div><b>Focus:</b> Embedded + Digital Design + Robotics</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="about-title">Hi, I’m Jesus Hernandez.</h3>
+
+            <div class="iam-line">
+              I AM <b id="iamWord">BUILDING</b><span class="caret" aria-hidden="true"></span>
             </div>
 
-            <div>
-              <h2 class="h1">Hi, I’m Jesus Hernandez.</h2>
+            <p class="about-text">
+              I’m a Computer Engineering student at San Jose State University. I’m studying digital logic and verification,
+              computer architecture, embedded systems, and software engineering. I like projects where I can prove things work:
+              waveforms, testbenches, logs, and real hardware behavior.
+            </p>
 
-              <div class="typed-line" aria-label="Rotating description">
-                <span class="label">I AM </span>
-                <span class="typed" id="typedText">BUILDING</span><span class="caret">█</span>
-              </div>
+            <p class="about-text">
+              I’m especially interested in robotics engineering, sensing, and systems built with purpose. I care about ethical,
+              practical engineering that actually helps people.
+            </p>
 
-              <p class="p">
-                I’m a Computer Engineering student at San Jose State University. I’m studying digital logic and verification,
-                computer architecture, embedded systems, and software engineering. I like projects where I can prove things work:
-                waveforms, testbenches, logs, and real hardware behavior.
-              </p>
-
-              <p class="p">
-                I’m especially interested in robotics engineering, sensing, and systems that are built with purpose.
-                I care about doing engineering that’s ethical and actually helps people.
-              </p>
-
-              <ul class="bullets">
-                <li>Hands-on electronics and PCB design (KiCad, soldering, debugging)</li>
-                <li>Digital design and verification (Verilog, testbenches, waveforms)</li>
-                <li>Robotics + autonomy interests (real-world constraints, reliable systems)</li>
-                <li>Personal: gym, building side projects, and always learning something new</li>
+            <div class="hobbies">
+              <h3>Hobbies</h3>
+              <ul>
+                <li>Hands-on electronics and building things (PCBs, embedded projects, debugging)</li>
+                <li>Robotics and automation ideas (especially assistive and human-centered robotics)</li>
+                <li>Learning by shipping: turning class projects into portfolio-quality builds</li>
               </ul>
+            </div>
+
+            <div class="panel-actions">
+              <button class="btn" data-route="home">Back</button>
+              <button class="btn" data-route="skills">Next: Skills</button>
             </div>
           </div>
         </div>
-
-        <div class="panel-footer">
-          <button class="btn" type="button" data-go="home">Back</button>
-          <button class="btn" type="button" data-go="skills">Next: Skills</button>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= SKILLS SCREEN (placeholder) ================= -->
+  <!-- =========================
+       SKILLS SCREEN (placeholder)
+  ========================== -->
   <section class="screen" id="screen-skills" aria-label="Skills">
-    <div class="img-bg" aria-hidden="true"></div>
-    <div class="page">
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="page-wrap">
       <div class="panel">
-        <div class="panel-inner">
-          <div class="panel-kicker">SKILLS</div>
-          <h2 class="h1">Skills</h2>
-          <p class="p">Placeholder. We’ll build this next.</p>
-        </div>
-        <div class="panel-footer">
-          <button class="btn" type="button" data-go="about">Back</button>
-          <button class="btn" type="button" data-go="projects">Next: Projects</button>
+        <h2>Skills</h2>
+        <p class="about-text">Next we’ll build this screen (clean categories, tools, and proof links).</p>
+        <div class="panel-actions">
+          <button class="btn" data-route="about">Back</button>
+          <button class="btn" data-route="projects">Next: Projects</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= PROJECTS SCREEN (placeholder) ================= -->
+  <!-- =========================
+       PROJECTS SCREEN (placeholder)
+  ========================== -->
   <section class="screen" id="screen-projects" aria-label="Projects">
-    <div class="img-bg" aria-hidden="true"></div>
-    <div class="page">
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="page-wrap">
       <div class="panel">
-        <div class="panel-inner">
-          <div class="panel-kicker">PROJECTS</div>
-          <h2 class="h1">Projects</h2>
-          <p class="p">Placeholder. We’ll build this later.</p>
-        </div>
-        <div class="panel-footer">
-          <button class="btn" type="button" data-go="skills">Back</button>
-          <button class="btn" type="button" data-go="research">Next: Research</button>
+        <h2>Projects</h2>
+        <p class="about-text">Next we’ll build your projects grid with screenshots, source links, and short “what I learned”.</p>
+        <div class="panel-actions">
+          <button class="btn" data-route="skills">Back</button>
+          <button class="btn" data-route="research">Next: Research</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= RESEARCH SCREEN (placeholder) ================= -->
+  <!-- =========================
+       RESEARCH SCREEN (placeholder)
+  ========================== -->
   <section class="screen" id="screen-research" aria-label="Research">
-    <div class="img-bg" aria-hidden="true"></div>
-    <div class="page">
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="page-wrap">
       <div class="panel">
-        <div class="panel-inner">
-          <div class="panel-kicker">RESEARCH</div>
-          <h2 class="h1">Research</h2>
-          <p class="p">Placeholder. We’ll build this later.</p>
-        </div>
-        <div class="panel-footer">
-          <button class="btn" type="button" data-go="projects">Back</button>
-          <button class="btn" type="button" data-go="contact">Next: Contact</button>
+        <h2>Research</h2>
+        <p class="about-text">Next we’ll add your research highlights + PDF links + concise impact bullets.</p>
+        <div class="panel-actions">
+          <button class="btn" data-route="projects">Back</button>
+          <button class="btn" data-route="contact">Next: Contact</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= CONTACT SCREEN (placeholder) ================= -->
+  <!-- =========================
+       CONTACT SCREEN (placeholder)
+  ========================== -->
   <section class="screen" id="screen-contact" aria-label="Contact">
-    <div class="img-bg" aria-hidden="true"></div>
-    <div class="page">
+    <div class="bg-image" aria-hidden="true"></div>
+    <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="page-wrap">
       <div class="panel">
-        <div class="panel-inner">
-          <div class="panel-kicker">CONTACT</div>
-          <h2 class="h1">Contact</h2>
-          <p class="p">
-            Email: <a href="mailto:jesus.m.hernandez01@sjsu.edu" style="color:rgba(255,255,255,.92);">jesus.m.hernandez01@sjsu.edu</a><br/>
-            GitHub: <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener" style="color:rgba(255,255,255,.92);">JesusHernandezComputerEngineering</a>
-          </p>
-        </div>
-        <div class="panel-footer">
-          <button class="btn" type="button" data-go="research">Back</button>
-          <button class="btn" type="button" data-go="home">Home</button>
+        <h2>Contact</h2>
+        <p class="about-text">
+          Email: <a style="color:rgba(255,255,255,.92)" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a><br/>
+          GitHub: <a style="color:rgba(255,255,255,.92)" href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener">JesusHernandezComputerEngineering</a>
+        </p>
+        <div class="panel-actions">
+          <button class="btn" data-route="research">Back</button>
+          <button class="btn" data-route="home">Home</button>
         </div>
       </div>
     </div>
   </section>
 
   <script>
-    /* ========= Timestamp ========= */
+    /* =========================
+       Timestamp like example
+    ========================== */
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
@@ -646,7 +771,9 @@
     tick();
     setInterval(tick, 15000);
 
-    /* ========= Boot ========= */
+    /* =========================
+       Boot sequence
+    ========================== */
     const boot = document.getElementById('boot');
     const stack = document.getElementById('stack');
     const bootLines = document.getElementById('bootLines');
@@ -655,14 +782,15 @@
 
     const lines = [
       "[OK] VIDEO SIGNAL DETECTED",
+      "[OK] RESOLUTION: 1920x1080 @ 60Hz",
       "[OK] SCANLINE GENERATOR: ONLINE",
       "[OK] NOISE BUFFER: ONLINE",
       "[OK] SYNC: STABLE",
       "",
       "LOADING INTERFACE..."
     ];
-    let idx = 0;
 
+    let idx = 0;
     function typeNextLine(){
       if(idx >= lines.length) return;
       bootLines.textContent += (lines[idx] + "\n");
@@ -674,89 +802,106 @@
     function finishBoot(){
       boot.classList.add('hidden');
       stack.classList.add('is-visible');
+      document.body.style.overflow = "hidden";
     }
 
     poweron.classList.add('play');
     setTimeout(() => {
       typeNextLine();
       setTimeout(() => bootFill.style.width = "100%", 450);
-      setTimeout(finishBoot, 2400);
+      setTimeout(finishBoot, 2600);
     }, 150);
 
     window.addEventListener('click', () => {
       if(!boot.classList.contains('hidden')) finishBoot();
     }, { once: true });
 
-    /* ========= Screen routing (true separate full screens) ========= */
-    const screens = {
-      home: document.getElementById('screen-home'),
-      about: document.getElementById('screen-about'),
-      skills: document.getElementById('screen-skills'),
-      projects: document.getElementById('screen-projects'),
-      research: document.getElementById('screen-research'),
-      contact: document.getElementById('screen-contact'),
-    };
+    /* =========================
+       Router: one screen at a time
+    ========================== */
+    const subnav = document.getElementById('subnav');
+    const routes = ["home","about","skills","projects","research","contact"];
 
-    function showScreen(name){
-      Object.values(screens).forEach(s => s.classList.remove('active'));
-      (screens[name] || screens.home).classList.add('active');
+    function setActiveRoute(route){
+      if(!routes.includes(route)) route = "home";
+
+      // screens
+      for(const r of routes){
+        const el = document.getElementById(`screen-${r}`);
+        if(el) el.classList.toggle("active", r === route);
+      }
+
+      // show subnav on non-home screens
+      subnav.classList.toggle("hidden", route === "home");
+
+      // highlight current link in subnav
+      document.querySelectorAll('[data-route]').forEach(a => {
+        if(a.closest('.subnav')){
+          a.classList.toggle('active', a.dataset.route === route);
+        }
+      });
+
+      // update hash without jumping
+      if(location.hash !== `#${route}`){
+        history.replaceState(null, "", `#${route}`);
+      }
     }
 
-    function routeFromHash(){
-      const h = (location.hash || "#home").replace("#","");
-      if(screens[h]) showScreen(h);
-      else showScreen("home");
-    }
-
-    window.addEventListener('hashchange', routeFromHash);
-    routeFromHash();
-
-    // Footer buttons
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-go]');
-      if(!btn) return;
-      const dest = btn.getAttribute('data-go');
-      location.hash = "#" + dest;
+    // click handling for all nav/buttons
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-route]");
+      if(!t) return;
+      e.preventDefault();
+      setActiveRoute(t.dataset.route);
     });
 
-    /* ========= About: typing loop "I AM ..." ========= */
-    const typedEl = document.getElementById('typedText');
+    // allow direct hash nav
+    function routeFromHash(){
+      const h = (location.hash || "#home").replace("#","").trim().toLowerCase();
+      setActiveRoute(h || "home");
+    }
+    window.addEventListener("hashchange", routeFromHash);
+    routeFromHash();
+
+    /* =========================
+       About: Type + erase rotating strings
+    ========================== */
+    const iamEl = document.getElementById("iamWord");
     const phrases = [
-      "BUILDING RELIABLE SYSTEMS",
-      "DEBUGGING REAL HARDWARE",
-      "LEARNING ROBOTICS",
-      "WRITING CLEAN CODE",
-      "DESIGNING PCBS"
+      "BUILDING ROBOTICS",
+      "DEBUGGING HARDWARE",
+      "DESIGNING PCBS",
+      "WRITING CLEAN C++",
+      "LEARNING FAST",
+      "SHIPPING PROJECTS"
     ];
-    let pIndex = 0, char = 0;
+
+    let pIndex = 0;
+    let charIndex = 0;
     let deleting = false;
 
     function typeLoop(){
-      // Only animate when About screen is visible
-      const aboutActive = screens.about.classList.contains('active');
-      if(!aboutActive){
-        setTimeout(typeLoop, 180);
-        return;
-      }
-
       const current = phrases[pIndex];
+
       if(!deleting){
-        char++;
-        typedEl.textContent = current.slice(0, char);
-        if(char >= current.length){
+        charIndex++;
+        iamEl.textContent = current.slice(0, charIndex);
+        if(charIndex >= current.length){
           deleting = true;
-          setTimeout(typeLoop, 900);
+          setTimeout(typeLoop, 1100);
           return;
         }
-      }else{
-        char--;
-        typedEl.textContent = current.slice(0, Math.max(0, char));
-        if(char <= 0){
+      } else {
+        charIndex--;
+        iamEl.textContent = current.slice(0, charIndex);
+        if(charIndex <= 0){
           deleting = false;
           pIndex = (pIndex + 1) % phrases.length;
         }
       }
-      setTimeout(typeLoop, deleting ? 40 : 55);
+
+      const speed = deleting ? 35 : 55;
+      setTimeout(typeLoop, speed);
     }
     typeLoop();
   </script>
