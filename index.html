@@ -308,11 +308,278 @@
       100%{ opacity:0; }
     }
 
+    /* ===== Music widget (spinning disc + play/pause) ===== */
+    .music-widget{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 12; /* above CRT + main content */
+      width: 74px;
+      height: 74px;
+      user-select: none;
+    }
+
+    .disc{
+      position:absolute;
+      inset: 0;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 35%),
+        radial-gradient(circle at center, rgba(0,0,0,.25), rgba(0,0,0,.65)),
+        conic-gradient(from 90deg,
+          rgba(255,255,255,.18),
+          rgba(255,255,255,.05),
+          rgba(255,255,255,.14),
+          rgba(255,255,255,.04),
+          rgba(255,255,255,.18)
+        );
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
+      overflow:hidden;
+
+      animation: spin 2.6s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .disc-center{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width: 14px;
+      height: 14px;
+      transform: translate(-50%,-50%);
+      border-radius: 999px;
+      background: rgba(0,0,0,.75);
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: 0 0 0 5px rgba(255,255,255,.05);
+    }
+
+    .music-btn{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(0,0,0,.50);
+      color: rgba(255,255,255,.92);
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+    }
+
+    .music-btn:hover{
+      filter: brightness(1.08);
+    }
+
+    .music-widget.playing .disc{
+      animation-play-state: running;
+    }
+
+    @keyframes spin{
+      to{ transform: rotate(360deg); }
+    }
+
+    /* ===== Full screen pages (sections) ===== */
+    .page{
+      position: fixed;
+      inset: 0;
+      z-index: 6;               /* above main content but below CRT and music */
+      display: none;
+      overflow: auto;
+      padding: 58px 18px 28px;  /* leave room for topbar */
+    }
+    .page:target{
+      display: block;
+    }
+    .page-inner{
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* ===== About Me layout ===== */
+    .about-grid{
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .about-photo{
+      position: sticky;
+      top: 58px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
+    }
+
+    .about-photo img{
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.10);
+      filter: contrast(1.02) saturate(1.02);
+    }
+
+    .about-photo-fallback{
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .about-text{
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      background: rgba(0,0,0,.30);
+      padding: 16px 16px 18px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.45);
+    }
+
+    .about-kicker{
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.70);
+    }
+
+    .about-title{
+      margin: 10px 0 8px;
+      font-size: 24px;
+      letter-spacing: .2px;
+    }
+
+    .iam-line{
+      margin-top: 6px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+
+    .iam-typing{
+      color: var(--red);
+    }
+
+    .iam-caret{
+      margin-left: 6px;
+      color: rgba(255,255,255,.70);
+      animation: caretBlink 1s steps(2) infinite;
+    }
+
+    @keyframes caretBlink{
+      0%{ opacity: 1; }
+      50%{ opacity: 0; }
+      100%{ opacity: 1; }
+    }
+
+    .about-p{
+      margin: 12px 0 0;
+      color: rgba(255,255,255,.78);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .about-subhead{
+      margin-top: 14px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: rgba(255,255,255,.75);
+    }
+
+    .about-list{
+      margin: 8px 0 0 18px;
+      padding: 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .about-actions{
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .about-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.88);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .about-btn:hover{
+      filter: brightness(1.1);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Placeholder page card */
+    .placeholder-card{
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      background: rgba(0,0,0,.30);
+      padding: 16px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.45);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .placeholder-title{
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+    .placeholder-text{
+      margin: 0;
+      color: rgba(255,255,255,.74);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .placeholder-actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
     /* Mobile */
+    @media (max-width: 860px){
+      .about-grid{
+        grid-template-columns: 1fr;
+      }
+      .about-photo{
+        position: relative;
+        top: auto;
+      }
+      .about-photo img{
+        height: 360px;
+      }
+    }
+
     @media (max-width: 420px){
       .logo{ font-size: 28px; }
       .menu a{ font-size: 12px; }
       .topbar{ font-size: 10px; letter-spacing: 1.5px; }
+      .music-widget{ right: 12px; bottom: 12px; transform: scale(.95); }
     }
 
     /* Reduce motion */
@@ -320,15 +587,18 @@
       .crt::after, .flicker{ animation:none; }
       .menu a{ transition:none; }
       .poweron.play{ animation:none; }
+      .disc{ animation:none; }
+      .iam-caret{ animation:none; }
     }
   </style>
 </head>
 
 <body>
+  <div id="top"></div>
+
   <div class="topbar">JESUS HERNANDEZ | PORTFOLIO</div>
 
   <div class="bg" aria-hidden="true">
-    <!-- Put your video in the repo and name it background.mp4 (or change src) -->
     <video autoplay muted loop playsinline preload="auto">
       <source src="images/beachVid.mp4" type="video/mp4" />
     </video>
@@ -346,7 +616,7 @@
     <div class="poweron" id="poweron" aria-hidden="true"></div>
 
     <div class="boot-inner">
-      <div class="boot-title">JH BIOS v1.0  —  CRT INITIALIZATION</div>
+      <div class="boot-title">JH BIOS v1.0  -  CRT INITIALIZATION</div>
       <div class="boot-lines" id="bootLines"></div>
 
       <div class="boot-bar" aria-hidden="true">
@@ -357,8 +627,8 @@
     </div>
   </div>
 
-  <!-- Main content -->
-  <main class="center">
+  <!-- Landing -->
+  <main class="center" aria-label="Landing">
     <div class="stack" id="stack">
       <h1 class="logo">Jesus Hernandez</h1>
       <div class="subline">Computer Engineering</div>
@@ -374,13 +644,118 @@
     </div>
   </main>
 
-  <!-- Placeholder targets so links work for now -->
-  <div style="position:absolute; left:-9999px; top:-9999px;">
-    <section id="about"></section>
-    <section id="skills"></section>
-    <section id="projects"></section>
-    <section id="research"></section>
-    <section id="contact"></section>
+  <!-- ABOUT SECTION -->
+  <section class="page" id="about" aria-label="About Me">
+    <div class="page-inner">
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="images/me.jpg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'">
+          <div class="about-photo-fallback" aria-hidden="true">
+            Add your photo as: images/me.jpg
+          </div>
+        </div>
+
+        <div class="about-text">
+          <div class="about-kicker">ABOUT ME</div>
+
+          <h2 class="about-title">Hi, I'm Jesus Hernandez.</h2>
+
+          <div class="iam-line">
+            I am <span class="iam-typing" id="iamTyping"></span><span class="iam-caret" aria-hidden="true">█</span>
+          </div>
+
+          <p class="about-p">
+            I'm a Computer Engineering student at San Jose State University. I'm studying digital logic and verification,
+            computer architecture, embedded systems, and software engineering. I like projects where I can prove things work:
+            waveforms, testbenches, logs, and real hardware behavior.
+          </p>
+
+          <p class="about-p">
+            I'm especially interested in robotics engineering, sensing, and systems that are built with purpose.
+            I care about doing engineering that's ethical and actually helps people.
+          </p>
+
+          <div class="about-subhead">Hobbies</div>
+          <ul class="about-list">
+            <li>Building and refining projects for my portfolio</li>
+            <li>Hands-on electronics and design (PCBs, embedded, debugging)</li>
+            <li>Learning through competitive projects and pushing my skills</li>
+          </ul>
+
+          <div class="about-actions">
+            <a class="about-btn" href="#top">Back</a>
+            <a class="about-btn" href="#skills">Next: Skills</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLACEHOLDER PAGES (we will build these one by one next) -->
+  <section class="page" id="skills" aria-label="Skills">
+    <div class="page-inner">
+      <div class="placeholder-card">
+        <div class="placeholder-title">Skills</div>
+        <p class="placeholder-text">Coming next. We'll build this section after About Me.</p>
+        <div class="placeholder-actions">
+          <a class="about-btn" href="#top">Back</a>
+          <a class="about-btn" href="#projects">Next: Projects</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="projects" aria-label="Projects">
+    <div class="page-inner">
+      <div class="placeholder-card">
+        <div class="placeholder-title">Projects</div>
+        <p class="placeholder-text">Coming next. We'll build this section after Skills.</p>
+        <div class="placeholder-actions">
+          <a class="about-btn" href="#top">Back</a>
+          <a class="about-btn" href="#research">Next: Research</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="research" aria-label="Research">
+    <div class="page-inner">
+      <div class="placeholder-card">
+        <div class="placeholder-title">Research</div>
+        <p class="placeholder-text">Coming next. We'll build this section after Projects.</p>
+        <div class="placeholder-actions">
+          <a class="about-btn" href="#top">Back</a>
+          <a class="about-btn" href="#contact">Next: Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="contact" aria-label="Contact">
+    <div class="page-inner">
+      <div class="placeholder-card">
+        <div class="placeholder-title">Contact</div>
+        <p class="placeholder-text">
+          Coming next. We'll build this section after Research.
+        </p>
+        <div class="placeholder-actions">
+          <a class="about-btn" href="#top">Back</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Music widget -->
+  <div class="music-widget" id="musicWidget" aria-label="Background music player">
+    <button class="music-btn" id="musicBtn" aria-label="Play music" title="Play / Pause">▶</button>
+    <div class="disc" id="disc" aria-hidden="true">
+      <div class="disc-center"></div>
+    </div>
+
+    <!-- CHANGE THIS to your real audio path/name -->
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="images/song.mp3" type="audio/mpeg" />
+    </audio>
   </div>
 
   <script>
@@ -393,12 +768,45 @@
       const ampm = h >= 12 ? 'PM' : 'AM';
       h = h % 12; if (h === 0) h = 12;
       const min = String(d.getMinutes()).padStart(2,'0');
-      return `${mm}/${dd}/${yyyy}  ${h}:${min} ${ampm} PT`;
+      return mm + "/" + dd + "/" + yyyy + "  " + h + ":" + min + " " + ampm + " PT";
     }
     const tsEl = document.getElementById('ts');
     function tick(){ tsEl.textContent = formatTimestamp(new Date()); }
     tick();
     setInterval(tick, 15000);
+
+    // Music widget logic
+    const audio = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    const musicWidget = document.getElementById("musicWidget");
+
+    function setMusicUI(isPlaying){
+      musicWidget.classList.toggle("playing", isPlaying);
+      musicBtn.textContent = isPlaying ? "❚❚" : "▶";
+      musicBtn.setAttribute("aria-label", isPlaying ? "Pause music" : "Play music");
+    }
+
+    async function toggleMusic(){
+      try{
+        if(audio.paused){
+          await audio.play();
+          setMusicUI(true);
+        } else {
+          audio.pause();
+          setMusicUI(false);
+        }
+      } catch (e){
+        setMusicUI(!audio.paused);
+      }
+    }
+
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMusic();
+    });
+    audio.addEventListener("play", () => setMusicUI(true));
+    audio.addEventListener("pause", () => setMusicUI(false));
+    setMusicUI(false);
 
     // Boot sequence
     const boot = document.getElementById('boot');
@@ -423,32 +831,86 @@
       if(idx >= lines.length) return;
       bootLines.textContent += (lines[idx] + "\n");
       idx++;
-      // Slightly jittery type timing for CRT feel
       const delay = 110 + Math.random() * 120;
       setTimeout(typeNextLine, delay);
+    }
+
+    async function tryStartMusic(){
+      try{
+        await audio.play();
+        setMusicUI(true);
+      } catch (e){
+        // blocked until user interaction
+      }
     }
 
     function finishBoot(){
       boot.classList.add('hidden');
       stack.classList.add('is-visible');
-      // Let video show through nicely
       document.body.style.overflow = "hidden";
+      tryStartMusic();
     }
 
-    // Start boot
     poweron.classList.add('play');
     setTimeout(() => {
       typeNextLine();
-      // Fill bar after a beat
       setTimeout(() => bootFill.style.width = "100%", 450);
-      // Auto-finish after typing + bar
       setTimeout(finishBoot, 2600);
     }, 150);
 
-    // Click to skip
     window.addEventListener('click', () => {
       if(!boot.classList.contains('hidden')) finishBoot();
     }, { once: true });
+
+    // "I am" typing + erasing rotator (runs only on About page)
+    (function(){
+      const el = document.getElementById("iamTyping");
+      if(!el) return;
+
+      const phrases = [
+        "a Computer Engineering student",
+        "building embedded systems",
+        "learning verification and debugging",
+        "interested in robotics engineering",
+        "obsessed with clean documentation"
+      ];
+
+      let p = 0;
+      let i = 0;
+      let deleting = false;
+
+      function step(){
+        if(location.hash !== "#about"){
+          setTimeout(step, 250);
+          return;
+        }
+
+        const current = phrases[p];
+
+        if(!deleting){
+          i++;
+          el.textContent = current.slice(0, i);
+          if(i >= current.length){
+            deleting = true;
+            setTimeout(step, 900);
+            return;
+          }
+          setTimeout(step, 35 + Math.random() * 35);
+        } else {
+          i--;
+          el.textContent = current.slice(0, i);
+          if(i <= 0){
+            deleting = false;
+            p = (p + 1) % phrases.length;
+            setTimeout(step, 280);
+            return;
+          }
+          setTimeout(step, 18 + Math.random() * 22);
+        }
+      }
+
+      step();
+    })();
   </script>
 </body>
 </html>
