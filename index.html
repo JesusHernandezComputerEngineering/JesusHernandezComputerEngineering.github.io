@@ -95,8 +95,6 @@
       color: rgba(255,255,255,1);
       opacity: 1;
     }
-
-    /* hide subnav on home (because menu is centered already) */
     .subnav.hidden{ display:none; }
 
     /* ===== HOME: Video background ===== */
@@ -145,17 +143,6 @@
       pointer-events:none;
     }
 
-    /* ===== Layout containers ===== */
-    .screen-content{
-      position:absolute;
-      inset:0;
-      z-index:2;
-      padding-top: 34px; /* topbar */
-    }
-    .screen-content.with-subnav{
-      padding-top: 34px + 38px;
-    }
-
     /* Home center stack */
     .home-center{
       position:absolute;
@@ -171,7 +158,7 @@
       text-shadow: var(--shadow);
       user-select:none;
       opacity: 0;
-      transition: opacity 900ms ease;
+      transition: opacity 700ms ease;
     }
     .stack.is-visible{ opacity: 1; }
     .logo{
@@ -219,29 +206,27 @@
       text-underline-offset: 3px;
     }
 
-    /* ===== Inner page panel ===== */
+    /* Inner page panel */
     .page-wrap{
       position:absolute;
       inset: 34px 0 0 0;
-      padding-top: 38px; /* space for subnav */
+      padding-top: 38px;
       display:flex;
       align-items:center;
       justify-content:center;
       z-index:2;
     }
-
     .panel{
       width: min(980px, 92vw);
       max-height: calc(100vh - 34px - 38px - 44px);
       overflow:auto;
-      background: var(--panel);
-      border: 1px solid var(--panelBorder);
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.10);
       border-radius: 14px;
       box-shadow: 0 18px 55px rgba(0,0,0,.55);
       backdrop-filter: blur(10px);
       padding: 18px 18px 16px;
     }
-
     .panel h2{
       margin: 0 0 10px;
       font-size: 13px;
@@ -257,7 +242,6 @@
       gap: 18px;
       align-items:start;
     }
-
     .me-card{
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 12px;
@@ -359,7 +343,6 @@
       line-height: 1.55;
     }
 
-    /* Buttons row */
     .panel-actions{
       margin-top: 14px;
       display:flex;
@@ -385,7 +368,7 @@
       border-color: rgba(255,255,255,.26);
     }
 
-    /* ===== CRT overlay (scanlines + noise + vignette + flicker) ===== */
+    /* ===== CRT overlay ===== */
     .crt{
       position:fixed;
       inset:0;
@@ -468,6 +451,7 @@
     .boot.hidden{
       opacity: 0;
       visibility: hidden;
+      pointer-events:none;
     }
     .boot-inner{
       width:min(720px, 92vw);
@@ -501,10 +485,12 @@
       transition: width 1200ms ease;
     }
     .boot-hint{
-      margin-top: 12px;
-      font-size: 11px;
-      opacity: .75;
-      color: rgba(180,255,180,.8);
+      margin-top: 14px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .85;
+      color: rgba(180,255,180,.92);
     }
     .poweron{
       position:absolute;
@@ -577,19 +563,17 @@
         <div id="bootFill"></div>
       </div>
 
-      <div class="boot-hint">Click anywhere to skip.</div>
+      <div class="boot-hint" id="bootHint">LOADING...</div>
     </div>
   </div>
 
-  <!-- =========================
-       HOME SCREEN
-  ========================== -->
+  <!-- ========================= HOME ========================= -->
   <section class="screen active" id="screen-home" aria-label="Home">
     <div class="bg-video" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="auto">
-        <!-- Your file is inside images/ -->
+      <!-- IMPORTANT: muted allows autoplay; we unmute after user clicks "enter" -->
+      <video id="homeVideo" autoplay muted loop playsinline preload="auto">
         <source src="images/background.mp4" type="video/mp4" />
-        <!-- fallback if you kept beachVid.mp4 -->
+        <!-- optional fallback if you have it -->
         <source src="images/beachVid.mp4" type="video/mp4" />
       </video>
     </div>
@@ -612,9 +596,7 @@
     </main>
   </section>
 
-  <!-- =========================
-       ABOUT SCREEN
-  ========================== -->
+  <!-- ========================= ABOUT ========================= -->
   <section class="screen" id="screen-about" aria-label="About Me">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
@@ -626,7 +608,6 @@
         <div class="about-grid">
           <div class="me-card">
             <div class="me-photo">
-              <!-- Put your photo at: images/me.jpg -->
               <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez"
                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
               <div class="placeholder" style="display:none;">
@@ -662,7 +643,7 @@
               <h3>Hobbies</h3>
               <ul>
                 <li>Hands-on electronics and building things (PCBs, embedded projects, debugging)</li>
-                <li>Robotics and automation ideas (especially assistive and human-centered robotics)</li>
+                <li>Robotics and automation ideas (assistive and human-centered robotics)</li>
                 <li>Learning by shipping: turning class projects into portfolio-quality builds</li>
               </ul>
             </div>
@@ -677,9 +658,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       SKILLS SCREEN (placeholder)
-  ========================== -->
+  <!-- ========================= SKILLS (placeholder) ========================= -->
   <section class="screen" id="screen-skills" aria-label="Skills">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
@@ -695,9 +674,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       PROJECTS SCREEN (placeholder)
-  ========================== -->
+  <!-- ========================= PROJECTS (placeholder) ========================= -->
   <section class="screen" id="screen-projects" aria-label="Projects">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
@@ -713,9 +690,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       RESEARCH SCREEN (placeholder)
-  ========================== -->
+  <!-- ========================= RESEARCH (placeholder) ========================= -->
   <section class="screen" id="screen-research" aria-label="Research">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
@@ -731,9 +706,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       CONTACT SCREEN (placeholder)
-  ========================== -->
+  <!-- ========================= CONTACT (placeholder) ========================= -->
   <section class="screen" id="screen-contact" aria-label="Contact">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
@@ -753,9 +726,7 @@
   </section>
 
   <script>
-    /* =========================
-       Timestamp like example
-    ========================== */
+    /* ===== Timestamp ===== */
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
@@ -771,14 +742,13 @@
     tick();
     setInterval(tick, 15000);
 
-    /* =========================
-       Boot sequence
-    ========================== */
+    /* ===== Boot sequence (now requires CLICK TO ENTER) ===== */
     const boot = document.getElementById('boot');
     const stack = document.getElementById('stack');
     const bootLines = document.getElementById('bootLines');
     const bootFill = document.getElementById('bootFill');
     const poweron = document.getElementById('poweron');
+    const bootHint = document.getElementById('bootHint');
 
     const lines = [
       "[OK] VIDEO SIGNAL DETECTED",
@@ -787,67 +757,75 @@
       "[OK] NOISE BUFFER: ONLINE",
       "[OK] SYNC: STABLE",
       "",
-      "LOADING INTERFACE..."
+      "READY"
     ];
 
     let idx = 0;
+    let bootReady = false;
+
     function typeNextLine(){
-      if(idx >= lines.length) return;
+      if(idx >= lines.length){
+        bootReady = true;
+        bootHint.textContent = "CLICK TO ENTER";
+        return;
+      }
       bootLines.textContent += (lines[idx] + "\n");
       idx++;
-      const delay = 110 + Math.random() * 120;
+      const delay = 100 + Math.random() * 140;
       setTimeout(typeNextLine, delay);
     }
 
-    function finishBoot(){
+    function finishBootAndStartAudio(){
+      if(boot.classList.contains('hidden')) return;
+
+      // Start MP4 audio legally (user gesture)
+      const video = document.getElementById('homeVideo');
+      if(video){
+        video.muted = false;
+        video.volume = 0.75;
+        video.play().catch(()=>{});
+      }
+
       boot.classList.add('hidden');
       stack.classList.add('is-visible');
       document.body.style.overflow = "hidden";
     }
 
+    // Start boot visuals (but DO NOT auto-close)
     poweron.classList.add('play');
     setTimeout(() => {
       typeNextLine();
-      setTimeout(() => bootFill.style.width = "100%", 450);
-      setTimeout(finishBoot, 2600);
-    }, 150);
+      setTimeout(() => bootFill.style.width = "100%", 420);
+    }, 140);
 
+    // Click to enter (works even if typing not finished)
     window.addEventListener('click', () => {
-      if(!boot.classList.contains('hidden')) finishBoot();
+      finishBootAndStartAudio();
     }, { once: true });
 
-    /* =========================
-       Router: one screen at a time
-    ========================== */
+    /* ===== Router: one screen at a time ===== */
     const subnav = document.getElementById('subnav');
     const routes = ["home","about","skills","projects","research","contact"];
 
     function setActiveRoute(route){
       if(!routes.includes(route)) route = "home";
 
-      // screens
       for(const r of routes){
         const el = document.getElementById(`screen-${r}`);
         if(el) el.classList.toggle("active", r === route);
       }
 
-      // show subnav on non-home screens
       subnav.classList.toggle("hidden", route === "home");
 
-      // highlight current link in subnav
-      document.querySelectorAll('[data-route]').forEach(a => {
-        if(a.closest('.subnav')){
-          a.classList.toggle('active', a.dataset.route === route);
-        }
+      document.querySelectorAll('.subnav a[data-route]').forEach(a => {
+        a.classList.toggle('active', a.dataset.route === route);
       });
 
-      // update hash without jumping
       if(location.hash !== `#${route}`){
         history.replaceState(null, "", `#${route}`);
       }
     }
 
-    // click handling for all nav/buttons
     document.addEventListener("click", (e) => {
       const t = e.target.closest("[data-route]");
       if(!t) return;
@@ -855,7 +833,6 @@
       setActiveRoute(t.dataset.route);
     });
 
-    // allow direct hash nav
     function routeFromHash(){
       const h = (location.hash || "#home").replace("#","").trim().toLowerCase();
       setActiveRoute(h || "home");
@@ -863,9 +840,7 @@
     window.addEventListener("hashchange", routeFromHash);
     routeFromHash();
 
-    /* =========================
-       About: Type + erase rotating strings
-    ========================== */
+    /* ===== About: type + erase rotating strings ===== */
     const iamEl = document.getElementById("iamWord");
     const phrases = [
       "BUILDING ROBOTICS",
