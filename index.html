@@ -14,9 +14,10 @@
       --shadow: 0 2px 18px rgba(0,0,0,.55);
       --bg: #000;
 
-      --panel: rgba(0,0,0,.58);
+      --panel: rgba(0,0,0,.55);
       --panelBorder: rgba(255,255,255,.10);
-      --panelGlow: 0 0 22px rgba(255,255,255,.08);
+      --btn: rgba(255,255,255,.08);
+      --btnHover: rgba(255,255,255,.12);
     }
 
     *{ box-sizing:border-box; }
@@ -47,31 +48,24 @@
       user-select:none;
     }
 
-    /* ===== Pages system (full screen screens) ===== */
-    .page{
+    /* ===== SCREENS (each is a full page) ===== */
+    .screen{
       position:fixed;
       inset:0;
+      padding-top:34px; /* topbar space */
       z-index: 1;
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-      transition: opacity 260ms ease, visibility 260ms ease;
+      display:none;     /* only active shows */
     }
-    .page.is-active{
-      opacity:1;
-      visibility:visible;
-      pointer-events:auto;
-      z-index: 2;
-    }
+    .screen.active{ display:block; }
 
-    /* ===== Background layer per page ===== */
-    .bg{
+    /* ===== Home: Video background ===== */
+    .home-bg{
       position:absolute;
       inset:0;
       overflow:hidden;
       background:#000;
     }
-    .bg video, .bg img{
+    .home-bg video{
       position:absolute;
       top:50%;
       left:50%;
@@ -84,16 +78,40 @@
       filter: saturate(1.05) contrast(1.05);
     }
 
-    /* Readability overlay per page */
+    /* ===== Section pages: Image background ===== */
+    .img-bg{
+      position:absolute;
+      inset:0;
+      background:#000;
+      overflow:hidden;
+    }
+    .img-bg::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: url("images/BackgroundWebsite.jpg") center / cover no-repeat;
+      filter: contrast(1.05) saturate(1.05);
+      transform: scale(1.03);
+    }
+    /* darken for readability */
+    .img-bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 70%, rgba(0,0,0,.86) 100%);
+    }
+
+    /* ===== Shared overlay ===== */
     .overlay{
       position:absolute;
       inset:0;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,.62) 70%, rgba(0,0,0,.82) 100%);
+        radial-gradient(circle at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,.58) 70%, rgba(0,0,0,.78) 100%);
       pointer-events:none;
     }
 
-    /* ===== Home center stack ===== */
+    /* ===== Center content (Home) ===== */
     .center{
       position:absolute;
       inset:0;
@@ -101,15 +119,15 @@
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding: 72px 18px 24px;
+      padding: 28px 18px 24px;
+      z-index: 2;
     }
-
     .stack{
       text-shadow: var(--shadow);
       user-select:none;
       opacity: 0;
-      transition: opacity 700ms ease;
-      transform: translateY(-8px);
+      transition: opacity 900ms ease;
+      transform: translateY(-6px);
     }
     .stack.is-visible{ opacity:1; }
 
@@ -133,7 +151,6 @@
       letter-spacing: 1.6px;
       text-transform: uppercase;
     }
-
     .menu{
       margin-top: 18px;
       display:flex;
@@ -158,194 +175,135 @@
       text-decoration: underline;
       text-underline-offset: 3px;
     }
-    .menu a:focus{
-      outline: 2px solid rgba(255,255,255,.65);
-      outline-offset: 2px;
-    }
 
-    /* ===== Content panel (for sections) ===== */
-    .section-wrap{
+    /* ===== Page panel ===== */
+    .page{
       position:absolute;
       inset:0;
+      z-index:2;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 64px 18px 22px;
+      padding: 24px 18px;
     }
-
     .panel{
-      width: min(980px, 94vw);
-      border: 1px solid var(--panelBorder);
+      width: min(980px, 92vw);
       background: var(--panel);
-      box-shadow: var(--panelGlow);
-      border-radius: 14px;
-      overflow:hidden;
+      border: 1px solid var(--panelBorder);
+      border-radius: 12px;
+      box-shadow: 0 18px 70px rgba(0,0,0,.55);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      overflow:hidden;
     }
-
-    .panel-head{
-      padding: 14px 18px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
+    .panel-inner{
+      padding: 18px 18px 14px;
     }
-
-    .crumb{
+    .panel-kicker{
       font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.72);
+      color: rgba(255,255,255,.78);
+      margin-bottom: 10px;
     }
 
-    .panel-body{
-      padding: 18px;
-    }
-
-    .grid{
+    .about-grid{
       display:grid;
       grid-template-columns: 320px 1fr;
       gap: 18px;
       align-items:start;
     }
-
-    .photo{
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 14px;
+    .me-box{
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
       overflow:hidden;
       background: rgba(0,0,0,.35);
-      box-shadow: 0 10px 24px rgba(0,0,0,.35);
-      position: relative;
+      min-height: 320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
     }
-    .photo img{
+    .me-box img{
       width:100%;
-      height: 360px;
-      object-fit: cover;
+      height:100%;
+      object-fit:cover;
       display:block;
-      filter: contrast(1.05) saturate(1.05);
+      opacity: .95;
     }
-    .photo .hint{
+    .me-hint{
       position:absolute;
       left:10px; right:10px; bottom:10px;
       font-size: 11px;
-      color: rgba(255,255,255,.75);
+      color: rgba(255,255,255,.72);
       background: rgba(0,0,0,.45);
       border: 1px solid rgba(255,255,255,.10);
       padding: 8px 10px;
       border-radius: 10px;
-      text-align:center;
     }
 
-    .about-title{
-      margin: 0 0 8px;
-      font-size: 30px;
+    .h1{
+      margin:0;
+      font-size: 28px;
       letter-spacing: .2px;
+      line-height: 1.1;
     }
-
-    .iamline{
-      margin: 0 0 14px;
-      font-size: 12px;
-      letter-spacing: 2px;
+    .typed-line{
+      margin-top: 8px;
+      font-size: 12.5px;
+      letter-spacing: 1.7px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.70);
+      color: rgba(255,255,255,.86);
     }
-
-    .iamline .fixed{
-      color: rgba(255,255,255,.78);
-      margin-right: 6px;
-    }
-    .iamline .typed{
-      color: var(--red);
-      font-weight: 700;
-    }
+    .typed-line .label{ color: rgba(255,255,255,.72); }
+    .typed-line .typed{ color: var(--red); }
     .caret{
       display:inline-block;
-      width: 10px;
-      transform: translateY(1px);
-      animation: blink 0.8s infinite;
-      color: rgba(255,255,255,.85);
-      margin-left: 2px;
+      width: 8px;
+      margin-left: 4px;
+      color: rgba(255,255,255,.75);
+      animation: blink 1s steps(2) infinite;
     }
-    @keyframes blink{
-      0%,49%{ opacity:1; }
-      50%,100%{ opacity:0; }
-    }
+    @keyframes blink{ 50%{ opacity: 0; } }
 
     .p{
-      margin: 0 0 12px;
-      color: rgba(255,255,255,.85);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .hobbies{
-      margin-top: 10px;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.22);
-    }
-    .hobbies .label{
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.70);
-      margin-bottom: 8px;
-    }
-    .hobbies ul{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(255,255,255,.83);
-      line-height: 1.7;
+      margin-top: 12px;
       font-size: 13.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.86);
     }
+    .bullets{
+      margin-top: 12px;
+      color: rgba(255,255,255,.84);
+      font-size: 13.5px;
+      line-height: 1.45;
+      padding-left: 18px;
+    }
+    .bullets li{ margin: 6px 0; }
 
-    .panel-foot{
-      padding: 14px 18px;
-      border-top: 1px solid rgba(255,255,255,.10);
+    .panel-footer{
       display:flex;
       justify-content:space-between;
-      align-items:center;
-      gap: 12px;
-    }
-
-    .btnrow{
-      display:flex;
       gap: 10px;
-      align-items:center;
+      padding: 12px 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.28);
     }
-
     .btn{
       appearance:none;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      background: var(--btn);
       color: rgba(255,255,255,.92);
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 10px;
       font-size: 12px;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      user-select:none;
+      transition: transform .12s ease, background .12s ease;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.28);
-      background: rgba(0,0,0,.48);
-    }
-    .btn:focus{
-      outline: 2px solid rgba(255,255,255,.55);
-      outline-offset: 2px;
-    }
-
-    .note{
-      font-size: 11px;
-      color: rgba(255,255,255,.70);
-      letter-spacing: .2px;
-    }
+    .btn:hover{ background: var(--btnHover); transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0px); }
 
     /* ===== CRT overlay (scanlines + noise + vignette + flicker) ===== */
     .crt{
@@ -381,18 +339,18 @@
     .vignette{
       position:fixed;
       inset:0;
-      z-index: 80;
+      z-index: 88;
       pointer-events:none;
       background: radial-gradient(circle at center,
         rgba(0,0,0,0) 35%,
         rgba(0,0,0,0.35) 70%,
-        rgba(0,0,0,0.70) 100%
+        rgba(0,0,0,0.65) 100%
       );
     }
     .flicker{
       position:fixed;
       inset:0;
-      z-index: 70;
+      z-index: 89;
       pointer-events:none;
       background: rgba(255,255,255,0.03);
       opacity: 0;
@@ -416,44 +374,39 @@
     .boot{
       position:fixed;
       inset:0;
-      z-index: 110;
+      z-index: 120;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: #000;
+      background:#000;
       color: rgba(180,255,180,.92);
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       padding: 24px;
       transition: opacity 700ms ease, visibility 700ms ease;
     }
-    .boot.hidden{
-      opacity: 0;
-      visibility: hidden;
-      pointer-events:none;
-    }
+    .boot.hidden{ opacity:0; visibility:hidden; }
     .boot-inner{
       width:min(720px, 92vw);
       text-align:left;
-      line-height: 1.35;
+      line-height:1.35;
       text-shadow: 0 0 14px rgba(0,255,0,.18);
     }
     .boot-title{
-      font-size: 14px;
-      letter-spacing: 1px;
-      color: rgba(180,255,180,.9);
-      margin-bottom: 10px;
+      font-size:14px;
+      letter-spacing:1px;
+      margin-bottom:10px;
     }
     .boot-lines{
-      font-size: 12.5px;
-      opacity: .95;
-      white-space: pre-wrap;
+      font-size:12.5px;
+      white-space:pre-wrap;
+      opacity:.95;
     }
     .boot-bar{
-      margin-top: 14px;
-      height: 10px;
-      border: 1px solid rgba(180,255,180,.45);
-      background: rgba(0,0,0,.35);
+      margin-top:14px;
+      height:10px;
+      border:1px solid rgba(180,255,180,.45);
       overflow:hidden;
+      background: rgba(0,0,0,.35);
     }
     .boot-bar > div{
       height:100%;
@@ -466,12 +419,11 @@
       margin-top: 12px;
       font-size: 11px;
       opacity: .75;
-      color: rgba(180,255,180,.8);
     }
     .poweron{
       position:absolute;
       inset:0;
-      background: #fff;
+      background:#fff;
       opacity:0;
       pointer-events:none;
     }
@@ -485,20 +437,21 @@
       100%{ opacity:0; }
     }
 
-    @media (max-width: 880px){
-      .grid{ grid-template-columns: 1fr; }
-      .photo img{ height: 320px; }
+    @media (max-width: 860px){
+      .about-grid{ grid-template-columns: 1fr; }
+      .me-box{ min-height: 260px; }
+      .h1{ font-size: 24px; }
     }
     @media (max-width: 420px){
       .logo{ font-size: 28px; }
       .menu a{ font-size: 12px; }
       .topbar{ font-size: 10px; letter-spacing: 1.5px; }
-      .about-title{ font-size: 26px; }
     }
     @media (prefers-reduced-motion: reduce){
       .crt::after, .flicker{ animation:none; }
       .menu a, .btn{ transition:none; }
       .poweron.play{ animation:none; }
+      .caret{ animation:none; }
     }
   </style>
 </head>
@@ -506,25 +459,25 @@
 <body>
   <div class="topbar">JESUS HERNANDEZ | PORTFOLIO</div>
 
-  <!-- CRT effects (global) -->
-  <div class="vignette" aria-hidden="true"></div>
-  <div class="flicker" aria-hidden="true"></div>
-  <div class="crt" aria-hidden="true"></div>
-
-  <!-- Boot screen -->
+  <!-- BOOT -->
   <div class="boot" id="boot" role="dialog" aria-label="Boot screen">
     <div class="poweron" id="poweron" aria-hidden="true"></div>
     <div class="boot-inner">
-      <div class="boot-title">JH BIOS v1.0  |  CRT INITIALIZATION</div>
+      <div class="boot-title">JH BIOS v1.0  —  CRT INITIALIZATION</div>
       <div class="boot-lines" id="bootLines"></div>
       <div class="boot-bar" aria-hidden="true"><div id="bootFill"></div></div>
       <div class="boot-hint">Click anywhere to skip.</div>
     </div>
   </div>
 
-  <!-- ===================== HOME PAGE ===================== -->
-  <section class="page is-active" id="page-home" data-route="home" aria-label="Home">
-    <div class="bg" aria-hidden="true">
+  <!-- CRT -->
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="flicker" aria-hidden="true"></div>
+  <div class="crt" aria-hidden="true"></div>
+
+  <!-- ================= HOME SCREEN ================= -->
+  <section class="screen active" id="screen-home" aria-label="Home">
+    <div class="home-bg" aria-hidden="true">
       <video autoplay muted loop playsinline preload="auto">
         <source src="images/beachVid.mp4" type="video/mp4" />
       </video>
@@ -548,148 +501,136 @@
     </main>
   </section>
 
-  <!-- ===================== ABOUT PAGE (DIFFERENT SCREEN + DIFFERENT BG) ===================== -->
-  <section class="page" id="page-about" data-route="about" aria-label="About me">
-    <div class="bg" aria-hidden="true">
-      <!-- Use a different background here -->
-      <video autoplay muted loop playsinline preload="auto">
-        <source src="images/BackgroundWebsite.jpg" type="image/jpg" />
-      </video>
-      <!-- Fallback image if you do not have aboutBg.mp4 -->
-      <!-- <img src="images/aboutBg.jpg" alt="" /> -->
-    </div>
-    <div class="overlay" aria-hidden="true"></div>
+  <!-- ================= ABOUT SCREEN ================= -->
+  <section class="screen" id="screen-about" aria-label="About Me">
+    <div class="img-bg" aria-hidden="true"></div>
 
-    <div class="section-wrap">
+    <div class="page">
       <div class="panel" role="region" aria-label="About panel">
-        <div class="panel-head">
-          <div class="crumb">ABOUT ME</div>
-          <div class="note">Tip: set your photo as <b>images/me.jpg</b></div>
-        </div>
+        <div class="panel-inner">
+          <div class="panel-kicker">ABOUT ME</div>
 
-        <div class="panel-body">
-          <div class="grid">
-            <div class="photo">
-              <img src="images/me.jpg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.querySelector('.hint').style.display='block';" />
-              <div class="hint" style="display:none;">Add your photo as: <b>images/me.jpg</b></div>
+          <div class="about-grid">
+            <!-- Put your photo at images/me.jpg -->
+            <div class="me-box">
+              <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.querySelector('.me-hint').style.display='block';">
+              <div class="me-hint" style="display:none;">Add your photo as: <b>images/me.jpg</b></div>
             </div>
 
             <div>
-              <h2 class="about-title">Hi, I'm Jesus Hernandez.</h2>
+              <h2 class="h1">Hi, I’m Jesus Hernandez.</h2>
 
-              <div class="iamline" aria-live="polite">
-                <span class="fixed">I AM</span>
-                <span class="typed" id="typedWord">BUILDING</span><span class="caret">|</span>
+              <div class="typed-line" aria-label="Rotating description">
+                <span class="label">I AM </span>
+                <span class="typed" id="typedText">BUILDING</span><span class="caret">█</span>
               </div>
 
               <p class="p">
-                I'm a Computer Engineering student at San Jose State University. I'm focused on digital logic and verification,
+                I’m a Computer Engineering student at San Jose State University. I’m studying digital logic and verification,
                 computer architecture, embedded systems, and software engineering. I like projects where I can prove things work:
                 waveforms, testbenches, logs, and real hardware behavior.
               </p>
 
               <p class="p">
-                I'm especially interested in robotics engineering, sensing, and systems built with purpose. I care about building
-                ethical tech that actually helps people and I like taking ideas from concept to something you can demo.
+                I’m especially interested in robotics engineering, sensing, and systems that are built with purpose.
+                I care about doing engineering that’s ethical and actually helps people.
               </p>
 
-              <div class="hobbies">
-                <div class="label">Hobbies</div>
-                <ul>
-                  <li>Hands on electronics and embedded builds (PCBs, debugging, soldering)</li>
-                  <li>Robotics and AI experiments for portfolio projects</li>
-                  <li>Learning by building, breaking, and fixing</li>
-                </ul>
-              </div>
+              <ul class="bullets">
+                <li>Hands-on electronics and PCB design (KiCad, soldering, debugging)</li>
+                <li>Digital design and verification (Verilog, testbenches, waveforms)</li>
+                <li>Robotics + autonomy interests (real-world constraints, reliable systems)</li>
+                <li>Personal: gym, building side projects, and always learning something new</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div class="panel-foot">
-          <div class="btnrow">
-            <button class="btn" type="button" data-nav="home">Back</button>
-          </div>
-          <div class="btnrow">
-            <button class="btn" type="button" data-nav="skills">Next: Skills</button>
-          </div>
+        <div class="panel-footer">
+          <button class="btn" type="button" data-go="home">Back</button>
+          <button class="btn" type="button" data-go="skills">Next: Skills</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stub pages for now (so your menu works). We will build these one by one. -->
-  <section class="page" id="page-skills" data-route="skills" aria-label="Skills">
-    <div class="bg" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="auto">
-        <source src="images/BackgroundWebsite.jpg" type="image/jpg" />
-      </video>
-    </div>
-    <div class="overlay" aria-hidden="true"></div>
-    <div class="section-wrap">
+  <!-- ================= SKILLS SCREEN (placeholder) ================= -->
+  <section class="screen" id="screen-skills" aria-label="Skills">
+    <div class="img-bg" aria-hidden="true"></div>
+    <div class="page">
       <div class="panel">
-        <div class="panel-head"><div class="crumb">SKILLS</div><div class="note">Coming next.</div></div>
-        <div class="panel-body"><p class="p">We will build this screen next, one by one, same style.</p></div>
-        <div class="panel-foot">
-          <button class="btn" type="button" data-nav="about">Back</button>
-          <button class="btn" type="button" data-nav="projects">Next: Projects</button>
+        <div class="panel-inner">
+          <div class="panel-kicker">SKILLS</div>
+          <h2 class="h1">Skills</h2>
+          <p class="p">Placeholder. We’ll build this next.</p>
+        </div>
+        <div class="panel-footer">
+          <button class="btn" type="button" data-go="about">Back</button>
+          <button class="btn" type="button" data-go="projects">Next: Projects</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="page" id="page-projects" data-route="projects" aria-label="Projects">
-    <div class="bg" aria-hidden="true"><video autoplay muted loop playsinline preload="auto">
-      <source src="images/BackgroundWebsite.jpg" type="image/jpg" /></video></div>
-    <div class="overlay" aria-hidden="true"></div>
-    <div class="section-wrap">
+  <!-- ================= PROJECTS SCREEN (placeholder) ================= -->
+  <section class="screen" id="screen-projects" aria-label="Projects">
+    <div class="img-bg" aria-hidden="true"></div>
+    <div class="page">
       <div class="panel">
-        <div class="panel-head"><div class="crumb">PROJECTS</div><div class="note">Coming soon.</div></div>
-        <div class="panel-body"><p class="p">We will build this after Skills.</p></div>
-        <div class="panel-foot">
-          <button class="btn" type="button" data-nav="skills">Back</button>
-          <button class="btn" type="button" data-nav="research">Next: Research</button>
+        <div class="panel-inner">
+          <div class="panel-kicker">PROJECTS</div>
+          <h2 class="h1">Projects</h2>
+          <p class="p">Placeholder. We’ll build this later.</p>
+        </div>
+        <div class="panel-footer">
+          <button class="btn" type="button" data-go="skills">Back</button>
+          <button class="btn" type="button" data-go="research">Next: Research</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="page" id="page-research" data-route="research" aria-label="Research">
-    <div class="bg" aria-hidden="true"><video autoplay muted loop playsinline preload="auto">
-      <source src="images/BackgroundWebsite.jpg" type="image/jpg" /></video></div>
-    <div class="overlay" aria-hidden="true"></div>
-    <div class="section-wrap">
+  <!-- ================= RESEARCH SCREEN (placeholder) ================= -->
+  <section class="screen" id="screen-research" aria-label="Research">
+    <div class="img-bg" aria-hidden="true"></div>
+    <div class="page">
       <div class="panel">
-        <div class="panel-head"><div class="crumb">RESEARCH</div><div class="note">Coming soon.</div></div>
-        <div class="panel-body"><p class="p">We will build this after Projects.</p></div>
-        <div class="panel-foot">
-          <button class="btn" type="button" data-nav="projects">Back</button>
-          <button class="btn" type="button" data-nav="contact">Next: Contact</button>
+        <div class="panel-inner">
+          <div class="panel-kicker">RESEARCH</div>
+          <h2 class="h1">Research</h2>
+          <p class="p">Placeholder. We’ll build this later.</p>
+        </div>
+        <div class="panel-footer">
+          <button class="btn" type="button" data-go="projects">Back</button>
+          <button class="btn" type="button" data-go="contact">Next: Contact</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="page" id="page-contact" data-route="contact" aria-label="Contact">
-    <div class="bg" aria-hidden="true"><video autoplay muted loop playsinline preload="auto">
-      <source src="images/BackgroundWebsite.jpg" type="image/jpg" /></video></div>
-    <div class="overlay" aria-hidden="true"></div>
-    <div class="section-wrap">
+  <!-- ================= CONTACT SCREEN (placeholder) ================= -->
+  <section class="screen" id="screen-contact" aria-label="Contact">
+    <div class="img-bg" aria-hidden="true"></div>
+    <div class="page">
       <div class="panel">
-        <div class="panel-head"><div class="crumb">CONTACT</div><div class="note">Coming soon.</div></div>
-        <div class="panel-body">
-          <p class="p">Email: <a href="mailto:jesus.m.hernandez01@sjsu.edu" style="color:rgba(255,255,255,.92)">jesus.m.hernandez01@sjsu.edu</a></p>
-          <p class="p">GitHub: <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener" style="color:rgba(255,255,255,.92)">JesusHernandezComputerEngineering</a></p>
+        <div class="panel-inner">
+          <div class="panel-kicker">CONTACT</div>
+          <h2 class="h1">Contact</h2>
+          <p class="p">
+            Email: <a href="mailto:jesus.m.hernandez01@sjsu.edu" style="color:rgba(255,255,255,.92);">jesus.m.hernandez01@sjsu.edu</a><br/>
+            GitHub: <a href="https://github.com/JesusHernandezComputerEngineering" target="_blank" rel="noopener" style="color:rgba(255,255,255,.92);">JesusHernandezComputerEngineering</a>
+          </p>
         </div>
-        <div class="panel-foot">
-          <button class="btn" type="button" data-nav="research">Back</button>
-          <button class="btn" type="button" data-nav="home">Home</button>
+        <div class="panel-footer">
+          <button class="btn" type="button" data-go="research">Back</button>
+          <button class="btn" type="button" data-go="home">Home</button>
         </div>
       </div>
     </div>
   </section>
 
   <script>
-    /* ===== Timestamp (Home) ===== */
+    /* ========= Timestamp ========= */
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
@@ -705,7 +646,7 @@
     tick();
     setInterval(tick, 15000);
 
-    /* ===== Boot sequence ===== */
+    /* ========= Boot ========= */
     const boot = document.getElementById('boot');
     const stack = document.getElementById('stack');
     const bootLines = document.getElementById('bootLines');
@@ -720,13 +661,14 @@
       "",
       "LOADING INTERFACE..."
     ];
-
     let idx = 0;
+
     function typeNextLine(){
       if(idx >= lines.length) return;
       bootLines.textContent += (lines[idx] + "\n");
       idx++;
-      setTimeout(typeNextLine, 110 + Math.random() * 120);
+      const delay = 110 + Math.random() * 120;
+      setTimeout(typeNextLine, delay);
     }
 
     function finishBoot(){
@@ -739,93 +681,82 @@
       typeNextLine();
       setTimeout(() => bootFill.style.width = "100%", 450);
       setTimeout(finishBoot, 2400);
-    }, 120);
+    }, 150);
 
     window.addEventListener('click', () => {
       if(!boot.classList.contains('hidden')) finishBoot();
     }, { once: true });
 
-    /* ===== Page router (full screen screens) ===== */
-    const pages = {
-      home: document.getElementById('page-home'),
-      about: document.getElementById('page-about'),
-      skills: document.getElementById('page-skills'),
-      projects: document.getElementById('page-projects'),
-      research: document.getElementById('page-research'),
-      contact: document.getElementById('page-contact'),
+    /* ========= Screen routing (true separate full screens) ========= */
+    const screens = {
+      home: document.getElementById('screen-home'),
+      about: document.getElementById('screen-about'),
+      skills: document.getElementById('screen-skills'),
+      projects: document.getElementById('screen-projects'),
+      research: document.getElementById('screen-research'),
+      contact: document.getElementById('screen-contact'),
     };
 
-    function setActive(route){
-      Object.keys(pages).forEach(r => pages[r].classList.toggle('is-active', r === route));
-      // Pause videos on inactive pages to save CPU
-      Object.keys(pages).forEach(r => {
-        const vids = pages[r].querySelectorAll('video');
-        vids.forEach(v => {
-          if(r === route){
-            if(v.paused) v.play().catch(()=>{});
-          } else {
-            v.pause();
-          }
-        });
-      });
+    function showScreen(name){
+      Object.values(screens).forEach(s => s.classList.remove('active'));
+      (screens[name] || screens.home).classList.add('active');
     }
 
     function routeFromHash(){
       const h = (location.hash || "#home").replace("#","");
-      return pages[h] ? h : "home";
+      if(screens[h]) showScreen(h);
+      else showScreen("home");
     }
 
-    window.addEventListener('hashchange', () => setActive(routeFromHash()));
-    setActive(routeFromHash());
+    window.addEventListener('hashchange', routeFromHash);
+    routeFromHash();
 
-    // Buttons
+    // Footer buttons
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-nav]');
+      const btn = e.target.closest('[data-go]');
       if(!btn) return;
-      const to = btn.getAttribute('data-nav');
-      location.hash = to === "home" ? "#home" : `#${to}`;
+      const dest = btn.getAttribute('data-go');
+      location.hash = "#" + dest;
     });
 
-    /* ===== About: typing/deleting "I AM ..." ===== */
-    const typedEl = document.getElementById('typedWord');
-    const words = [
-      "BUILDING",
-      "DEBUGGING",
-      "DESIGNING PCBS",
-      "VERIFYING RTL",
-      "LEARNING FAST",
-      "WORKING ON ROBOTS"
+    /* ========= About: typing loop "I AM ..." ========= */
+    const typedEl = document.getElementById('typedText');
+    const phrases = [
+      "BUILDING RELIABLE SYSTEMS",
+      "DEBUGGING REAL HARDWARE",
+      "LEARNING ROBOTICS",
+      "WRITING CLEAN CODE",
+      "DESIGNING PCBS"
     ];
-    let w = 0, i = 0;
+    let pIndex = 0, char = 0;
     let deleting = false;
 
     function typeLoop(){
-      // only run if About page is active (keeps it clean)
-      const aboutActive = pages.about.classList.contains('is-active');
+      // Only animate when About screen is visible
+      const aboutActive = screens.about.classList.contains('active');
       if(!aboutActive){
-        requestAnimationFrame(typeLoop);
+        setTimeout(typeLoop, 180);
         return;
       }
 
-      const current = words[w];
+      const current = phrases[pIndex];
       if(!deleting){
-        i++;
-        typedEl.textContent = current.slice(0, i);
-        if(i >= current.length){
+        char++;
+        typedEl.textContent = current.slice(0, char);
+        if(char >= current.length){
           deleting = true;
           setTimeout(typeLoop, 900);
           return;
         }
-      } else {
-        i--;
-        typedEl.textContent = current.slice(0, Math.max(0,i));
-        if(i <= 0){
+      }else{
+        char--;
+        typedEl.textContent = current.slice(0, Math.max(0, char));
+        if(char <= 0){
           deleting = false;
-          w = (w + 1) % words.length;
+          pIndex = (pIndex + 1) % phrases.length;
         }
       }
-      const speed = deleting ? 38 : 55;
-      setTimeout(typeLoop, speed);
+      setTimeout(typeLoop, deleting ? 40 : 55);
     }
     typeLoop();
   </script>
