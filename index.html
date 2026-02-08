@@ -530,6 +530,37 @@
       .menu a, .btn, .subnav a{ transition:none; }
       .poweron.play{ animation:none; }
     }
+    .skills-panel h2 {
+  margin-bottom: 18px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.skill-block h3 {
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  color: #ff4a4a;
+  text-transform: uppercase;
+}
+
+.skill-block ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.92;
+}
+
+@media (max-width: 720px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -614,7 +645,7 @@
               </div>
             </div>
             <div class="me-meta">
-              <div><b>Location:</b> Bay Area, CA</div>
+              <div><b>Location:</b> Oakland, CA</div>
               <div><b>School:</b> San Jose State University</div>
               <div><b>Focus:</b> Embedded + Digital Design + Robotics</div>
             </div>
@@ -641,7 +672,7 @@
             <div class="hobbies">
               <h3>Hobbies</h3>
               <ul>
-                <li>Hands-on electronics and building things (PCBs, embedded projects, debugging)</li>
+                <li>Hands-on electronics and building things (PCBs, FPGAs, embedded projects, debugging)</li>
                 <li>Robotics and automation ideas (assistive and human-centered robotics)</li>
                 <li>Learning by shipping: turning class projects into portfolio-quality builds</li>
               </ul>
@@ -659,20 +690,68 @@
 
   <!-- ========================= SKILLS (placeholder) ========================= -->
   <section class="screen" id="screen-skills" aria-label="Skills">
-    <div class="bg-image" aria-hidden="true"></div>
-    <div class="overlay-inner" aria-hidden="true"></div>
-    <div class="page-wrap">
-      <div class="panel">
-        <h2>Skills</h2>
-        <p class="about-text">Next we’ll build this screen (clean categories, tools, and proof links).</p>
-        <div class="panel-actions">
-          <button class="btn" data-route="about">Back</button>
-          <button class="btn" data-route="projects">Next: Projects</button>
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="overlay-inner" aria-hidden="true"></div>
+
+  <div class="page-wrap">
+    <div class="panel skills-panel">
+      <h2>Skills</h2>
+
+      <div class="skills-grid">
+
+        <div class="skill-block">
+          <h3>Programming</h3>
+          <ul>
+            <li>C / C++</li>
+            <li>Python</li>
+            <li>Java</li>
+            <li>Verilog (RTL)</li>
+            <li>x86 Assembly</li>
+          </ul>
         </div>
+
+        <div class="skill-block">
+          <h3>Hardware & Embedded</h3>
+          <ul>
+            <li>PCB Design (KiCad)</li>
+            <li>FPGA Development</li>
+            <li>Arduino / ESP32</li>
+            <li>Digital Logic Verification</li>
+            <li>Hardware Debugging</li>
+          </ul>
+        </div>
+
+        <div class="skill-block">
+          <h3>Tools & Systems</h3>
+          <ul>
+            <li>Linux</li>
+            <li>GDB Debugging</li>
+            <li>Waveform Analysis</li>
+            <li>Testbench Design</li>
+            <li>Git / Version Control</li>
+          </ul>
+        </div>
+
+        <div class="skill-block">
+          <h3>Engineering Focus</h3>
+          <ul>
+            <li>Computer Architecture</li>
+            <li>Embedded Systems</li>
+            <li>Verification & Validation</li>
+            <li>Real Hardware Bring-Up</li>
+            <li>Systems Analysis</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="panel-actions">
+        <button class="btn" data-route="about">Back</button>
+        <button class="btn" data-route="projects">Next: Projects</button>
       </div>
     </div>
-  </section>
-
+  </div>
+</section>
   <!-- ========================= PROJECTS (placeholder) ========================= -->
   <section class="screen" id="screen-projects" aria-label="Projects">
     <div class="bg-image" aria-hidden="true"></div>
