@@ -586,7 +586,145 @@
       .menu button, .btn{ transition:none; }
       .poweron.play{ animation:none; }
     }
-  </style>
+  
+
+    
+  /* ===== Updates widget (classic window) ===== */
+  .updates{
+    position:fixed;
+    inset:0;
+    z-index:20;
+    pointer-events:none; /* window/pill will re-enable */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+
+  /* Centered window */
+  .updates-window{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    width:min(560px, 92vw);
+    max-height:min(72vh, 640px);
+    background:#e9e9e9;
+    color:#111;
+    border:2px solid #c8c8c8;
+    box-shadow: 0 10px 40px rgba(0,0,0,.55);
+    display:none; /* toggled by .open */
+    pointer-events:auto;
+    overflow:hidden;
+  }
+  .updates-window.open{ display:block; }
+
+  .updates-titlebar{
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(#f4f4f4, #dedede);
+    border-bottom:1px solid #c4c4c4;
+    position:relative;
+    user-select:none;
+  }
+  .updates-title{
+    font-size:11px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:#222;
+  }
+  .updates-exit{
+    position:absolute;
+    right:8px;
+    top:4px;
+    height:18px;
+    padding:0 8px;
+    border:1px solid #b4b4b4;
+    background:#ff5a5a;
+    color:#111;
+    font-size:11px;
+    cursor:pointer;
+    border-radius:2px;
+  }
+  .updates-exit:hover{ filter:brightness(1.05); }
+  .updates-exit:focus{ outline:2px solid rgba(0,0,0,.65); outline-offset:1px; }
+
+  .updates-body{
+    padding:14px 14px 12px;
+  }
+
+  .updates-h{
+    margin:0 0 10px 0;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:.2px;
+  }
+  .updates-meta{
+    font-size:12px;
+    color:#333;
+    opacity:.85;
+    margin:0 0 10px 0;
+  }
+
+  .updates-scroll{
+    border:1px solid #c8c8c8;
+    background:#f8f8f8;
+    padding:10px;
+    height:min(44vh, 360px);
+    overflow:auto;
+    font-size:12.5px;
+    line-height:1.35;
+  }
+
+  .updates-scroll ul{ margin:0; padding-left:18px; }
+  .updates-scroll li{ margin: 0 0 8px 0; }
+
+  .updates-back{
+    display:inline-block;
+    margin-top:10px;
+    color:#b23a3a;
+    text-decoration:none;
+    font-size:12px;
+  }
+  .updates-back:hover{ text-decoration:underline; text-underline-offset:2px; }
+
+  /* Bottom-left sticky pill (shows when window closed) */
+  .updates-pill{
+    position:fixed;
+    left:16px;
+    bottom:16px;
+    display:none; /* toggled by JS */
+    align-items:center;
+    gap:8px;
+    background: rgba(255,255,255,.92);
+    color:#111;
+    border:1px solid rgba(0,0,0,.18);
+    border-radius:10px;
+    padding:10px 12px;
+    cursor:pointer;
+    pointer-events:auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,.32);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size:12px;
+  }
+  .updates-pill:hover{ transform: translateY(-1px); }
+  .updates-pill .dot{
+    width:8px; height:8px;
+    border-radius:50%;
+    background:#111;
+    display:inline-block;
+  }
+
+  /* Scrollbar styling (best effort) */
+  .updates-scroll::-webkit-scrollbar{ width: 10px; }
+  .updates-scroll::-webkit-scrollbar-track{ background:#e8e8e8; }
+  .updates-scroll::-webkit-scrollbar-thumb{ background:#bcbcbc; border-radius:10px; border:2px solid #e8e8e8; }
+
+  @media (max-width: 420px){
+    .updates-h{ font-size:18px; }
+    .updates-scroll{ height:min(46vh, 340px); }
+  }
+
+</style>
 </head>
 
 <body>
@@ -658,7 +796,7 @@
           <div class="card">
             <div class="photo">
               <!-- Put your photo here: images/me.jpg -->
-              <img src="images/me.jpg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;hint&quot;>Add your photo as: images/me.jpg</div>';">
+              <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;hint&quot;>Add your photo as: images/me.jpg</div>';">
               <div class="hint">Add your photo as: images/me.jpg</div>
             </div>
 
@@ -938,7 +1076,45 @@
     </div>
   </section>
 
-  <script>
+  
+  <!-- Updates widget (sticky bottom-left) -->
+  
+  <!-- Updates widget -->
+  <div class="updates" id="updatesWidget" aria-live="polite">
+    <div class="updates-window" id="updatesWindow" role="dialog" aria-label="Updates">
+      <div class="updates-titlebar">
+        <div class="updates-title">NOTE FROM JESUS</div>
+        <button class="updates-exit" id="updatesClose" type="button" aria-label="Close updates">Exit</button>
+      </div>
+
+      <div class="updates-body">
+        <h3 class="updates-h">Project updates: <span style="font-weight:700;">(UPDATED FEB 09)</span></h3>
+        <p class="updates-meta">Quick notes on what I’m building right now.</p>
+
+        <div class="updates-scroll" aria-label="Updates content">
+          <ul>
+            <li><b>Smart Message Terminal (ESP32 + OLED):</b> finishing UI polish, adding message queue + better error handling, and tightening power wiring.</li>
+            <li><b>Orbital Debris Detection research:</b> collecting sources on radar/optical + in situ sensing limits and drafting improvement ideas for real-time small-particle detection.</li>
+            <li><b>Portfolio refresh:</b> building the full section screens (Skills, Projects, Research, Contact) and adding proof links (GitHub, reports, demos).</li>
+          </ul>
+          <p style="margin:10px 0 0 0; opacity:.85;">
+            Email: <span style="text-decoration:underline;">jesus.m.hernandez01@sjsu.edu</span>
+          </p>
+        </div>
+
+        <a class="updates-back" href="#" id="updatesBack">→ back to site</a>
+      </div>
+    </div>
+
+    <button class="updates-pill" id="updatesPill" type="button" aria-label="Open updates">
+      <span class="dot" aria-hidden="true"></span>
+      <span>* updates</span>
+    </button>
+  </div>
+  <!-- /Updates widget -->
+
+
+<script>
     // ===== Timestamp like example: MM/DD/YYYY  h:mm AM/PM PT =====
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
@@ -1092,6 +1268,46 @@
       homeVideo.muted = true;
       homeVideo.volume = 0;
     }
+  
+
+    /* ===== Updates widget logic ===== */
+    
+  // Updates widget (open by default, sticky pill when closed)
+  (() => {
+    const win   = document.getElementById('updatesWindow');
+    const pill  = document.getElementById('updatesPill');
+    const close = document.getElementById('updatesClose');
+    const back  = document.getElementById('updatesBack');
+    if(!win || !pill || !close) return;
+
+    const KEY = "jh_updates_open_v2";
+
+    function setOpen(v){
+      win.classList.toggle('open', v);
+      pill.style.display = v ? "none" : "inline-flex";
+      try{ localStorage.setItem(KEY, v ? "1" : "0"); }catch(e){}
+    }
+
+    // Default open; if user explicitly closed before, respect that.
+    let open = true;
+    try{
+      const stored = localStorage.getItem(KEY);
+      if(stored === "0") open = false;
+    }catch(e){}
+    setOpen(open);
+
+    pill.addEventListener('click', () => setOpen(true));
+    close.addEventListener('click', () => setOpen(false));
+    if(back){
+      back.addEventListener('click', (e) => { e.preventDefault(); setOpen(false); });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if(e.key === "Escape" && win.classList.contains("open")) setOpen(false);
+    });
+  })();
+;
+
   </script>
 </body>
 </html>
