@@ -28,7 +28,7 @@
       background:var(--bg);
       color:var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      overflow:hidden;
+      overflow:hidden; /* keep global scroll disabled */
     }
 
     /* ===== Top strip ===== */
@@ -237,6 +237,19 @@
       line-height: 1.45;
     }
 
+    /* ===== Projects-only scrolling =====
+       Only the Projects panel becomes scrollable; everything else stays fixed. */
+    #screen-projects .page-wrap{
+      align-items: stretch;   /* let the panel fill vertical space */
+    }
+    #screen-projects .panel{
+      max-height: calc(100vh - 62px - 18px); /* top padding + bottom padding */
+      overflow: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 14px; /* tiny buffer so scrollbar does not sit on text */
+    }
+
     .grid-2{
       display:grid;
       grid-template-columns: 0.95fr 1.25fr;
@@ -397,6 +410,131 @@
       font-size: 14px;
     }
 
+    /* ===== Projects grid (filter tabs + cards) ===== */
+    .proj-tabs{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin: 8px 0 14px;
+    }
+    .proj-tab{
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.30);
+      color: rgba(255,255,255,.88);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .proj-tab:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.26); }
+    .proj-tab.is-active{
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.34);
+    }
+
+    .proj-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+    .proj-card{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.40);
+      border-radius: 14px;
+      overflow:hidden;
+      box-shadow: 0 12px 38px rgba(0,0,0,.25);
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+    }
+    .proj-thumb{
+      height: 92px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.10), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,.10), transparent 55%),
+        rgba(0,0,0,.35);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .proj-body{
+      padding: 12px 12px 10px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      flex:1;
+    }
+    .proj-title{
+      margin:0;
+      font-size: 14px;
+      letter-spacing: .3px;
+      font-weight: 800;
+    }
+    .proj-sub{
+      margin:0;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      letter-spacing: .6px;
+    }
+    .proj-desc{
+      margin:0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,.86);
+      flex:1;
+    }
+    .proj-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .proj-tag{
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.84);
+    }
+    .proj-actions{
+      display:flex;
+      gap: 10px;
+      padding: 10px 12px 12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .proj-actions a{
+      flex:1;
+      text-align:center;
+      text-decoration:none;
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.28);
+      color: rgba(255,255,255,.90);
+      padding: 9px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .proj-actions a:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+      transform: translateY(-1px);
+    }
+    .proj-actions a.is-disabled{
+      opacity:.45;
+      pointer-events:none;
+    }
+
     .panel-actions{
       margin-top: 14px;
       display:flex;
@@ -427,7 +565,7 @@
     .crt{
       position:fixed;
       inset:0;
-      z-index: 999; /* always above */
+      z-index: 999;
       pointer-events:none;
     }
     .crt::before{
@@ -586,145 +724,137 @@
       .menu button, .btn{ transition:none; }
       .poweron.play{ animation:none; }
     }
-  
 
-    
-  /* ===== Updates widget (classic window) ===== */
-  .updates{
-    position:fixed;
-    inset:0;
-    z-index:20;
-    pointer-events:none; /* window/pill will re-enable */
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  }
+    /* ===== Updates widget (classic window) ===== */
+    .updates{
+      position:fixed;
+      inset:0;
+      z-index:20;
+      pointer-events:none;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
 
-  /* Centered window */
-  .updates-window{
-    position:fixed;
-    left:50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-    width:min(560px, 92vw);
-    max-height:min(72vh, 640px);
-    background:#e9e9e9;
-    color:#111;
-    border:2px solid #c8c8c8;
-    box-shadow: 0 10px 40px rgba(0,0,0,.55);
-    display:none; /* toggled by .open */
-    pointer-events:auto;
-    overflow:hidden;
-  }
-  .updates-window.open{ display:block; }
+    .updates-window{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, -50%);
+      width:min(560px, 92vw);
+      max-height:min(72vh, 640px);
+      background:#e9e9e9;
+      color:#111;
+      border:2px solid #c8c8c8;
+      box-shadow: 0 10px 40px rgba(0,0,0,.55);
+      display:none;
+      pointer-events:auto;
+      overflow:hidden;
+    }
+    .updates-window.open{ display:block; }
 
-  .updates-titlebar{
-    height:26px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(#f4f4f4, #dedede);
-    border-bottom:1px solid #c4c4c4;
-    position:relative;
-    user-select:none;
-  }
-  .updates-title{
-    font-size:11px;
-    letter-spacing:1.2px;
-    text-transform:uppercase;
-    color:#222;
-  }
-  .updates-exit{
-    position:absolute;
-    right:8px;
-    top:4px;
-    height:18px;
-    padding:0 8px;
-    border:1px solid #b4b4b4;
-    background:#ff5a5a;
-    color:#111;
-    font-size:11px;
-    cursor:pointer;
-    border-radius:2px;
-  }
-  .updates-exit:hover{ filter:brightness(1.05); }
-  .updates-exit:focus{ outline:2px solid rgba(0,0,0,.65); outline-offset:1px; }
+    .updates-titlebar{
+      height:26px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(#f4f4f4, #dedede);
+      border-bottom:1px solid #c4c4c4;
+      position:relative;
+      user-select:none;
+    }
+    .updates-title{
+      font-size:11px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:#222;
+    }
+    .updates-exit{
+      position:absolute;
+      right:8px;
+      top:4px;
+      height:18px;
+      padding:0 8px;
+      border:1px solid #b4b4b4;
+      background:#ff5a5a;
+      color:#111;
+      font-size:11px;
+      cursor:pointer;
+      border-radius:2px;
+    }
+    .updates-exit:hover{ filter:brightness(1.05); }
+    .updates-exit:focus{ outline:2px solid rgba(0,0,0,.65); outline-offset:1px; }
 
-  .updates-body{
-    padding:14px 14px 12px;
-  }
+    .updates-body{ padding:14px 14px 12px; }
 
-  .updates-h{
-    margin:0 0 10px 0;
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:.2px;
-  }
-  .updates-meta{
-    font-size:12px;
-    color:#333;
-    opacity:.85;
-    margin:0 0 10px 0;
-  }
+    .updates-h{
+      margin:0 0 10px 0;
+      font-size:22px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .updates-meta{
+      font-size:12px;
+      color:#333;
+      opacity:.85;
+      margin:0 0 10px 0;
+    }
 
-  .updates-scroll{
-    border:1px solid #c8c8c8;
-    background:#f8f8f8;
-    padding:10px;
-    height:min(44vh, 360px);
-    overflow:auto;
-    font-size:12.5px;
-    line-height:1.35;
-  }
+    .updates-scroll{
+      border:1px solid #c8c8c8;
+      background:#f8f8f8;
+      padding:10px;
+      height:min(44vh, 360px);
+      overflow:auto;
+      font-size:12.5px;
+      line-height:1.35;
+    }
 
-  .updates-scroll ul{ margin:0; padding-left:18px; }
-  .updates-scroll li{ margin: 0 0 8px 0; }
+    .updates-scroll ul{ margin:0; padding-left:18px; }
+    .updates-scroll li{ margin: 0 0 8px 0; }
 
-  .updates-back{
-    display:inline-block;
-    margin-top:10px;
-    color:#b23a3a;
-    text-decoration:none;
-    font-size:12px;
-  }
-  .updates-back:hover{ text-decoration:underline; text-underline-offset:2px; }
+    .updates-back{
+      display:inline-block;
+      margin-top:10px;
+      color:#b23a3a;
+      text-decoration:none;
+      font-size:12px;
+    }
+    .updates-back:hover{ text-decoration:underline; text-underline-offset:2px; }
 
-  /* Bottom-left sticky pill (shows when window closed) */
-  .updates-pill{
-    position:fixed;
-    left:16px;
-    bottom:16px;
-    display:none; /* toggled by JS */
-    align-items:center;
-    gap:8px;
-    background: rgba(255,255,255,.92);
-    color:#111;
-    border:1px solid rgba(0,0,0,.18);
-    border-radius:10px;
-    padding:10px 12px;
-    cursor:pointer;
-    pointer-events:auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,.32);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    font-size:12px;
-  }
-  .updates-pill:hover{ transform: translateY(-1px); }
-  .updates-pill .dot{
-    width:8px; height:8px;
-    border-radius:50%;
-    background:#111;
-    display:inline-block;
-  }
+    .updates-pill{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      display:none;
+      align-items:center;
+      gap:8px;
+      background: rgba(255,255,255,.92);
+      color:#111;
+      border:1px solid rgba(0,0,0,.18);
+      border-radius:10px;
+      padding:10px 12px;
+      cursor:pointer;
+      pointer-events:auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,.32);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+    }
+    .updates-pill:hover{ transform: translateY(-1px); }
+    .updates-pill .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background:#111;
+      display:inline-block;
+    }
 
-  /* Scrollbar styling (best effort) */
-  .updates-scroll::-webkit-scrollbar{ width: 10px; }
-  .updates-scroll::-webkit-scrollbar-track{ background:#e8e8e8; }
-  .updates-scroll::-webkit-scrollbar-thumb{ background:#bcbcbc; border-radius:10px; border:2px solid #e8e8e8; }
+    .updates-scroll::-webkit-scrollbar{ width: 10px; }
+    .updates-scroll::-webkit-scrollbar-track{ background:#e8e8e8; }
+    .updates-scroll::-webkit-scrollbar-thumb{ background:#bcbcbc; border-radius:10px; border:2px solid #e8e8e8; }
 
-  @media (max-width: 420px){
-    .updates-h{ font-size:18px; }
-    .updates-scroll{ height:min(46vh, 340px); }
-  }
-
-</style>
+    @media (max-width: 420px){
+      .updates-h{ font-size:18px; }
+      .updates-scroll{ height:min(46vh, 340px); }
+    }
+  </style>
 </head>
 
 <body>
@@ -760,7 +890,6 @@
   <!-- HOME -->
   <section class="screen active" id="screen-home" aria-label="Home">
     <div class="bg-video" aria-hidden="true">
-      <!-- MUTED so it never plays sound -->
       <video id="homeVideo" autoplay muted loop playsinline preload="auto">
         <source src="images/beachVid.mp4" type="video/mp4" />
       </video>
@@ -795,8 +924,8 @@
         <div class="grid-2">
           <div class="card">
             <div class="photo">
-              <!-- Put your photo here: images/me.jpg -->
               <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;hint&quot;>Add your photo as: images/me.jpg</div>';">
+              <div class="hint">Add your photo as: images/me.jpg</div>
             </div>
 
             <div class="pill-row" aria-label="Quick facts">
@@ -935,53 +1064,129 @@
     <div class="page-wrap">
       <div class="panel">
         <h2>Projects</h2>
-        <div class="subtitle">
-          These are the projects I’m most confident putting in front of recruiters — clear scope, real debugging, and proof.
+        <p class="about-text">Filter by type. Each card is written to show what I built, what I learned, and what I can prove.</p>
+
+        <div class="proj-tabs" role="tablist" aria-label="Project filters">
+          <button class="proj-tab is-active" type="button" data-filter="featured" role="tab" aria-selected="true">Featured</button>
+          <button class="proj-tab" type="button" data-filter="software" role="tab" aria-selected="false">Software</button>
+          <button class="proj-tab" type="button" data-filter="hardware" role="tab" aria-selected="false">Hardware</button>
+          <button class="proj-tab" type="button" data-filter="electrical" role="tab" aria-selected="false">Electrical</button>
+          <button class="proj-tab" type="button" data-filter="ml" role="tab" aria-selected="false">ML</button>
+          <button class="proj-tab" type="button" data-filter="all" role="tab" aria-selected="false">All</button>
         </div>
 
-        <div class="project">
-          <div class="ptitle">Custom Instruction Set Computer Simulator (C, x86 Assembly)</div>
-          <div class="pmeta">Linux • Instruction decode • ALU ops • Register state updates • Debugging with GDB</div>
-          <p class="pdesc">
-            Built a custom instruction set simulator to model low-level program execution. Debugged silent logic errors where programs ran but produced incorrect output,
-            using GDB to trace execution step-by-step and validate control flow and data-path behavior. Extended the simulator by adding new instructions.
-          </p>
-        </div>
+        <div class="proj-grid" id="projGrid">
+          <article class="proj-card" data-cat="featured hardware electrical">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">Smart Message Terminal (ESP32 + OLED)</h3>
+              <p class="proj-sub">Embedded Systems • UI/UX • Hardware bring-up</p>
+              <p class="proj-desc">Built a small message display terminal with an ESP32 and OLED, focusing on reliability, clean UX, and iterative debugging on real hardware.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">ESP32</span><span class="proj-tag">Arduino</span><span class="proj-tag">I2C</span><span class="proj-tag">OLED</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#" aria-label="View project">View</a>
+              <a class="is-disabled" href="#" aria-label="GitHub link">GitHub</a>
+            </div>
+          </article>
 
-        <div class="project">
-          <div class="ptitle">Digital Logic and Verification (Verilog)</div>
-          <div class="pmeta">FSMs • Adders • Control logic • RTL testbenches • Waveform analysis</div>
-          <p class="pdesc">
-            Designed and verified finite state machines and arithmetic/control logic in Verilog. Traced failures back to timing/state-transition issues using RTL testbenches
-            and waveform-based debugging to prove correctness under clocked operation.
-          </p>
-        </div>
+          <article class="proj-card" data-cat="featured software">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">Custom Instruction Set Computer Simulator</h3>
+              <p class="proj-sub">C • x86 Assembly • Linux</p>
+              <p class="proj-desc">Implemented a custom instruction set simulator and debug tooling to model instruction decode, ALU ops, and register state updates, using GDB to trace execution and validate state transitions.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">C</span><span class="proj-tag">x86</span><span class="proj-tag">Linux</span><span class="proj-tag">GDB</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
 
-        <div class="project">
-          <div class="ptitle">Polynomial Class Library (C++)</div>
-          <div class="pmeta">Dynamic memory • Object lifecycle • Operator overloading • Correct copy/assign/destruct</div>
-          <p class="pdesc">
-            Implemented a C++ polynomial library supporting arithmetic operations and evaluation using dynamic memory. Fixed ownership and lifecycle bugs by redesigning constructors,
-            destructors, and operator overloads to enforce safe object-oriented behavior.
-          </p>
-        </div>
+          <article class="proj-card" data-cat="featured hardware electrical">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">PCB Design — LM386 Audio Amplifier</h3>
+              <p class="proj-sub">KiCad • Layout • Hardware testing</p>
+              <p class="proj-desc">Designed, assembled, and tested an LM386 audio amplifier PCB. Diagnosed connectivity and signal issues through hands-on inspection and iterative hardware bring-up.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">KiCad</span><span class="proj-tag">PCB</span><span class="proj-tag">Soldering</span><span class="proj-tag">Debug</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
 
-        <div class="project">
-          <div class="ptitle">PCB Design – LM386 Audio Amplifier</div>
-          <div class="pmeta">KiCad • Schematic → layout • Soldering • Hardware bring-up • Iterative testing</div>
-          <p class="pdesc">
-            Designed, assembled, and tested an LM386 amplifier PCB. After fabrication, diagnosed connectivity and signal issues that weren’t obvious in the schematic, requiring
-            physical inspection and iterative debugging to reach a working build.
-          </p>
-        </div>
+          <article class="proj-card" data-cat="software">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">Polynomial Class Library</h3>
+              <p class="proj-sub">C++ • Dynamic memory • Operator overloading</p>
+              <p class="proj-desc">Implemented a polynomial library supporting arithmetic operations and evaluation with correct object lifecycle handling. Fixed ownership bugs by redesigning constructors, destructors, and overloads.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">C++</span><span class="proj-tag">OOP</span><span class="proj-tag">Memory</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
 
-        <div class="project">
-          <div class="ptitle">Smart Message Terminal (ESP32)</div>
-          <div class="pmeta">Embedded • UI/UX • Real device behavior • Iteration-driven build</div>
-          <p class="pdesc">
-            Building an ESP32-based “Smart Message Terminal” focused on clean user experience, reliable behavior, and real-world constraints. Emphasis on debugging, robustness,
-            and making the device feel polished (not just “it works on my desk”).
-          </p>
+          <article class="proj-card" data-cat="hardware electrical">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">Digital Logic &amp; Verification</h3>
+              <p class="proj-sub">Verilog • RTL • Testbenches</p>
+              <p class="proj-desc">Designed and verified FSMs and arithmetic logic in Verilog. Used RTL testbenches and waveform analysis to trace failures back to logic errors and timing mismatches.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">Verilog</span><span class="proj-tag">RTL</span><span class="proj-tag">TB</span><span class="proj-tag">Waveforms</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="hardware software electrical featured">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">IoT Health Monitoring System</h3>
+              <p class="proj-sub">Sensors • Data logging • Dashboard-ready</p>
+              <p class="proj-desc">Built an IoT monitoring prototype that collects sensor data, logs it reliably, and prepares it for visualization and analysis (health metrics / environmental signals).</p>
+              <div class="proj-tags">
+                <span class="proj-tag">IoT</span><span class="proj-tag">Sensors</span><span class="proj-tag">ESP32</span><span class="proj-tag">Data</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
+
+          <article class="proj-card" data-cat="ml software featured">
+            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-body">
+              <h3 class="proj-title">ML — League of Legends Analytics</h3>
+              <p class="proj-sub">Feature engineering • Model training • Evaluation</p>
+              <p class="proj-desc">Built an ML workflow around match data to predict outcomes and/or player performance, focusing on clean features, baseline models, and honest evaluation.</p>
+              <div class="proj-tags">
+                <span class="proj-tag">Python</span><span class="proj-tag">ML</span><span class="proj-tag">Pandas</span><span class="proj-tag">Metrics</span>
+              </div>
+            </div>
+            <div class="proj-actions">
+              <a class="is-disabled" href="#">View</a>
+              <a class="is-disabled" href="#">GitHub</a>
+            </div>
+          </article>
         </div>
 
         <div class="panel-actions">
@@ -1075,9 +1280,6 @@
     </div>
   </section>
 
-  
-  <!-- Updates widget (sticky bottom-left) -->
-  
   <!-- Updates widget -->
   <div class="updates" id="updatesWidget" aria-live="polite">
     <div class="updates-window" id="updatesWindow" role="dialog" aria-label="Updates">
@@ -1110,11 +1312,9 @@
       <span>* updates</span>
     </button>
   </div>
-  <!-- /Updates widget -->
 
-
-<script>
-    // ===== Timestamp like example: MM/DD/YYYY  h:mm AM/PM PT =====
+  <script>
+    // Timestamp: MM/DD/YYYY  h:mm AM/PM PT
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
@@ -1130,7 +1330,7 @@
     tick();
     setInterval(tick, 15000);
 
-    // ===== Boot sequence (click to enter) =====
+    // Boot sequence (click to enter)
     const boot = document.getElementById('boot');
     const stack = document.getElementById('stack');
     const bootLines = document.getElementById('bootLines');
@@ -1161,19 +1361,17 @@
       stack.classList.add('is-visible');
     }
 
-    // Power-on flash + type
     poweron.classList.add('play');
     setTimeout(() => {
       typeNextLine();
       setTimeout(() => bootFill.style.width = "100%", 450);
     }, 150);
 
-    // Click to enter (required for reliable autoplay policies and your requested UX)
     window.addEventListener('click', () => {
       if(!boot.classList.contains('hidden')) hideBoot();
     }, { once: true });
 
-    // ===== Router: full-screen section switching =====
+    // Router
     const topbar = document.getElementById('topbar');
     const screens = {
       home: document.getElementById('screen-home'),
@@ -1189,19 +1387,16 @@
       const target = screens[route] || screens.home;
       target.classList.add('active');
 
-      // show top nav only on section screens (not home)
       if(route && route !== 'home'){
         topbar.classList.add('section-mode');
       } else {
         topbar.classList.remove('section-mode');
       }
 
-      // keep URL hash clean
       const hash = route ? `#${route}` : '#home';
       if(location.hash !== hash) history.replaceState(null, "", hash);
     }
 
-    // menu buttons + back/next buttons
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-route]');
       if(!btn) return;
@@ -1209,35 +1404,21 @@
       setActive(route);
     });
 
-    // hash navigation
     function routeFromHash(){
       const r = (location.hash || '#home').replace('#','').trim();
       if(Object.keys(screens).includes(r)) setActive(r);
       else setActive('home');
     }
     window.addEventListener('hashchange', routeFromHash);
-
-    // init route
     routeFromHash();
 
-    // ===== Typed "I AM ..." effect =====
+    // Typed "I AM ..." effect
     const typedEl = document.getElementById('typedText');
-    const phrases = [
-      "BUILDING A IoT DEVICE",
-      "TRAINING A ML DEVICE",
-      "TRYING TO CLIMB OUT OF PLATINUM IN LEAGUE",
-      "WAKING UP TO EARLY!!!",
-      "ITERATING",
-      "ENGINEERING"
-    ];
-
-    let pIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
+    const phrases = ["BUILDING","DEBUGGING","VERIFYING","LEARNING","ITERATING","ENGINEERING"];
+    let pIndex = 0, charIndex = 0, deleting = false;
 
     function typeLoop(){
       const word = phrases[pIndex];
-
       if(!deleting){
         charIndex++;
         typedEl.textContent = word.slice(0, charIndex);
@@ -1261,52 +1442,77 @@
     }
     typeLoop();
 
-    // ===== Ensure home video stays muted =====
+    // Ensure home video stays muted
     const homeVideo = document.getElementById('homeVideo');
     if(homeVideo){
       homeVideo.muted = true;
       homeVideo.volume = 0;
     }
-  
 
-    /* ===== Updates widget logic ===== */
-    
-  // Updates widget (open by default, sticky pill when closed)
-  (() => {
-    const win   = document.getElementById('updatesWindow');
-    const pill  = document.getElementById('updatesPill');
-    const close = document.getElementById('updatesClose');
-    const back  = document.getElementById('updatesBack');
-    if(!win || !pill || !close) return;
+    // Updates widget logic
+    (() => {
+      const win   = document.getElementById('updatesWindow');
+      const pill  = document.getElementById('updatesPill');
+      const close = document.getElementById('updatesClose');
+      const back  = document.getElementById('updatesBack');
+      if(!win || !pill || !close) return;
 
-    const KEY = "jh_updates_open_v2";
+      const KEY = "jh_updates_open_v2";
+      function setOpen(v){
+        win.classList.toggle('open', v);
+        pill.style.display = v ? "none" : "inline-flex";
+        try{ localStorage.setItem(KEY, v ? "1" : "0"); }catch(e){}
+      }
 
-    function setOpen(v){
-      win.classList.toggle('open', v);
-      pill.style.display = v ? "none" : "inline-flex";
-      try{ localStorage.setItem(KEY, v ? "1" : "0"); }catch(e){}
-    }
+      let open = true;
+      try{
+        const stored = localStorage.getItem(KEY);
+        if(stored === "0") open = false;
+      }catch(e){}
+      setOpen(open);
 
-    // Default open; if user explicitly closed before, respect that.
-    let open = true;
-    try{
-      const stored = localStorage.getItem(KEY);
-      if(stored === "0") open = false;
-    }catch(e){}
-    setOpen(open);
+      pill.addEventListener('click', () => setOpen(true));
+      close.addEventListener('click', () => setOpen(false));
+      if(back){
+        back.addEventListener('click', (e) => { e.preventDefault(); setOpen(false); });
+      }
+      window.addEventListener('keydown', (e) => {
+        if(e.key === "Escape" && win.classList.contains("open")) setOpen(false);
+      });
+    })();
 
-    pill.addEventListener('click', () => setOpen(true));
-    close.addEventListener('click', () => setOpen(false));
-    if(back){
-      back.addEventListener('click', (e) => { e.preventDefault(); setOpen(false); });
-    }
+    // Projects filters
+    (function(){
+      const grid = document.getElementById('projGrid');
+      if(!grid) return;
 
-    window.addEventListener('keydown', (e) => {
-      if(e.key === "Escape" && win.classList.contains("open")) setOpen(false);
-    });
-  })();
-;
+      const tabs = Array.from(document.querySelectorAll('.proj-tab'));
+      function setActive(tab){
+        tabs.forEach(t=>{
+          const on = (t === tab);
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+      function applyFilter(filter){
+        const cards = Array.from(grid.querySelectorAll('.proj-card'));
+        cards.forEach(card=>{
+          const cats = (card.getAttribute('data-cat') || '').split(/\s+/).filter(Boolean);
+          const show = (filter === 'all') || cats.includes(filter);
+          card.style.display = show ? '' : 'none';
+        });
+      }
 
+      tabs.forEach(tab=>{
+        tab.addEventListener('click', ()=>{
+          const filter = tab.getAttribute('data-filter') || 'all';
+          setActive(tab);
+          applyFilter(filter);
+        });
+      });
+
+      applyFilter('featured');
+    })();
   </script>
 </body>
 </html>
