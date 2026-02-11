@@ -560,6 +560,33 @@
       border-color: rgba(255,255,255,.22);
       transform: translateY(-1px);
     }
+    
+    /* About layout improvements */
+    #screen-about .grid-2{
+      align-items: stretch;
+    }
+
+    #screen-about .about-left{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #screen-about .photo{
+      margin: 0 auto;
+    }
+
+    #screen-about .photo img{
+      object-position: center;
+    }
+
+    #screen-about .pill-row{
+      justify-content: center;
+    }
+
+    #screen-about .right-now{
+      margin-top: 6px;
+    }
 
     /* ===== CRT overlay (scanlines + noise + vignette + flicker) ===== */
     .crt{
@@ -914,86 +941,99 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="screen" id="screen-about" aria-label="About Me">
-    <div class="bg-image" aria-hidden="true"></div>
-    <div class="overlay-inner" aria-hidden="true"></div>
+ <!-- ABOUT -->
+<section class="screen" id="screen-about" aria-label="About Me">
+  <div class="bg-image" aria-hidden="true"></div>
+  <div class="overlay-inner" aria-hidden="true"></div>
 
-    <div class="page-wrap">
-      <div class="panel">
-        <h2>About Me</h2>
-        <div class="grid-2">
-          <div class="card">
-            <div class="photo">
-              <img src="images/jesus.jpeg" alt="Photo of Jesus Hernandez" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;hint&quot;>Add your photo as: images/me.jpg</div>';">
-            </div>
+  <div class="page-wrap">
+    <div class="panel">
+      <h2>About Me</h2>
 
-            <div class="pill-row" aria-label="Quick facts">
-              <span class="pill">SJSU</span>
-              <span class="pill">Computer Engineering</span>
-              <span class="pill">Robotics</span>
-              <span class="pill">Embedded</span>
-              <span class="pill">Verification</span>
-            </div>
+      <div class="grid-2">
+
+        <!-- LEFT COLUMN -->
+        <div class="card about-left">
+
+          <div class="photo">
+            <img src="images/jesus.jpeg"
+                 alt="Photo of Jesus Hernandez"
+                 onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=&quot;hint&quot;>Add your photo as: images/me.jpg</div>';">
           </div>
 
-          <div class="card">
-            <div style="margin-bottom:10px;">
-              <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.75);">Hi, I'm</div>
-              <h3 class="about-title">Jesus Hernandez.</h3>
-
-              <div class="about-line">
-                <span>I AM</span>
-                <span class="typewrap">
-                  <span class="typed" id="typedText">BUILDING</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </span>
-              </div>
-            </div>
-
-            <p class="p">
-              I am a Computer Engineering student at San José State University with a strong interest in robotics and intelligent 
-              systems. My academic foundation includes digital logic and verification, computer architecture, embedded systems, 
-              and software engineering. I enjoy building systems where I can clearly prove they work, whether through structured 
-              testbenches, waveform validation, detailed logs, or real hardware behavior.
-            </p>
-          
-            <p class="p">
-              Currently, I am experimenting with IoT devices and machine learning, exploring how connected systems can sense, adapt,
-              and make decisions in real time. Robotics excites me because it combines sensing, control systems, embedded software, 
-              and physical interaction with the real world into one cohesive discipline.
-            </p>
-              
-            <p class="p">
-              I care deeply about building technology with purpose. Engineering should be ethical, thoughtful, and genuinely useful.
-              I want to contribute to systems that solve meaningful problems and improve how people interact with technology.
-            </p>
-              
-            <p class="p">
-              Outside of engineering, I am competitive in League of Legends at the Platinum level, I enjoy drawing, going to the gym, 
-              and spending time at local farmers markets. I am also a dedicated One Piece Trading Card Game player. I appreciate strategy, 
-              thoughtful design, and well built systems, whether that is in hardware, software, or a deck list.
-            </p>
-              
-            <div class="sections">
-              <div class="card">
-                <h3>Right Now </h3>
-                <ul>
-                  <li>Hands-on electronics and embedded projects</li>
-                  <li>Building portfolio projects and polishing UX</li>
-                  <li>Learning by pushing harder problems</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="panel-actions">
-              <button class="btn" data-route="home">Back</button>
-              <button class="btn" data-route="skills">Next: Skills</button>
-            </div>
+          <div class="pill-row" aria-label="Quick facts">
+            <span class="pill">SJSU</span>
+            <span class="pill">Computer Engineering</span>
+            <span class="pill">Robotics</span>
+            <span class="pill">Embedded</span>
+            <span class="pill">Verification</span>
           </div>
+
+          <!-- RIGHT NOW moved here -->
+          <div class="card right-now">
+            <h3>Right Now</h3>
+            <ul>
+              <li>Hands-on electronics and embedded projects</li>
+              <li>Building portfolio projects and polishing UX</li>
+              <li>Learning by pushing harder problems</li>
+            </ul>
+          </div>
+
         </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="card">
+
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.75);">
+              Hi, I'm Jesus Hernandez.
+            </div>
+
+            <div class="about-line">
+              <span>I AM</span>
+              <span class="typewrap">
+                <span class="typed" id="typedText">BUILDING</span>
+                <span class="caret" aria-hidden="true"></span>
+              </span>
+            </div>
+          </div>
+
+          <p class="p">
+            I am a Computer Engineering student at San José State University with a strong interest in robotics and intelligent systems.
+            My academic foundation includes digital logic and verification, computer architecture, embedded systems, and software engineering.
+            I enjoy building systems where I can clearly prove they work, whether through structured testbenches, waveform validation,
+            detailed logs, or real hardware behavior.
+          </p>
+
+          <p class="p">
+            Currently, I am experimenting with IoT devices and machine learning, exploring how connected systems can sense, adapt,
+            and make decisions in real time. Robotics excites me because it combines sensing, control systems, embedded software,
+            and physical interaction with the real world into one cohesive discipline.
+          </p>
+
+          <p class="p">
+            I care deeply about building technology with purpose. Engineering should be ethical, thoughtful, and genuinely useful.
+            I want to contribute to systems that solve meaningful problems and improve how people interact with technology.
+          </p>
+
+          <p class="p">
+            Outside of engineering, I am competitive in League of Legends at the Platinum level. I enjoy drawing, going to the gym,
+            and spending time at local farmers markets. I am also a dedicated One Piece Trading Card Game player.
+            I appreciate strategy, thoughtful design, and well built systems, whether in hardware, software, or a deck list.
+          </p>
+
+          <div class="panel-actions">
+            <button class="btn" data-route="home">Back</button>
+            <button class="btn" data-route="skills">Next: Skills</button>
+          </div>
+
+        </div>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- SKILLS -->
   <section class="screen" id="screen-skills" aria-label="Skills">
