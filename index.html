@@ -15,17 +15,22 @@
       --muted: rgba(255,255,255,.72);
       --red: #d30000;
       --red-glow: rgba(211,0,0,0.5);
-      --panel: rgba(8,8,8,.72);
-      --panel2: rgba(8,8,8,.80);
+      --cyan: #00ffe7;
+      --cyan-dim: rgba(0,255,231,0.15);
+      --green-phosphor: rgba(160,255,160,0.85);
+      --amber: #ffb800;
+      --panel: rgba(4,4,8,.80);
+      --panel2: rgba(4,4,8,.88);
       --stroke: rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.65);
+      --shadow: 0 18px 60px rgba(0,0,0,.75), 0 0 80px rgba(211,0,0,0.04);
       --bg: #000;
       --accent: rgba(255,255,255,.92);
-      --btn: rgba(255,255,255,.10);
-      --btnHover: rgba(255,255,255,.16);
+      --btn: rgba(255,255,255,.08);
+      --btnHover: rgba(255,255,255,.14);
       --font-mono: 'Share Tech Mono', ui-monospace, monospace;
       --font-body: 'Rajdhani', Arial, sans-serif;
       --font-display: 'Orbitron', Arial, sans-serif;
+      --phosphor-green: #39ff14;
     }
 
     *{ box-sizing:border-box; }
@@ -1719,6 +1724,514 @@
       .topbar-sys { display: none; }
       .home-ticker { display: none; }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       90s CYBERCORE / ANALOG AESTHETIC LAYER
+    ═══════════════════════════════════════════════════════════ */
+
+    /* ── 1. RGB PHOSPHOR SCREEN TINT ── */
+    /* Gives the whole page a faint green phosphor monitor warmth */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 996;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at 50% 40%,
+        rgba(0,255,100,0.025) 0%,
+        rgba(0,200,80,0.01) 50%,
+        transparent 75%
+      );
+      mix-blend-mode: screen;
+    }
+
+    /* ── 2. VHS TRACKING ARTIFACTS ── */
+    /* Random horizontal drift lines that slide down like bad tape */
+    .vhs-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 995;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .vhs-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      opacity: 0;
+      transform: translateX(0);
+      animation: vhs-drift var(--dur, 6s) linear var(--delay, 0s) infinite;
+    }
+    @keyframes vhs-drift {
+      0%   { top: -2%; opacity: 0; transform: translateX(0) scaleX(1); }
+      5%   { opacity: 0.4; }
+      30%  { transform: translateX(-8px) scaleX(0.97); }
+      55%  { transform: translateX(5px) scaleX(1.02); }
+      80%  { opacity: 0.2; }
+      95%  { opacity: 0; }
+      100% { top: 102%; opacity: 0; transform: translateX(0) scaleX(1); }
+    }
+    .vhs-bar {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,180,0.08), rgba(255,80,80,0.06), transparent);
+      opacity: 0;
+      animation: vhs-bar-drift var(--dur2, 11s) ease-in-out var(--delay2, 2s) infinite;
+    }
+    @keyframes vhs-bar-drift {
+      0%   { top: -4%; opacity: 0; }
+      8%   { opacity: 1; }
+      90%  { opacity: 0.3; }
+      100% { top: 104%; opacity: 0; }
+    }
+
+    /* ── 3. CHROMATIC ABERRATION ON PANELS ── */
+    /* Panel borders glow with RGB split like a detuned monitor */
+    .panel {
+      box-shadow:
+        var(--shadow),
+        0 0 0 1px rgba(255,255,255,0.05),
+        2px 0 0 0 rgba(255,0,60,0.08),
+        -2px 0 0 0 rgba(0,255,231,0.06);
+    }
+    .screen.active .panel {
+      animation: panel-aberration 8s ease-in-out infinite;
+    }
+    @keyframes panel-aberration {
+      0%,100% { box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.05), 2px 0 0 0 rgba(255,0,60,0.08), -2px 0 0 0 rgba(0,255,231,0.06); }
+      30%      { box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.05), 3px 0 0 0 rgba(255,0,60,0.12), -3px 0 0 0 rgba(0,255,231,0.09); }
+      60%      { box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.05), 1px 0 0 0 rgba(255,0,60,0.05), -1px 0 0 0 rgba(0,255,231,0.04); }
+    }
+
+    /* ── 4. DITHERED GRAIN TEXTURE ── */
+    /* SVG-based film grain overlay for analog tactility */
+    .grain-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 994;
+      pointer-events: none;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      mix-blend-mode: overlay;
+      animation: grain-shift 0.3s steps(2) infinite;
+    }
+    @keyframes grain-shift {
+      0%   { background-position: 0 0; }
+      25%  { background-position: -40px 20px; }
+      50%  { background-position: 20px -30px; }
+      75%  { background-position: -20px -10px; }
+      100% { background-position: 30px 40px; }
+    }
+
+    /* ── 5. PHOSPHOR DOT MATRIX GRID ── */
+    /* Very faint pixel grid like an old phosphor display */
+    .phosphor-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 993;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 4px 4px;
+      mix-blend-mode: screen;
+    }
+
+    /* ── 6. ANALOG CLOCK (home screen) ── */
+    .analog-clock {
+      position: absolute;
+      bottom: 56px;
+      right: 22px;
+      width: 52px;
+      height: 52px;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .analog-clock svg { width: 100%; height: 100%; }
+    .clock-face {
+      fill: none;
+      stroke: rgba(255,255,255,0.12);
+      stroke-width: 1;
+    }
+    .clock-tick {
+      stroke: rgba(255,255,255,0.25);
+      stroke-width: 1;
+    }
+    .clock-tick-major {
+      stroke: var(--red);
+      stroke-width: 1.2;
+      opacity: 0.7;
+    }
+    .clock-hand-h {
+      stroke: rgba(255,255,255,0.7);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      transform-origin: 26px 26px;
+      transition: transform 0.5s cubic-bezier(.4,2.08,.55,.44);
+    }
+    .clock-hand-m {
+      stroke: rgba(255,255,255,0.85);
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      transform-origin: 26px 26px;
+      transition: transform 0.5s cubic-bezier(.4,2.08,.55,.44);
+    }
+    .clock-hand-s {
+      stroke: var(--red);
+      stroke-width: 0.8;
+      stroke-linecap: round;
+      transform-origin: 26px 26px;
+      filter: drop-shadow(0 0 2px rgba(211,0,0,0.8));
+    }
+    .clock-center {
+      fill: var(--red);
+      filter: drop-shadow(0 0 2px rgba(211,0,0,0.8));
+    }
+
+    /* ── 7. ASCII BORDER DECORATIONS ── */
+    .ascii-border {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(255,255,255,0.12);
+      letter-spacing: 0;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      white-space: pre;
+    }
+    .ascii-border-top {
+      display: block;
+      margin: 0 0 8px 0;
+      color: rgba(211,0,0,0.3);
+    }
+    .ascii-border-bottom {
+      display: block;
+      margin: 10px 0 0 0;
+      color: rgba(211,0,0,0.3);
+    }
+
+    /* ── 8. SECTION NUMBER BADGE (left edge of panel h2) ── */
+    .panel h2 {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--red);
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    /* ── 9. HOME MENU — RETRO TERMINAL STYLE ── */
+    /* Numbered list like an old BBS menu */
+    .menu {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: flex-start;
+      width: min(260px, 80vw);
+    }
+    .menu-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 6px 0;
+    }
+    .menu button {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .menu-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      opacity: 0.8;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      width: 20px;
+    }
+    .menu-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+    }
+
+    /* ── 10. PHOSPHOR TEXT GLOW on the logo ── */
+    .logo {
+      text-shadow:
+        0 0 20px rgba(255,255,255,0.15),
+        0 0 40px rgba(211,0,0,0.12),
+        0 2px 18px rgba(0,0,0,.55);
+    }
+
+    /* ── 11. RED SCANLINE OVER HOME VIDEO ── */
+    /* Rolling red tint band like a degaussed monitor */
+    .video-scanband {
+      position: absolute;
+      left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom,
+        transparent,
+        rgba(211,0,0,0.03) 40%,
+        rgba(211,0,0,0.05) 50%,
+        rgba(211,0,0,0.03) 60%,
+        transparent
+      );
+      pointer-events: none;
+      z-index: 2;
+      animation: scanband-roll 9s linear infinite;
+      top: -60px;
+    }
+    @keyframes scanband-roll {
+      from { top: -60px; }
+      to   { top: 110%; }
+    }
+
+    /* ── 12. TOPBAR — AMBER SIGNAL DOT ── */
+    .topbar-signal {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      color: rgba(255,184,0,0.6);
+      flex-shrink: 0;
+    }
+    .topbar-signal-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 5px var(--amber);
+      animation: amber-pulse 2s ease-in-out infinite;
+    }
+    @keyframes amber-pulse {
+      0%,100% { opacity: 1; box-shadow: 0 0 5px var(--amber); }
+      50%      { opacity: 0.4; box-shadow: none; }
+    }
+
+    /* ── 13. PANEL — INNER CRT GLOW TOP EDGE ── */
+    .panel::before {
+      top: 8px; left: 8px;
+      border-width: 1.5px 0 0 1.5px;
+    }
+    .panel::after {
+      bottom: 8px; right: 8px;
+      border-width: 0 1.5px 1.5px 0;
+    }
+    /* Top edge inner glow */
+    .panel-inner-glow {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,231,0.2), var(--red), rgba(0,255,231,0.2), transparent);
+      border-radius: 16px 16px 0 0;
+      animation: top-glow-sweep 4s ease-in-out infinite;
+    }
+    @keyframes top-glow-sweep {
+      0%,100% { opacity: 0.5; background-position: 0% 0; }
+      50%      { opacity: 1; background-position: 100% 0; }
+    }
+
+    /* ── 14. SKILL BAR — PHOSPHOR GREEN VARIANT FOR FILLS ── */
+    /* Override existing fill to pulse green-to-red */
+    .skill-bar-fill {
+      background: linear-gradient(90deg,
+        rgba(57,255,20,0.6),
+        rgba(211,0,0,0.9)
+      ) !important;
+      box-shadow: 0 0 8px rgba(57,255,20,0.25), 0 0 4px rgba(211,0,0,0.3) !important;
+    }
+
+    /* ── 15. BOOT — MORE BIOS-AUTHENTIC ── */
+    .boot-bios-header {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(180,255,180,0.9);
+      margin-bottom: 18px;
+      text-shadow: 0 0 10px rgba(0,255,0,0.3);
+      border-bottom: 1px solid rgba(180,255,180,0.2);
+      padding-bottom: 10px;
+    }
+    .boot-bios-header span {
+      color: rgba(255,255,255,0.5);
+    }
+    .boot-ram {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(180,255,180,0.75);
+      margin-bottom: 6px;
+    }
+    .boot-ram-bar {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 12px;
+    }
+    .boot-ram-cell {
+      width: 8px; height: 4px;
+      background: rgba(180,255,180,0.6);
+      box-shadow: 0 0 3px rgba(0,255,0,0.3);
+    }
+
+    /* ── 16. PROJ CARDS — VHS TAPE DATE STAMP ── */
+    .proj-thumb .vhs-stamp {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      z-index: 3;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 1px;
+      color: rgba(255,180,0,0.75);
+      text-shadow: 0 0 4px rgba(255,150,0,0.5);
+      pointer-events: none;
+    }
+
+    /* ── 17. CONTACT — TERMINAL PROMPT LINES ── */
+    .terminal-prompt {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(57,255,20,0.7);
+      letter-spacing: 1.5px;
+      padding: 4px 0;
+    }
+    .terminal-prompt::before {
+      content: "> ";
+      color: var(--red);
+    }
+
+    /* ── 18. ABOUT — QUOTE STYLE "TRANSMISSION" BOX ── */
+    .transmission-box {
+      border-left: 2px solid var(--red);
+      padding: 6px 12px;
+      margin: 10px 0;
+      background: rgba(211,0,0,0.04);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+    .transmission-box strong { color: rgba(211,0,0,0.85); }
+
+    /* ── 19. RETRO LOADING DOTS ON TIMESTAMP ── */
+    .ts-dots::after {
+      content: "...";
+      display: inline-block;
+      animation: dots-load 1.5s steps(4) infinite;
+      letter-spacing: 1px;
+      margin-left: 2px;
+    }
+    @keyframes dots-load {
+      0%   { content: ""; }
+      25%  { content: "."; }
+      50%  { content: ".."; }
+      75%  { content: "..."; }
+    }
+
+    /* ── 20. HOME — CORNER ASCII BADGES ── */
+    .home-ascii-badge {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: rgba(211,0,0,0.35);
+      letter-spacing: 1px;
+      pointer-events: none;
+      z-index: 4;
+      line-height: 1.3;
+    }
+    .home-ascii-badge.tl { top: 48px; left: 20px; }
+    .home-ascii-badge.tr { top: 48px; right: 20px; text-align: right; }
+    .home-ascii-badge.bl { bottom: 38px; left: 20px; }
+    .home-ascii-badge.br { bottom: 38px; right: 20px; text-align: right; }
+
+    /* ── 21. STRONGER PANEL BACKDROP + NOISE TEXTURE ── */
+    .panel {
+      background: var(--panel) !important;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255,255,255,0.005) 2px,
+          rgba(255,255,255,0.005) 3px
+        ) !important;
+    }
+
+    /* ── 22. CYAN ACCENT FOR SECTION HEADERS ── */
+    .panel h2 {
+      color: rgba(255,255,255,0.95);
+    }
+    .sec-num {
+      text-shadow: 0 0 8px rgba(211,0,0,0.6);
+    }
+
+    /* ── 23. GLITCH OFFSET on .typed text ── */
+    @keyframes typed-glitch {
+      0%,95%,100% { text-shadow: none; transform: none; }
+      96% { text-shadow: 2px 0 var(--cyan), -2px 0 var(--red); transform: translateX(1px); }
+      97% { text-shadow: -2px 0 var(--cyan), 2px 0 var(--red); transform: translateX(-1px); }
+      98% { text-shadow: none; transform: none; }
+    }
+    .typed {
+      animation: typed-glitch 4s steps(1) infinite;
+    }
+
+    /* ── 24. RESEARCH — RED LEFT BORDER ACCENT ── */
+    #screen-research .panel h2::before {
+      content: "///";
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--red);
+      opacity: 0.6;
+      margin-right: 8px;
+      letter-spacing: 2px;
+    }
+
+    /* ── 25. PROJ GRID — MASONRY-STYLE LABEL ── */
+    .proj-count-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.3);
+      text-align: right;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    /* ── 26. NOISE TEXTURE ON BOOT ── */
+    .boot {
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(0,20,0,0.6) 0%, #000 100%);
+    }
+
+    /* ── 27. CARD INNER SCANLINE ── */
+    .card {
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.008) 3px,
+        rgba(255,255,255,0.008) 4px
+      );
+    }
+
+    /* ── REDUCED MOTION OVERRIDE ── */
+    @media (prefers-reduced-motion: reduce){
+      .vhs-line, .vhs-bar, .grain-layer, .video-scanband,
+      .panel-inner-glow, .amber-pulse, .typed,
+      .boot-ram-cell { animation: none !important; }
+    }
   </style>
 </head>
 
@@ -1730,12 +2243,28 @@
   <!-- Particle canvas -->
   <canvas id="particles-canvas"></canvas>
 
+  <!-- 90s analog layers -->
+  <div class="vhs-layer" aria-hidden="true">
+    <div class="vhs-line" style="--dur:7.2s;--delay:0s;top:15%"></div>
+    <div class="vhs-line" style="--dur:11s;--delay:3.4s;top:42%"></div>
+    <div class="vhs-line" style="--dur:8.8s;--delay:1.8s;top:67%"></div>
+    <div class="vhs-line" style="--dur:14s;--delay:5s;top:31%"></div>
+    <div class="vhs-bar" style="--dur2:12s;--delay2:0s;top:0%"></div>
+    <div class="vhs-bar" style="--dur2:17s;--delay2:6s;top:20%"></div>
+  </div>
+  <div class="grain-layer" aria-hidden="true"></div>
+  <div class="phosphor-grid" aria-hidden="true"></div>
+
   <!-- Screen indicator -->
   <div class="screen-indicator" id="screenIndicator">SYS:ONLINE</div>
 
   <div class="topbar" id="topbar">
     <div class="brand">JESUS HERNANDEZ | PORTFOLIO</div>
     <div class="spacer"></div>
+    <div class="topbar-signal" aria-hidden="true">
+      <span class="topbar-signal-dot"></span>
+      <span>LIVE</span>
+    </div>
     <div class="topbar-sys" id="topbarSys">SYS:OK // 2026</div>
     <nav class="navlinks" aria-label="Top navigation">
       <a href="#home" data-route="home">Home</a>
@@ -1757,10 +2286,16 @@
   <div class="boot" id="boot" role="dialog" aria-label="Boot screen">
     <div class="poweron" id="poweron" aria-hidden="true"></div>
     <div class="boot-inner">
-      <div class="boot-title">JH BIOS v1.0 — CRT INITIALIZATION</div>
+      <div class="boot-bios-header">
+        JH/BIOS v2.6.1 &nbsp;<span>|</span>&nbsp; CPU: CORTEX-M7 @ 480MHz &nbsp;<span>|</span>&nbsp; SN: 0x4A48D3F1<br>
+        Copyright (C) 2024 Jesus Hernandez Engineering. All rights reserved.
+      </div>
+      <div class="boot-ram">MEMORY TEST: 524288K OK</div>
+      <div class="boot-ram-bar" aria-hidden="true" id="ramBar"></div>
+      <div class="boot-title">SYSTEM INITIALIZATION</div>
       <div class="boot-lines" id="bootLines"></div>
       <div class="boot-bar" aria-hidden="true"><div id="bootFill"></div></div>
-      <div class="boot-hint"><strong>Click to Enter</strong></div>
+      <div class="boot-hint"><strong>Click / Tap to Enter</strong></div>
     </div>
   </div>
 
@@ -1772,6 +2307,8 @@
       </video>
     </div>
     <div class="home-overlay" aria-hidden="true"></div>
+    <!-- Rolling VHS scanband over video -->
+    <div class="video-scanband" aria-hidden="true"></div>
 
     <!-- Corner decorations -->
     <div class="home-corners" id="homeCorners" aria-hidden="true">
@@ -1781,18 +2318,51 @@
       <div class="hc hc-br"></div>
     </div>
 
+    <!-- ASCII corner badges -->
+    <div class="home-ascii-badge tl" aria-hidden="true">SIG:LOCK<br>CH:01</div>
+    <div class="home-ascii-badge tr" aria-hidden="true">FREQ:60Hz<br>RGB:ON</div>
+    <div class="home-ascii-badge bl" aria-hidden="true">SJSU/CE<br>2026</div>
+    <div class="home-ascii-badge br" aria-hidden="true" id="signalStrength">SIG:████<br>FULL</div>
+
+    <!-- Analog clock -->
+    <div class="analog-clock" aria-label="Analog clock" aria-hidden="true">
+      <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="24" class="clock-face"/>
+        <!-- hour ticks -->
+        <line x1="26" y1="4" x2="26" y2="7" class="clock-tick-major" transform="rotate(0,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(30,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(60,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="7" class="clock-tick-major" transform="rotate(90,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(120,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(150,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="7" class="clock-tick-major" transform="rotate(180,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(210,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(240,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="7" class="clock-tick-major" transform="rotate(270,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(300,26,26)"/>
+        <line x1="26" y1="4" x2="26" y2="6" class="clock-tick" transform="rotate(330,26,26)"/>
+        <!-- Hands -->
+        <line id="clockH" x1="26" y1="26" x2="26" y2="13" class="clock-hand-h"/>
+        <line id="clockM" x1="26" y1="26" x2="26" y2="8" class="clock-hand-m"/>
+        <line id="clockS" x1="26" y1="30" x2="26" y2="7" class="clock-hand-s"/>
+        <circle cx="26" cy="26" r="2" class="clock-center"/>
+      </svg>
+    </div>
+
     <main class="center">
       <div class="stack" id="stack">
         <h1 class="logo logo-glitch" id="mainLogo" data-text="Jesus Hernandez">Jesus Hernandez</h1>
         <div class="subline">Computer Engineering</div>
         <div class="timestamp" id="ts">Loading time...</div>
 
-        <div class="menu" aria-label="Main">
-          <button type="button" data-route="about">About Me</button>
-          <button type="button" data-route="skills">Skills</button>
-          <button type="button" data-route="projects">Projects</button>
-          <button type="button" data-route="research">Research</button>
-          <button type="button" data-route="contact">Contact</button>
+        <div class="menu" aria-label="Main navigation">
+          <div class="menu-divider"></div>
+          <button type="button" data-route="about"><span class="menu-num">01.</span><span class="menu-label">About Me</span></button>
+          <button type="button" data-route="skills"><span class="menu-num">02.</span><span class="menu-label">Skills</span></button>
+          <button type="button" data-route="projects"><span class="menu-num">03.</span><span class="menu-label">Projects</span></button>
+          <button type="button" data-route="research"><span class="menu-num">04.</span><span class="menu-label">Research</span></button>
+          <button type="button" data-route="contact"><span class="menu-num">05.</span><span class="menu-label">Contact</span></button>
+          <div class="menu-divider"></div>
         </div>
       </div>
     </main>
@@ -1848,7 +2418,9 @@
 
   <div class="page-wrap">
     <div class="panel">
-      <h2>About Me</h2>
+      <div class="panel-inner-glow" aria-hidden="true"></div>
+      <div class="panel-ambient" aria-hidden="true"></div>
+      <h2><span class="sec-num">// 01</span> About Me</h2>
 
       <div class="grid-2">
 
@@ -1898,6 +2470,10 @@
 
           <hr class="red-divider">
 
+          <div class="transmission-box" aria-hidden="true">
+            <strong>TRANSMISSION</strong> // SJSU-CE // SJC NODE // 2026
+          </div>
+
           <p class="p">
             I am a Computer Engineering student at San José State University with a strong interest in robotics and intelligent systems.
             My academic foundation includes digital logic and verification, computer architecture, embedded systems, and software engineering.
@@ -1943,8 +2519,9 @@
 
     <div class="page-wrap">
       <div class="panel">
+        <div class="panel-inner-glow" aria-hidden="true"></div>
         <div class="panel-ambient" aria-hidden="true"></div>
-        <h2>Skills</h2>
+        <h2><span class="sec-num">// 02</span> Skills</h2>
         <div class="subtitle">
           Tools, languages, and strengths — based on my resume and coursework.
         </div>
@@ -2008,8 +2585,9 @@
 
     <div class="page-wrap">
       <div class="panel">
-        <h2>Projects</h2>
-        <p class="about-text">Filter by type. Each card is written to show what I built, what I learned, and what I can prove.</p>
+        <div class="panel-inner-glow" aria-hidden="true"></div>
+        <h2><span class="sec-num">// 03</span> Projects</h2>
+        <p class="about-text" style="font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:10px;">FILTER BY TYPE // EACH CARD SHOWS WHAT WAS BUILT AND PROVEN</p>
 
         <div class="proj-tabs" role="tablist" aria-label="Project filters">
           <button class="proj-tab is-active" type="button" data-filter="featured" role="tab" aria-selected="true">Featured</button>
@@ -2021,7 +2599,9 @@
 
         <div class="proj-grid" id="projGrid">
           <article class="proj-card" data-cat="featured hardware electrical">
-            <div class="proj-thumb" aria-hidden="true"></div>
+            <div class="proj-thumb" aria-hidden="true">
+              <span class="vhs-stamp">REC 24-01-15 ●</span>
+            </div>
             <div class="proj-body">
               <h3 class="proj-title">Smart Message Terminal (ESP32 + OLED)</h3>
               <p class="proj-sub">Embedded Systems • UI/UX • Hardware bring-up</p>
@@ -2038,7 +2618,8 @@
 
           <article class="proj-card" data-cat="featured software">
             <div class="proj-thumb">
-                <img src="images/ALU.JPG" alt="ESP32 Interactive Message Terminal with OLED display and input controls">
+                <img src="images/ALU.JPG" alt="Custom ISC Simulator">
+                <span class="vhs-stamp">REC 23-11-08 ●</span>
             </div>
             <div class="proj-body">
               <h3 class="proj-title">Custom Instruction Set Computer Simulator</h3>
@@ -2056,7 +2637,8 @@
 
           <article class="proj-card" data-cat="featured hardware electrical">
             <div class="proj-thumb">
-                <img src="images/PBC_audio_amp.JPG" alt="ESP32 Interactive Message Terminal with OLED display and input controls">
+                <img src="images/PBC_audio_amp.JPG" alt="PCB LM386 Audio Amplifier">
+                <span class="vhs-stamp">REC 24-03-22 ●</span>
             </div>
             <div class="proj-body">
               <h3 class="proj-title">PCB Design — LM386 Audio Amplifier</h3>
@@ -2090,7 +2672,8 @@
 
           <article class="proj-card" data-cat="hardware electrical">
             <div class="proj-thumb">
-                <img src="images/verilog_img.JPG" alt="ESP32 Interactive Message Terminal with OLED display and input controls">
+                <img src="images/verilog_img.JPG" alt="Verilog Digital Logic Verification">
+                <span class="vhs-stamp">REC 23-09-14 ●</span>
             </div>
             <div class="proj-body">
               <h3 class="proj-title">Digital Logic &amp; Verification</h3>
@@ -2108,7 +2691,8 @@
 
           <article class="proj-card" data-cat="hardware software electrical featured">
             <div class="proj-thumb">
-                <img src="images/Valentine.jpg" alt="ESP32 Interactive Message Terminal with OLED display and input controls">
+                <img src="images/Valentine.jpg" alt="ESP32 OLED Interactive Terminal">
+                <span class="vhs-stamp">REC 24-02-14 ●</span>
             </div>
             <div class="proj-body">
               <h3 class="proj-title">ESP32 Interactive Message Terminal (OLED UI + Input System)</h3>
@@ -2158,7 +2742,8 @@
 
     <div class="page-wrap">
       <div class="panel">
-        <h2>Research</h2>
+        <div class="panel-inner-glow" aria-hidden="true"></div>
+        <h2><span class="sec-num">// 04</span> Research</h2>
         <div class="subtitle">
           NASA-style proposal work + systems-level thinking — trade-offs, requirements, and defensible engineering decisions.
         </div>
@@ -2206,8 +2791,9 @@
 
     <div class="page-wrap">
       <div class="panel">
+        <div class="panel-inner-glow" aria-hidden="true"></div>
         <div class="panel-ambient" aria-hidden="true"></div>
-        <h2>Contact</h2>
+        <h2><span class="sec-num">// 05</span> Contact</h2>
         <div class="subtitle">
           Open to internships, research opportunities, and interesting projects. Let's connect.
         </div>
@@ -2215,6 +2801,7 @@
         <div class="sections">
           <div class="card">
             <h3>Email</h3>
+            <div class="terminal-prompt">mailto jesus.m.hernandez01@sjsu.edu</div>
             <a class="contact-link" href="mailto:jesus.m.hernandez01@sjsu.edu">
               <span class="contact-icon">@</span>
               jesus.m.hernandez01@sjsu.edu
@@ -2223,6 +2810,7 @@
 
           <div class="card">
             <h3>LinkedIn</h3>
+            <div class="terminal-prompt">open linkedin.com/in/jesus-hernandez-ce</div>
             <a class="contact-link" href="https://www.linkedin.com/in/jesus-hernandez-computer-engineering/" target="_blank" rel="noreferrer">
               <span class="contact-icon">in</span>
               jesus-hernandez-computer-engineering
@@ -2289,7 +2877,7 @@
     </button>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Timestamp: MM/DD/YYYY  h:mm AM/PM PT
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
@@ -2747,6 +3335,75 @@
         if(_bootEl.classList.contains('hidden')) revealHomeCorners();
       });
       _bootObserver.observe(_bootEl, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    // ====================================================
+    // NEW: Analog clock
+    // ====================================================
+    (() => {
+      const handH = document.getElementById('clockH');
+      const handM = document.getElementById('clockM');
+      const handS = document.getElementById('clockS');
+      if(!handH) return;
+      function updateClock(){
+        const now = new Date();
+        const s = now.getSeconds() + now.getMilliseconds() / 1000;
+        const m = now.getMinutes() + s / 60;
+        const h = (now.getHours() % 12) + m / 60;
+        const sd = s / 60 * 360;
+        const md = m / 60 * 360;
+        const hd = h / 12 * 360;
+        handS.setAttribute('transform', `rotate(${sd},26,26)`);
+        handM.setAttribute('transform', `rotate(${md},26,26)`);
+        handH.setAttribute('transform', `rotate(${hd},26,26)`);
+      }
+      updateClock();
+      setInterval(updateClock, 200);
+    })();
+
+    // ====================================================
+    // NEW: Boot RAM bar fill
+    // ====================================================
+    (() => {
+      const bar = document.getElementById('ramBar');
+      if(!bar) return;
+      const cells = 32;
+      for(let i = 0; i < cells; i++){
+        const cell = document.createElement('div');
+        cell.className = 'boot-ram-cell';
+        cell.style.opacity = '0';
+        bar.appendChild(cell);
+        setTimeout(() => {
+          cell.style.opacity = '1';
+          cell.style.transition = 'opacity 0.05s';
+        }, 80 + i * 28);
+      }
+    })();
+
+    // ====================================================
+    // NEW: Extra boot lines (more authentic BIOS)
+    // ====================================================
+    // Override the existing boot lines array — patch after declaration
+    // We do this by re-defining the lines variable used in typeNextLine
+    // The original lines array is already defined; we extend it:
+    // (This runs after the original lines var, so we reassign)
+    if(typeof lines !== 'undefined'){
+      lines.length = 0;
+      lines.push(
+        "Detecting hardware...",
+        "[OK] CPU: ARM CORTEX-M7 @ 480MHz",
+        "[OK] FLASH: 2048K / RAM: 1024K",
+        "[OK] VIDEO SIGNAL DETECTED",
+        "[OK] RESOLUTION: 1920x1080 @ 60Hz",
+        "[OK] SCANLINE GENERATOR: ONLINE",
+        "[OK] NOISE BUFFER: ALLOCATED",
+        "[OK] CRT PHOSPHOR: WARMING UP",
+        "[OK] SYNC: STABLE",
+        "[OK] PORTFOLIO DATA: LOADED",
+        "",
+        "ALL SYSTEMS NOMINAL.",
+        "READY."
+      );
     }
 
   </script>
