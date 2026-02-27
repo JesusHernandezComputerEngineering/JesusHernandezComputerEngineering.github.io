@@ -5,20 +5,27 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jesus Hernandez | Portfolio</title>
   <meta name="description" content="Jesus Hernandez - Computer Engineering Portfolio" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.72);
       --red: #d30000;
-      --panel: rgba(10,10,10,.62);
-      --panel2: rgba(10,10,10,.70);
+      --red-glow: rgba(211,0,0,0.5);
+      --panel: rgba(8,8,8,.72);
+      --panel2: rgba(8,8,8,.80);
       --stroke: rgba(255,255,255,.10);
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow: 0 18px 60px rgba(0,0,0,.65);
       --bg: #000;
       --accent: rgba(255,255,255,.92);
       --btn: rgba(255,255,255,.10);
       --btnHover: rgba(255,255,255,.16);
+      --font-mono: 'Share Tech Mono', ui-monospace, monospace;
+      --font-body: 'Rajdhani', Arial, sans-serif;
+      --font-display: 'Orbitron', Arial, sans-serif;
     }
 
     *{ box-sizing:border-box; }
@@ -27,53 +34,71 @@
       margin:0;
       background:var(--bg);
       color:var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      overflow:hidden; /* keep global scroll disabled */
+      font-family: var(--font-body);
+      overflow:hidden;
+      cursor: none; /* custom cursor */
     }
 
     /* ===== Top strip ===== */
     .topbar{
       position:fixed;
       top:0; left:0; right:0;
-      height:34px;
+      height:36px;
       display:flex;
       align-items:center;
       justify-content:center;
-      letter-spacing: 2px;
-      font-size: 11px;
+      letter-spacing: 3px;
+      font-size: 10px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.75);
-      background: rgba(0,0,0,.75);
+      color: rgba(255,255,255,.70);
+      background: rgba(0,0,0,.88);
       z-index: 10;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.07);
       user-select:none;
-      padding: 0 12px;
+      padding: 0 16px;
       gap: 10px;
+      font-family: var(--font-mono);
+      backdrop-filter: blur(12px);
     }
-    .topbar .brand{ white-space:nowrap; }
+    .topbar .brand{
+      white-space:nowrap;
+      font-family: var(--font-display);
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.85);
+    }
+    /* blinking dot after brand */
+    .topbar .brand::after {
+      content: " ●";
+      color: var(--red);
+      animation: dot-blink 1.8s steps(2) infinite;
+    }
+    @keyframes dot-blink { 50% { opacity: 0; } }
     .topbar .spacer{ flex:1; }
     .topbar .navlinks{
-      display:none; /* only shows on section screens */
-      gap: 10px;
+      display:none;
+      gap: 8px;
       align-items:center;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .topbar .navlinks a{
-      color: rgba(255,255,255,.78);
+      color: rgba(255,255,255,.65);
       text-decoration:none;
-      font-size: 11px;
-      letter-spacing: 1.6px;
+      font-size: 9.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 2px 6px;
+      padding: 3px 8px;
       border-radius: 2px;
       border: 1px solid transparent;
+      font-family: var(--font-mono);
+      transition: all 0.2s ease;
     }
     .topbar .navlinks a:hover{
       color: rgba(255,255,255,.95);
-      border-color: rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
     }
     .topbar.section-mode .navlinks{ display:flex; }
     .topbar.section-mode .spacer{ display:none; }
@@ -153,55 +178,76 @@
       transform: translateY(0);
     }
     .logo{
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: .5px;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
       margin: 0;
       line-height: 1.05;
-    }
-    .subline{
-      margin-top: 6px;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: .3px;
-    }
-    .timestamp{
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--red);
-      letter-spacing: 1.6px;
+      font-family: var(--font-display);
       text-transform: uppercase;
     }
+    .subline{
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+    .timestamp{
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
     .menu{
-      margin-top: 18px;
+      margin-top: 28px;
       display:flex;
       flex-direction:column;
-      gap: 10px;
+      gap: 4px;
       align-items:center;
     }
     .menu button{
-      cursor:pointer;
-      color: var(--text);
+      cursor:none;
+      color: rgba(255,255,255,.82);
       background: transparent;
       border: none;
       text-decoration:none;
-      font-size: 13px;
-      letter-spacing: .8px;
+      font-size: 12px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 8px 16px;
       border-radius: 2px;
-      transition: transform .12s ease, opacity .12s ease;
-      opacity: .92;
+      transition: transform .15s ease, color .15s ease;
+      font-family: var(--font-mono);
+      position: relative;
     }
     .menu button:hover{
+      color: rgba(255,255,255,1);
+      transform: translateX(6px);
+    }
+    /* > prefix on hover */
+    .menu button::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--red);
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.15s ease, left 0.15s ease;
+    }
+    .menu button:hover::before {
+      content: "> ";
       opacity: 1;
-      transform: translateY(-1px);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      left: -12px;
     }
     .menu button:focus{
-      outline: 2px solid rgba(255,255,255,.65);
-      outline-offset: 2px;
+      outline: 1px solid rgba(255,255,255,.4);
+      outline-offset: 3px;
     }
 
     /* ===== Page layout on section screens ===== */
@@ -216,25 +262,48 @@
     }
     .panel{
       width:min(980px, 94vw);
-      border: 1px solid var(--stroke);
+      border: 1px solid rgba(255,255,255,.08);
       background: var(--panel);
       box-shadow: var(--shadow);
-      border-radius: 14px;
-      padding: 18px 18px;
-      backdrop-filter: blur(6px);
+      border-radius: 16px;
+      padding: 22px 22px;
+      backdrop-filter: blur(14px);
+      position: relative;
+    }
+    /* Corner bracket decorations */
+    .panel::before, .panel::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-color: var(--red);
+      border-style: solid;
+      opacity: 0.5;
+    }
+    .panel::before {
+      top: 8px; left: 8px;
+      border-width: 1.5px 0 0 1.5px;
+    }
+    .panel::after {
+      bottom: 8px; right: 8px;
+      border-width: 0 1.5px 1.5px 0;
     }
     .panel h2{
-      margin: 0 0 10px 0;
-      font-size: 18px;
-      letter-spacing: 2px;
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.82);
+      color: rgba(255,255,255,.90);
+      font-family: var(--font-display);
+      padding-bottom: 10px;
     }
     .panel .subtitle{
-      margin: -2px 0 14px 0;
-      font-size: 13px;
+      margin: -6px 0 16px 0;
+      font-size: 14px;
       color: var(--muted);
-      line-height: 1.45;
+      line-height: 1.5;
+      font-family: var(--font-body);
+      font-weight: 500;
     }
 
     /* ===== Projects-only scrolling =====
@@ -304,14 +373,15 @@
       letter-spacing: .2px;
     }
     .about-line{
-      font-size: 13px;
-      color: rgba(255,255,255,.85);
-      letter-spacing: 1px;
+      font-size: 12px;
+      color: rgba(255,255,255,.75);
+      letter-spacing: 3px;
       text-transform: uppercase;
       display:flex;
-      gap: 8px;
+      gap: 10px;
       align-items:center;
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
+      font-family: var(--font-mono);
     }
     .typewrap{
       display:inline-flex;
@@ -321,30 +391,35 @@
     .typed{
       color: var(--red);
       font-weight: 700;
-      letter-spacing: 1.4px;
+      letter-spacing: 3px;
+      font-family: var(--font-mono);
     }
     .caret{
-      width: 9px;
-      height: 14px;
-      background: rgba(255,255,255,.78);
+      width: 8px;
+      height: 16px;
+      background: var(--red);
       display:inline-block;
       transform: translateY(1px);
       animation: blink .9s steps(2) infinite;
       opacity:.9;
+      box-shadow: 0 0 6px rgba(211,0,0,0.6);
     }
     @keyframes blink{ 50%{ opacity:0; } }
 
     .p{
       margin: 10px 0;
-      font-size: 14px;
-      line-height: 1.7;
-      color: rgba(255,255,255,.86);
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,.84);
+      font-family: var(--font-body);
+      font-weight: 500;
     }
     .bullets{
       margin: 12px 0 0 18px;
       color: rgba(255,255,255,.84);
       line-height: 1.8;
-      font-size: 14px;
+      font-size: 15px;
+      font-family: var(--font-body);
     }
 
     .pill-row{
@@ -371,43 +446,64 @@
       margin-top: 8px;
     }
     .sections h3{
-      margin: 0 0 8px 0;
-      font-size: 13px;
-      letter-spacing: 1.8px;
+      margin: 0 0 10px 0;
+      font-size: 10px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,.80);
+      color: rgba(255,255,255,.75);
+      font-family: var(--font-display);
     }
     .sections ul{
-      margin: 0 0 0 18px;
+      margin: 0 0 0 16px;
       padding: 0;
-      line-height: 1.75;
+      line-height: 1.9;
       color: rgba(255,255,255,.84);
-      font-size: 14px;
+      font-size: 15px;
+      font-family: var(--font-body);
+      font-weight: 500;
     }
 
     .project{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.35);
       border-radius: 12px;
-      padding: 12px;
+      padding: 14px 16px;
       margin: 10px 0;
+      position: relative;
     }
+    .project::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 2px;
+      background: var(--red);
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .project:hover::before { opacity: 0.7; }
     .project .ptitle{
       font-weight: 700;
-      letter-spacing: .3px;
+      letter-spacing: 1px;
       margin: 0 0 6px 0;
+      font-family: var(--font-body);
+      font-size: 15px;
+      text-transform: uppercase;
     }
     .project .pmeta{
       margin: 0 0 8px 0;
-      font-size: 12px;
-      color: rgba(255,255,255,.72);
-      letter-spacing: .6px;
+      font-size: 11px;
+      color: rgba(255,255,255,.60);
+      letter-spacing: 1.5px;
+      font-family: var(--font-mono);
     }
     .project .pdesc{
       margin: 0;
-      color: rgba(255,255,255,.86);
-      line-height: 1.65;
-      font-size: 14px;
+      color: rgba(255,255,255,.84);
+      line-height: 1.7;
+      font-size: 14.5px;
+      font-family: var(--font-body);
+      font-weight: 500;
     }
 
     /* ===== Projects grid (filter tabs + cards) ===== */
@@ -419,15 +515,16 @@
       margin: 8px 0 14px;
     }
     .proj-tab{
-      cursor:pointer;
+      cursor:none;
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.30);
       color: rgba(255,255,255,.88);
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 1.2px;
+      font-size: 10px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
+      font-family: var(--font-mono);
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
     .proj-tab:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.26); }
@@ -480,21 +577,27 @@
     .proj-title{
       margin:0;
       font-size: 14px;
-      letter-spacing: .3px;
-      font-weight: 800;
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      text-transform: uppercase;
     }
     .proj-sub{
       margin:0;
-      font-size: 12px;
-      color: rgba(255,255,255,.72);
-      letter-spacing: .6px;
+      font-size: 11px;
+      color: rgba(255,255,255,.60);
+      letter-spacing: 1.2px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
     }
     .proj-desc{
       margin:0;
-      font-size: 13px;
-      line-height: 1.6;
-      color: rgba(255,255,255,.86);
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: rgba(255,255,255,.84);
       flex:1;
+      font-family: var(--font-body);
+      font-weight: 500;
     }
     .proj-tags{
       display:flex;
@@ -553,15 +656,16 @@
       flex-wrap:wrap;
     }
     .btn{
-      cursor:pointer;
+      cursor:none;
       border: 1px solid rgba(255,255,255,.14);
       background: var(--btn);
       color: rgba(255,255,255,.90);
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      letter-spacing: 1.4px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 10px;
+      letter-spacing: 3px;
       text-transform: uppercase;
+      font-family: var(--font-mono);
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
     .btn:hover{
@@ -890,13 +994,749 @@
       .updates-h{ font-size:18px; }
       .updates-scroll{ height:min(46vh, 340px); }
     }
+
+    /* ============================================================
+       ENHANCED ANIMATIONS — CRT / TERMINAL VIBE
+    ============================================================ */
+
+    /* ---- Glitch effect on the main logo ---- */
+    @keyframes glitch-clip-1 {
+      0%   { clip-path: inset(0 0 95% 0); transform: translate(-3px, 0); }
+      20%  { clip-path: inset(30% 0 50% 0); transform: translate(3px, 0); }
+      40%  { clip-path: inset(60% 0 20% 0); transform: translate(-2px, 1px); }
+      60%  { clip-path: inset(10% 0 75% 0); transform: translate(2px, -1px); }
+      80%  { clip-path: inset(80% 0 5% 0);  transform: translate(-1px, 0); }
+      100% { clip-path: inset(0 0 95% 0);   transform: translate(0, 0); }
+    }
+    @keyframes glitch-clip-2 {
+      0%   { clip-path: inset(50% 0 30% 0); transform: translate(3px, 0); }
+      25%  { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 1px); }
+      50%  { clip-path: inset(75% 0 10% 0); transform: translate(2px, -1px); }
+      75%  { clip-path: inset(25% 0 55% 0); transform: translate(-2px, 0); }
+      100% { clip-path: inset(50% 0 30% 0); transform: translate(0, 0); }
+    }
+    .logo-glitch{
+      position: relative;
+      display: inline-block;
+    }
+    .logo-glitch::before,
+    .logo-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .logo-glitch::before {
+      color: #ff003c;
+      text-shadow: 2px 0 #ff003c;
+    }
+    .logo-glitch::after {
+      color: #00ffe7;
+      text-shadow: -2px 0 #00ffe7;
+    }
+    .logo-glitch.glitching::before {
+      opacity: 0.75;
+      animation: glitch-clip-1 0.28s steps(1) forwards;
+    }
+    .logo-glitch.glitching::after {
+      opacity: 0.65;
+      animation: glitch-clip-2 0.28s steps(1) forwards;
+    }
+
+    /* ---- Screen transition flash (static burst) ---- */
+    .static-flash{
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      pointer-events: none;
+      opacity: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px,
+        transparent 1px, transparent 3px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px,
+        transparent 1px, transparent 4px
+      );
+    }
+    @keyframes static-burst {
+      0%   { opacity: 0; }
+      8%   { opacity: 0.85; }
+      18%  { opacity: 0.3; }
+      28%  { opacity: 0.7; }
+      42%  { opacity: 0.15; }
+      55%  { opacity: 0.5; }
+      70%  { opacity: 0.05; }
+      100% { opacity: 0; }
+    }
+    .static-flash.burst {
+      animation: static-burst 0.32s steps(4) forwards;
+    }
+
+    /* ---- Panel enter animation ---- */
+    .screen .panel{
+      transform: translateY(14px);
+      opacity: 0;
+      transition: transform 420ms cubic-bezier(.22,.68,0,1.2), opacity 380ms ease;
+    }
+    .screen.active .panel{
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ---- Scanline sweep on section enter ---- */
+    .scanline-sweep {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .scanline-sweep::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      height: 120px;
+      top: -120px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255,255,255,0.04) 40%,
+        rgba(255,255,255,0.09) 50%,
+        rgba(255,255,255,0.04) 60%,
+        transparent 100%
+      );
+      animation: none;
+    }
+    .screen.active .scanline-sweep::after {
+      animation: sweep-down 0.7s cubic-bezier(.4,0,.6,1) forwards;
+    }
+    @keyframes sweep-down {
+      from { top: -120px; }
+      to   { top: 110%; }
+    }
+
+    /* ---- Red accent line that draws across panel header ---- */
+    .panel h2 {
+      position: relative;
+      overflow: hidden;
+    }
+    .panel h2::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0%;
+      height: 1.5px;
+      background: var(--red);
+      transition: width 600ms cubic-bezier(.4,0,.2,1) 200ms;
+      box-shadow: 0 0 8px rgba(211,0,0,0.6);
+    }
+    .screen.active .panel h2::after {
+      width: 100%;
+    }
+
+    /* ---- Menu button hover: red glow line + subtle scanline fill ---- */
+    .menu button {
+      position: relative;
+      overflow: hidden;
+    }
+    .menu button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .menu button::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 1.5px;
+      background: var(--red);
+      transform: translateX(-50%);
+      box-shadow: 0 0 6px rgba(211,0,0,.7);
+      transition: width 0.22s ease;
+    }
+    .menu button:hover::before { opacity: 1; }
+    .menu button:hover::after  { width: 80%; }
+
+    /* ---- Navbar link underline wipe ---- */
+    .topbar .navlinks a {
+      position: relative;
+      overflow: hidden;
+    }
+    .topbar .navlinks a::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: rgba(255,255,255,.6);
+      transition: width .2s ease;
+    }
+    .topbar .navlinks a:hover::after { width: 100%; }
+
+    /* ---- Proj-card hover: red glow border + lift ---- */
+    .proj-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .proj-card:hover {
+      transform: translateY(-4px) scale(1.012);
+      border-color: rgba(211,0,0,0.45);
+      box-shadow: 0 16px 48px rgba(0,0,0,.45), 0 0 18px rgba(211,0,0,0.18);
+    }
+
+    /* ---- Proj-card stagger entrance ---- */
+    .proj-card {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .proj-card.card-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 420ms ease, transform 420ms cubic-bezier(.22,.68,0,1.2),
+                  box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    /* ---- Skill card accent line on hover ---- */
+    .card {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      border-color: rgba(211,0,0,0.3);
+      box-shadow: 0 0 14px rgba(211,0,0,0.1);
+    }
+
+    /* ---- btn hover micro-glow ---- */
+    .btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+    }
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .btn:hover::before { opacity: 1; }
+    .btn:hover {
+      background: var(--btnHover);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 0 12px rgba(255,255,255,0.06);
+      transform: translateY(-1px);
+    }
+
+    /* ---- Topbar brand text: subtle red flicker ---- */
+    @keyframes brand-flicker {
+      0%,100% { opacity: .75; }
+      48%      { opacity: .68; }
+      50%      { opacity: .82; }
+      52%      { opacity: .72; }
+    }
+    .topbar .brand {
+      animation: brand-flicker 7s ease-in-out infinite;
+    }
+
+    /* ---- Timestamp red pulse ---- */
+    @keyframes ts-pulse {
+      0%,100% { opacity: 1; text-shadow: 0 0 6px rgba(211,0,0,.4); }
+      50%      { opacity: .75; text-shadow: none; }
+    }
+    .timestamp {
+      animation: ts-pulse 2.4s ease-in-out infinite;
+    }
+
+    /* ---- CRT power-down: channel-change effect on route switch ---- */
+    @keyframes h-collapse {
+      0%   { transform: scaleY(1) scaleX(1); opacity: 1; }
+      40%  { transform: scaleY(0.05) scaleX(1.04); opacity: .9; }
+      55%  { transform: scaleY(0.005) scaleX(1.06); opacity: .6; }
+      70%  { transform: scaleY(0.005) scaleX(1.06); opacity: 0; }
+      100% { transform: scaleY(1) scaleX(1); opacity: 0; }
+    }
+    .screen.leaving {
+      animation: h-collapse 0.38s cubic-bezier(.55,0,.45,1) forwards;
+      transform-origin: center center;
+    }
+
+    /* ---- Cursor blink on logo (optional subtle underscore) ---- */
+    @keyframes logo-blink {
+      0%,49% { border-right-color: rgba(255,255,255,.7); }
+      50%,100% { border-right-color: transparent; }
+    }
+
+    /* ---- Research project card hover ---- */
+    .project {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .project:hover {
+      border-color: rgba(211,0,0,0.35);
+      box-shadow: 0 0 18px rgba(211,0,0,0.12);
+      transform: translateX(3px);
+    }
+
+    /* ---- About photo hover subtle scale + red border ---- */
+    .photo {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .photo:hover {
+      border-color: rgba(211,0,0,0.4);
+      box-shadow: 0 0 20px rgba(211,0,0,0.15);
+    }
+
+    /* ---- Pill hover ---- */
+    .pill {
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      cursor: default;
+    }
+    .pill:hover {
+      background: rgba(211,0,0,0.15);
+      border-color: rgba(211,0,0,0.4);
+      color: rgba(255,255,255,1);
+      transform: translateY(-1px);
+    }
+
+    /* ---- Red noise ambient pulse in background (section screens) ---- */
+    @keyframes bg-pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .94; }
+    }
+    .bg-image { animation: bg-pulse 6s ease-in-out infinite; }
+
+    /* ---- Proj tag hover ---- */
+    .proj-tag {
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      cursor: default;
+    }
+    .proj-tag:hover {
+      background: rgba(211,0,0,0.18);
+      border-color: rgba(211,0,0,0.4);
+      transform: scale(1.05);
+    }
+
+    /* ---- Tab active indicator: animated underline ---- */
+    .proj-tab {
+      transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+    .proj-tab.is-active {
+      box-shadow: 0 0 14px rgba(211,0,0,0.22), inset 0 0 8px rgba(211,0,0,0.1);
+      border-color: rgba(211,0,0,0.4);
+    }
+    .proj-tab:hover {
+      box-shadow: 0 0 10px rgba(255,255,255,0.08);
+    }
+
+    /* ---- About section entrance stagger ---- */
+    .about-enter-anim {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 400ms ease, transform 400ms cubic-bezier(.22,.68,0,1.2);
+    }
+    .about-enter-anim.is-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       NEW PREMIUM COMPONENTS
+    ============================================================ */
+
+    /* ---- Custom cursor ---- */
+    .cursor-dot {
+      position: fixed;
+      width: 5px; height: 5px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 28px; height: 28px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+    }
+    body:has(button:hover) .cursor-ring,
+    body:has(a:hover) .cursor-ring {
+      width: 44px; height: 44px;
+      border-color: var(--red);
+    }
+    body:has(button:hover) .cursor-dot,
+    body:has(a:hover) .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+    }
+
+    /* ---- Canvas particle layer ---- */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    /* ---- Home screen corner decorations ---- */
+    .home-corners {
+      position: absolute;
+      inset: 50px 0 0 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hc {
+      position: absolute;
+      width: 40px; height: 40px;
+      border-color: rgba(211,0,0,0.4);
+      border-style: solid;
+      opacity: 0;
+      transition: opacity 1s ease 0.8s;
+    }
+    .stack.is-visible ~ * .hc,
+    .home-corners.show .hc { opacity: 1; }
+    .hc-tl { top: 12px; left: 18px; border-width: 1.5px 0 0 1.5px; }
+    .hc-tr { top: 12px; right: 18px; border-width: 1.5px 1.5px 0 0; }
+    .hc-bl { bottom: 18px; left: 18px; border-width: 0 0 1.5px 1.5px; }
+    .hc-br { bottom: 18px; right: 18px; border-width: 0 1.5px 1.5px 0; }
+
+    /* ---- Status ticker at bottom of home ---- */
+    .home-ticker {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.5);
+      overflow: hidden;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .home-ticker-label {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--red);
+      padding: 0 12px;
+      border-right: 1px solid rgba(255,255,255,.1);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .home-ticker-track {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .home-ticker-inner {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: ticker-scroll 28s linear infinite;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      color: rgba(255,255,255,.55);
+      text-transform: uppercase;
+    }
+    .home-ticker-inner span { padding: 0 32px; }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ---- Horizontal rule decorative divider ---- */
+    .red-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--red), transparent);
+      opacity: 0.4;
+      margin: 14px 0;
+      border: none;
+    }
+
+    /* ---- Skill bars (replaces plain list in skills section) ---- */
+    .skill-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 2px;
+    }
+    .skill-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .skill-bar-name {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.82);
+    }
+    .skill-bar-pct {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(211,0,0,0.85);
+      letter-spacing: 1px;
+    }
+    .skill-bar-track {
+      height: 3px;
+      background: rgba(255,255,255,.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, rgba(211,0,0,0.7), rgba(211,0,0,1));
+      border-radius: 2px;
+      box-shadow: 0 0 6px rgba(211,0,0,0.4);
+      transition: width 1.1s cubic-bezier(.4,0,.2,1);
+    }
+    .skill-bar-fill.is-filled { /* set by JS */ }
+
+    /* ---- Card in skills: header style ---- */
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 9px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+      margin: 0 0 12px 0;
+    }
+
+    /* ---- About section: hi text upgrade ---- */
+    .about-hi {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 6px;
+    }
+
+    /* ---- Pill font upgrade ---- */
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+    }
+
+    /* ---- Proj-tag font upgrade ---- */
+    .proj-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+    }
+
+    /* ---- Proj-actions font upgrade ---- */
+    .proj-actions a {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 2px;
+      cursor: none;
+    }
+
+    /* ---- Right-now card h3 ---- */
+    .right-now h3 {
+      font-family: var(--font-display);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.6);
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+    }
+    .right-now ul {
+      margin: 0 0 0 14px;
+      padding: 0;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: rgba(255,255,255,.8);
+      font-weight: 500;
+    }
+
+    /* ---- Boot screen font upgrade ---- */
+    .boot-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    /* ---- Scrollbar theming ---- */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+    ::-webkit-scrollbar-thumb { background: rgba(211,0,0,0.5); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(211,0,0,0.8); }
+
+    /* ---- Photo frame scan line overlay ---- */
+    .photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.08) 3px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      border-radius: 12px;
+    }
+
+    /* ---- Proj thumb scan lines ---- */
+    .proj-thumb::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.07) 3px,
+        rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* ---- Ambient red gradient at bottom of panels ---- */
+    .panel-ambient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      background: radial-gradient(ellipse at 50% 100%, rgba(211,0,0,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 0 0 16px 16px;
+    }
+
+    /* ---- Contact section — email/linkedin cards upgraded ---- */
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: rgba(255,255,255,.9);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+    .contact-link:hover { color: var(--red); }
+    .contact-icon {
+      width: 22px; height: 22px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,.05);
+    }
+
+    /* ---- Page-wrap status indicator (bottom right) ---- */
+    .screen-indicator {
+      position: fixed;
+      bottom: 14px;
+      right: 16px;
+      z-index: 15;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.28);
+      text-transform: uppercase;
+      pointer-events: none;
+      display: none;
+    }
+    .topbar.section-mode ~ .screen-indicator,
+    .screen-indicator.show { display: block; }
+
+    /* ---- NASA badge on research ---- */
+    .nasa-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(0,0,0,.3);
+      margin-bottom: 8px;
+    }
+    .nasa-badge::before {
+      content: "★";
+      color: var(--red);
+      font-size: 10px;
+    }
+
+    /* ---- Topbar right sys info ---- */
+    .topbar-sys {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,.35);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 620px){
+      .topbar-sys { display: none; }
+      .home-ticker { display: none; }
+    }
   </style>
 </head>
 
 <body>
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Screen indicator -->
+  <div class="screen-indicator" id="screenIndicator">SYS:ONLINE</div>
+
   <div class="topbar" id="topbar">
     <div class="brand">JESUS HERNANDEZ | PORTFOLIO</div>
     <div class="spacer"></div>
+    <div class="topbar-sys" id="topbarSys">SYS:OK // 2026</div>
     <nav class="navlinks" aria-label="Top navigation">
       <a href="#home" data-route="home">Home</a>
       <a href="#about" data-route="about">About Me</a>
@@ -911,6 +1751,7 @@
   <div class="vignette" aria-hidden="true"></div>
   <div class="flicker" aria-hidden="true"></div>
   <div class="crt" aria-hidden="true"></div>
+  <div class="static-flash" id="staticFlash" aria-hidden="true"></div>
 
   <!-- Boot screen -->
   <div class="boot" id="boot" role="dialog" aria-label="Boot screen">
@@ -932,9 +1773,17 @@
     </div>
     <div class="home-overlay" aria-hidden="true"></div>
 
+    <!-- Corner decorations -->
+    <div class="home-corners" id="homeCorners" aria-hidden="true">
+      <div class="hc hc-tl"></div>
+      <div class="hc hc-tr"></div>
+      <div class="hc hc-bl"></div>
+      <div class="hc hc-br"></div>
+    </div>
+
     <main class="center">
       <div class="stack" id="stack">
-        <h1 class="logo">Jesus Hernandez</h1>
+        <h1 class="logo logo-glitch" id="mainLogo" data-text="Jesus Hernandez">Jesus Hernandez</h1>
         <div class="subline">Computer Engineering</div>
         <div class="timestamp" id="ts">Loading time...</div>
 
@@ -947,6 +1796,47 @@
         </div>
       </div>
     </main>
+
+    <!-- Status ticker -->
+    <div class="home-ticker" aria-hidden="true">
+      <div class="home-ticker-label">// STATUS</div>
+      <div class="home-ticker-track">
+        <div class="home-ticker-inner" id="tickerInner">
+          <span>SJSU Computer Engineering</span>
+          <span>//</span>
+          <span>Embedded Systems</span>
+          <span>//</span>
+          <span>Robotics &amp; Intelligent Systems</span>
+          <span>//</span>
+          <span>Digital Logic &amp; Verification</span>
+          <span>//</span>
+          <span>IoT + Machine Learning</span>
+          <span>//</span>
+          <span>PCB Design</span>
+          <span>//</span>
+          <span>NASA L'SPACE Alumni</span>
+          <span>//</span>
+          <span>Available for Internships</span>
+          <span>//</span>
+          <span>SJSU Computer Engineering</span>
+          <span>//</span>
+          <span>Embedded Systems</span>
+          <span>//</span>
+          <span>Robotics &amp; Intelligent Systems</span>
+          <span>//</span>
+          <span>Digital Logic &amp; Verification</span>
+          <span>//</span>
+          <span>IoT + Machine Learning</span>
+          <span>//</span>
+          <span>PCB Design</span>
+          <span>//</span>
+          <span>NASA L'SPACE Alumni</span>
+          <span>//</span>
+          <span>Available for Internships</span>
+          <span>//</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -954,6 +1844,7 @@
 <section class="screen" id="screen-about" aria-label="About Me">
   <div class="bg-image" aria-hidden="true"></div>
   <div class="overlay-inner" aria-hidden="true"></div>
+  <div class="scanline-sweep" aria-hidden="true"></div>
 
   <div class="page-wrap">
     <div class="panel">
@@ -962,7 +1853,7 @@
       <div class="grid-2">
 
         <!-- LEFT COLUMN -->
-        <div class="card about-left">
+        <div class="card about-left about-enter-anim">
 
           <div class="photo">
             <img src="images/jesus.jpeg"
@@ -991,12 +1882,10 @@
         </div>
 
         <!-- RIGHT COLUMN -->
-        <div class="card">
+        <div class="card about-enter-anim">
 
           <div style="margin-bottom:10px;">
-            <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.75);">
-              Hi, I'm Jesus Hernandez.
-            </div>
+            <div class="about-hi">Hi, I'm Jesus Hernandez.</div>
 
             <div class="about-line">
               <span>I AM</span>
@@ -1006,6 +1895,8 @@
               </span>
             </div>
           </div>
+
+          <hr class="red-divider">
 
           <p class="p">
             I am a Computer Engineering student at San José State University with a strong interest in robotics and intelligent systems.
@@ -1048,56 +1939,56 @@
   <section class="screen" id="screen-skills" aria-label="Skills">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="scanline-sweep" aria-hidden="true"></div>
 
     <div class="page-wrap">
       <div class="panel">
+        <div class="panel-ambient" aria-hidden="true"></div>
         <h2>Skills</h2>
         <div class="subtitle">
-          Quick snapshot of the tools and languages I use the most (based on my resume).
+          Tools, languages, and strengths — based on my resume and coursework.
         </div>
 
         <div class="sections">
           <div class="card">
             <h3>Languages</h3>
-            <ul>
-              <li>C</li>
-              <li>C++</li>
-              <li>Python</li>
-              <li>Java</li>
-              <li>Verilog</li>
-              <li>x86 Assembly</li>
-            </ul>
+            <div class="skill-bar-wrap" data-skills>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">C / C++</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Verilog</span><span class="skill-bar-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Java</span><span class="skill-bar-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="70"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">x86 Assembly</span><span class="skill-bar-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="65"></div></div></div>
+            </div>
           </div>
 
           <div class="card">
             <h3>Hardware + Embedded</h3>
-            <ul>
-              <li>Arduino</li>
-              <li>ESP32</li>
-              <li>FPGAs (course + labs)</li>
-              <li>PCB Design</li>
-              <li>Debugging on real hardware</li>
-            </ul>
+            <div class="skill-bar-wrap" data-skills>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Arduino / ESP32</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">PCB Design (KiCad)</span><span class="skill-bar-pct">72%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="72"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">FPGAs</span><span class="skill-bar-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="65"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">HW Debugging</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
+            </div>
           </div>
 
           <div class="card">
             <h3>Systems + Tools</h3>
-            <ul>
-              <li>Linux</li>
-              <li>GDB (step-through debugging)</li>
-              <li>Waveform-based verification</li>
-              <li>Testbenches and logging</li>
-            </ul>
+            <div class="skill-bar-wrap" data-skills>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Linux</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="78"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">GDB</span><span class="skill-bar-pct">74%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="74"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Waveform Verification</span><span class="skill-bar-pct">76%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="76"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Testbenches</span><span class="skill-bar-pct">80%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div></div>
+            </div>
           </div>
 
           <div class="card">
             <h3>Strengths</h3>
-            <ul>
-              <li>Low-level reasoning (instruction flow, state)</li>
-              <li>Time-dependent debugging</li>
-              <li>Clean, testable implementations</li>
-              <li>Documentation and technical writing</li>
-            </ul>
+            <div class="skill-bar-wrap" data-skills>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Low-level Reasoning</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Time-dep. Debugging</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Clean Implementation</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div></div>
+              <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Technical Writing</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="82"></div></div></div>
+            </div>
           </div>
         </div>
 
@@ -1113,6 +2004,7 @@
   <section class="screen" id="screen-projects" aria-label="Projects">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="scanline-sweep" aria-hidden="true"></div>
 
     <div class="page-wrap">
       <div class="panel">
@@ -1262,6 +2154,7 @@
   <section class="screen" id="screen-research" aria-label="Research">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="scanline-sweep" aria-hidden="true"></div>
 
     <div class="page-wrap">
       <div class="panel">
@@ -1309,27 +2202,49 @@
   <section class="screen" id="screen-contact" aria-label="Contact">
     <div class="bg-image" aria-hidden="true"></div>
     <div class="overlay-inner" aria-hidden="true"></div>
+    <div class="scanline-sweep" aria-hidden="true"></div>
 
     <div class="page-wrap">
       <div class="panel">
+        <div class="panel-ambient" aria-hidden="true"></div>
         <h2>Contact</h2>
         <div class="subtitle">
-          Quick links (edit these to your preferred URLs).
+          Open to internships, research opportunities, and interesting projects. Let's connect.
         </div>
 
         <div class="sections">
           <div class="card">
             <h3>Email</h3>
-            <ul>
-              <li><a style="color:rgba(255,255,255,.9)" href="mailto:jesus.m.hernandez01@sjsu.edu">jesus.m.hernandez01@sjsu.edu</a></li>
-            </ul>
+            <a class="contact-link" href="mailto:jesus.m.hernandez01@sjsu.edu">
+              <span class="contact-icon">@</span>
+              jesus.m.hernandez01@sjsu.edu
+            </a>
           </div>
 
           <div class="card">
             <h3>LinkedIn</h3>
-            <ul>
-              <li><a style="color:rgba(255,255,255,.9)" href="https://www.linkedin.com/in/jesus-hernandez-computer-engineering/" target="_blank" rel="noreferrer">View profile</a></li>
-            </ul>
+            <a class="contact-link" href="https://www.linkedin.com/in/jesus-hernandez-computer-engineering/" target="_blank" rel="noreferrer">
+              <span class="contact-icon">in</span>
+              jesus-hernandez-computer-engineering
+            </a>
+          </div>
+
+          <div class="card" style="grid-column: 1 / -1;">
+            <h3>Status</h3>
+            <div style="display:flex; gap:24px; flex-wrap:wrap; margin-top:4px;">
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:1.5px; color:rgba(255,255,255,.7);">
+                <span style="color:var(--red);">▶</span> &nbsp;San José, CA
+              </div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:1.5px; color:rgba(255,255,255,.7);">
+                <span style="color:var(--red);">▶</span> &nbsp;SJSU — Computer Engineering
+              </div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:1.5px; color:rgba(255,255,255,.7);">
+                <span style="color:rgba(0,220,120,0.9);">●</span> &nbsp;Available for internships
+              </div>
+              <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:1.5px; color:rgba(255,255,255,.7);">
+                <span style="color:var(--red);">▶</span> &nbsp;Interested in embedded / robotics / hardware roles
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1360,7 +2275,7 @@
             <li><b>Portfolio refresh:</b> building the full section screens (Skills, Projects, Research, Contact) and adding proof links (GitHub, reports, demos).</li>
           </ul>
           <p style="margin:10px 0 0 0; opacity:.85;">
-            Email: <span style="text-decoration:underline;">jesus.m.hernandez01@sjsu.edu</span>
+            Email: <span style="text-decoration:underline;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="18727d6b6d6b367536707d6a7679767c7d622829586b726b6d367d7c6d">[email&#160;protected]</a></span>
           </p>
         </div>
 
@@ -1374,7 +2289,7 @@
     </button>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Timestamp: MM/DD/YYYY  h:mm AM/PM PT
     function formatTimestamp(d){
       const mm = String(d.getMonth()+1).padStart(2,'0');
@@ -1420,6 +2335,8 @@
     function hideBoot(){
       boot.classList.add('hidden');
       stack.classList.add('is-visible');
+      // Trigger glitch right after boot
+      setTimeout(() => triggerGlitch(), 400);
     }
 
     poweron.classList.add('play');
@@ -1432,7 +2349,36 @@
       if(!boot.classList.contains('hidden')) hideBoot();
     }, { once: true });
 
-    // Router
+    // ---- Glitch the logo ----
+    const mainLogo = document.getElementById('mainLogo');
+    function triggerGlitch(){
+      if(!mainLogo) return;
+      mainLogo.classList.add('glitching');
+      setTimeout(() => mainLogo.classList.remove('glitching'), 320);
+    }
+    // Periodic random glitch
+    function scheduleGlitch(){
+      const delay = 3500 + Math.random() * 7000;
+      setTimeout(() => {
+        const homeScreen = document.getElementById('screen-home');
+        if(homeScreen && homeScreen.classList.contains('active')){
+          triggerGlitch();
+        }
+        scheduleGlitch();
+      }, delay);
+    }
+    scheduleGlitch();
+
+    // ---- Static flash helper ----
+    const staticFlash = document.getElementById('staticFlash');
+    function doStaticFlash(){
+      if(!staticFlash) return;
+      staticFlash.classList.remove('burst');
+      void staticFlash.offsetWidth; // reflow
+      staticFlash.classList.add('burst');
+    }
+
+    // ---- Router with transition ----
     const topbar = document.getElementById('topbar');
     const screens = {
       home: document.getElementById('screen-home'),
@@ -1443,19 +2389,55 @@
       contact: document.getElementById('screen-contact'),
     };
 
-    function setActive(route){
-      Object.values(screens).forEach(s => s.classList.remove('active'));
-      const target = screens[route] || screens.home;
-      target.classList.add('active');
+    let currentRoute = 'home';
+    let transitioning = false;
 
-      if(route && route !== 'home'){
-        topbar.classList.add('section-mode');
-      } else {
-        topbar.classList.remove('section-mode');
+    function setActive(route){
+      if(transitioning) return;
+      if(route === currentRoute && document.querySelector('.screen.active')) return;
+      transitioning = true;
+
+      const prevScreen = screens[currentRoute];
+      const nextScreen = screens[route] || screens.home;
+
+      // Static flash burst
+      doStaticFlash();
+
+      // CRT collapse out
+      if(prevScreen && prevScreen !== nextScreen){
+        prevScreen.classList.add('leaving');
       }
 
-      const hash = route ? `#${route}` : '#home';
-      if(location.hash !== hash) history.replaceState(null, "", hash);
+      setTimeout(() => {
+        // Hide all
+        Object.values(screens).forEach(s => {
+          s.classList.remove('active', 'leaving');
+        });
+
+        // Show next
+        nextScreen.classList.add('active');
+        currentRoute = route;
+
+        if(route && route !== 'home'){
+          topbar.classList.add('section-mode');
+        } else {
+          topbar.classList.remove('section-mode');
+        }
+
+        const hash = route ? `#${route}` : '#home';
+        if(location.hash !== hash) history.replaceState(null, "", hash);
+
+        // Stagger animate project cards when entering projects
+        if(route === 'projects'){
+          animateProjCards();
+        }
+        // Stagger about section
+        if(route === 'about'){
+          animateAbout();
+        }
+
+        transitioning = false;
+      }, 200);
     }
 
     document.addEventListener('click', (e) => {
@@ -1473,7 +2455,27 @@
     window.addEventListener('hashchange', routeFromHash);
     routeFromHash();
 
-    // Typed "I AM ..." effect
+    // ---- Project card stagger ----
+    function animateProjCards(){
+      const grid = document.getElementById('projGrid');
+      if(!grid) return;
+      const visible = Array.from(grid.querySelectorAll('.proj-card')).filter(c => c.style.display !== 'none');
+      visible.forEach((card, i) => {
+        card.classList.remove('card-visible');
+        setTimeout(() => card.classList.add('card-visible'), 60 + i * 80);
+      });
+    }
+
+    // ---- About stagger ----
+    function animateAbout(){
+      const targets = document.querySelectorAll('#screen-about .about-enter-anim');
+      targets.forEach((el, i) => {
+        el.classList.remove('is-in');
+        setTimeout(() => el.classList.add('is-in'), 80 + i * 100);
+      });
+    }
+
+    // ---- Typed "I AM ..." effect ----
     const typedEl = document.getElementById('typedText');
     const phrases = ["BUILDING","DEBUGGING","VERIFYING","LEARNING","ITERATING","ENGINEERING"];
     let pIndex = 0, charIndex = 0, deleting = false;
@@ -1548,7 +2550,7 @@
       if(!grid) return;
 
       const tabs = Array.from(document.querySelectorAll('.proj-tab'));
-      function setActive(tab){
+      function setActiveTab(tab){
         tabs.forEach(t=>{
           const on = (t === tab);
           t.classList.toggle('is-active', on);
@@ -1561,19 +2563,192 @@
           const cats = (card.getAttribute('data-cat') || '').split(/\s+/).filter(Boolean);
           const show = (filter === 'all') || cats.includes(filter);
           card.style.display = show ? '' : 'none';
+          card.classList.remove('card-visible');
         });
+        // Re-stagger after filter
+        setTimeout(() => {
+          const visible = cards.filter(c => c.style.display !== 'none');
+          visible.forEach((card, i) => {
+            setTimeout(() => card.classList.add('card-visible'), 40 + i * 70);
+          });
+        }, 20);
       }
 
       tabs.forEach(tab=>{
         tab.addEventListener('click', ()=>{
           const filter = tab.getAttribute('data-filter') || 'all';
-          setActive(tab);
+          setActiveTab(tab);
           applyFilter(filter);
         });
       });
 
       applyFilter('featured');
     })();
+
+    // ---- Cursor parallax on section screens (subtle) ----
+    document.addEventListener('mousemove', (e) => {
+      const active = document.querySelector('.screen.active');
+      if(!active) return;
+      const bg = active.querySelector('.bg-image');
+      if(!bg) return;
+      const cx = (e.clientX / window.innerWidth - 0.5) * 8;
+      const cy = (e.clientY / window.innerHeight - 0.5) * 5;
+      bg.style.transform = `scale(1.04) translate(${cx}px, ${cy}px)`;
+    });
+
+    // ====================================================
+    // NEW: Custom cursor
+    // ====================================================
+    (() => {
+      const dot  = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorRing');
+      if(!dot || !ring) return;
+      let mx = -100, my = -100, rx = -100, ry = -100;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      function animCursor(){
+        dot.style.left  = mx + 'px';
+        dot.style.top   = my + 'px';
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(animCursor);
+      }
+      animCursor();
+    })();
+
+    // ====================================================
+    // NEW: Canvas particle network
+    // ====================================================
+    (() => {
+      const canvas = document.getElementById('particles-canvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles;
+
+      function resize(){
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', () => { resize(); init(); });
+
+      function Particle(){
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.28;
+        this.vy = (Math.random() - 0.5) * 0.28;
+        this.r  = Math.random() * 1.1 + 0.3;
+        this.opacity = Math.random() * 0.45 + 0.12;
+      }
+      Particle.prototype.update = function(){
+        this.x += this.vx; this.y += this.vy;
+        if(this.x < 0) this.x = W; if(this.x > W) this.x = 0;
+        if(this.y < 0) this.y = H; if(this.y > H) this.y = 0;
+      };
+
+      function init(){
+        const count = Math.floor((W * H) / 14000);
+        particles = Array.from({length: Math.min(count, 80)}, () => new Particle());
+      }
+      init();
+
+      function draw(){
+        ctx.clearRect(0, 0, W, H);
+        for(let i = 0; i < particles.length; i++){
+          for(let j = i+1; j < particles.length; j++){
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if(dist < 130){
+              const alpha = (1 - dist/130) * 0.1;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(211,0,0,${alpha})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
+          ctx.fill();
+          p.update();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // ====================================================
+    // NEW: Skill bars — animate on screen enter
+    // ====================================================
+    function animateSkillBars(){
+      const fills = document.querySelectorAll('#screen-skills .skill-bar-fill');
+      fills.forEach((el, i) => {
+        el.style.width = '0%';
+        const pct = el.getAttribute('data-pct') || '0';
+        setTimeout(() => { el.style.width = pct + '%'; }, 100 + i * 55);
+      });
+    }
+
+    // ====================================================
+    // NEW: Screen indicator text
+    // ====================================================
+    const screenIndicator = document.getElementById('screenIndicator');
+    const indicatorMap = {
+      about: 'SEC:ABOUT // 01',
+      skills: 'SEC:SKILLS // 02',
+      projects: 'SEC:PROJECTS // 03',
+      research: 'SEC:RESEARCH // 04',
+      contact: 'SEC:CONTACT // 05',
+    };
+    function updateIndicator(route){
+      if(!screenIndicator) return;
+      if(route && route !== 'home'){
+        screenIndicator.textContent = indicatorMap[route] || 'SEC:' + route.toUpperCase();
+        screenIndicator.style.display = 'block';
+      } else {
+        screenIndicator.style.display = 'none';
+      }
+    }
+
+    // ====================================================
+    // NEW: Home corners reveal
+    // ====================================================
+    function revealHomeCorners(){
+      const corners = document.getElementById('homeCorners');
+      if(corners) setTimeout(() => corners.classList.add('show'), 800);
+    }
+
+    // Patch hideBoot to also reveal corners
+    const _origHideBoot = hideBoot;
+
+    // Hook into route changes for skill bars + indicator using MutationObserver
+    const _routeObserver = new MutationObserver(() => {
+      const active = document.querySelector('.screen.active');
+      if(!active) return;
+      const id = active.id.replace('screen-','');
+      updateIndicator(id);
+      if(id === 'skills') setTimeout(animateSkillBars, 300);
+    });
+    const screensContainer = document.querySelector('body');
+    if(screensContainer){
+      _routeObserver.observe(screensContainer, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    }
+
+    // Call revealHomeCorners when boot is dismissed
+    const _bootEl = document.getElementById('boot');
+    if(_bootEl){
+      const _bootObserver = new MutationObserver(() => {
+        if(_bootEl.classList.contains('hidden')) revealHomeCorners();
+      });
+      _bootObserver.observe(_bootEl, { attributes: true, attributeFilter: ['class'] });
+    }
+
   </script>
 </body>
 </html>
